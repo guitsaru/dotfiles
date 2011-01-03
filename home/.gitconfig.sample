@@ -1,0 +1,24 @@
+# ADD LOCAL CONFIGURATION HERE
+[user]
+  name = Matt Pruitt
+  email = guitsaru@gmail.com
+
+# DO NOT EDIT BELOW THIS LINE
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+[core]
+  excludesfile = ~/.gitignore
+  editor = "mvim -f"
+[alias]
+  c = commit -m
+  a = add
+  di = diff
+  dic = diff --cached
+  pl = pull
+  ps = push
+  plre = pull --rebase
+  st = status
+  out = log origin..HEAD
+
