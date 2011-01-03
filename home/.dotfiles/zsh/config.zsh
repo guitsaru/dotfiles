@@ -9,7 +9,7 @@ setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt EXTENDED_HISTORY
 
-bindkey ^R history-incrementl-search-backward
+bindkey '^R' history-incremental-search-backward
 bindkey '^[[A' history-beginning-search-backward
 bindkey '^[[B' history-beginning-search-forward
 
