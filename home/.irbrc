@@ -7,6 +7,10 @@ IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 IRB.conf[:PROMPT_MODE] = :SIMPLE
 IRB.conf[:AUTO_INDENT] = true
 
-if ENV['RAILS_ENV']
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
+if defined?(Rails) && Rails.logger
+  Rails.logger =Logger.new(STDOUT)
+  ActiveRecord::Base.logger = Rails.logger
+elsif !Object.const_defined?('RAILS_DEFAULT_LOGGER')
+  require 'logger'
+  Object.const_set('RAILS_DEFAULT_LOGGER', Logger.new(STDOUT))
 end
