@@ -2,7 +2,7 @@ setopt prompt_subst
 autoload colors && colors
 
 git_branch() {
-  echo "%{$fg_bold[green]%}$(/usr/bin/git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})%{$reset_color%}"
+  echo "%{$fg_bold[green]%}$(git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})%{$reset_color%}"
 }
 
 # Show character if changes are pending
