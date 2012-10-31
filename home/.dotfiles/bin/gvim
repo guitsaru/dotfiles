@@ -1,0 +1,1 @@
+open -a MacVim.app $1
