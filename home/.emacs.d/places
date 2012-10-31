@@ -1,0 +1,12 @@
+;;; -*- coding: utf-8 -*-
+(("/Users/mpruitt/.emacs.d/elpa/elisp-slime-nav-0.2/elisp-slime-nav-autoloads.el" . 795)
+ ("/Users/mpruitt/.emacs.d/elpa/evil-0.0.0/evil-autoloads.el" . 557)
+ ("/Users/mpruitt/.emacs.d/elpa/evil-leader-0.1/evil-leader-autoloads.el" . 188)
+ ("/Users/mpruitt/.emacs.d/elpa/evil-numbers-0.2/evil-numbers-autoloads.el" . 644)
+ ("/Users/mpruitt/.emacs.d/elpa/inf-ruby-2.2.3/inf-ruby-autoloads.el" . 1247)
+ ("/Users/mpruitt/.emacs.d/elpa/starter-kit-bindings-2.0.2/starter-kit-bindings-autoloads.el" . 2120)
+ ("/Users/mpruitt/.emacs.d/elpa/starter-kit-eshell-2.0.3/starter-kit-eshell-autoloads.el" . 1816)
+ ("/Users/mpruitt/.emacs.d/elpa/starter-kit-js-2.0.1/starter-kit-js-autoloads.el" . 771)
+ ("/Users/mpruitt/.emacs.d/elpa/starter-kit-lisp-2.0.3/starter-kit-lisp-autoloads.el" . 1916)
+ ("/Users/mpruitt/.emacs.d/elpa/starter-kit-ruby-2.0.3/starter-kit-ruby-autoloads.el" . 2444)
+ ("/Users/mpruitt/.emacs.d/elpa/undo-tree-0.5.5/undo-tree-autoloads.el" . 1675))
