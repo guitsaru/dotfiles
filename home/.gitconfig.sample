@@ -1,7 +1,9 @@
 # ADD LOCAL CONFIGURATION HERE
 [user]
-  name = Matt Pruitt
+	name = Matt Pruitt
   email = guitsaru@gmail.com
+[alias]
+  status = status -sb
 
 # DO NOT EDIT BELOW THIS LINE
 [color]
@@ -10,7 +12,7 @@
   branch = auto
 [core]
   excludesfile = ~/.gitignore
-  editor = "mvim -f"
+  editor = "vim"
 [alias]
   c = commit -m
   a = add
@@ -21,4 +23,5 @@
   plre = pull --rebase
   st = status
   out = log origin..HEAD
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 
