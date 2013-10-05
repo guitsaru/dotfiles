@@ -1,7 +1,7 @@
 export LSCOLORS="exfxcxdxbxegedabagacad"
 export CLICOLOR=1
 
-export EDITOR="mvim"
+export EDITOR="vim"
 
 setopt histignoredups
 setopt APPEND_HISTORY
