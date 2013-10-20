@@ -1,4 +1,4 @@
-alias migrate="rake db:migrate db:test:prepare"
+alias migrate="bundle exec rake db:migrate db:test:prepare"
 
 function ss {
   if [ -e script/rails ]; then
