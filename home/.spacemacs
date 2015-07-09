@@ -37,6 +37,7 @@
      perspectives
      company-mode
      ruby
+     shell
    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -77,8 +78,8 @@ before layers configuration."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(spacemacs-dark
-                         solarized-light
                          solarized-dark
+                         solarized-light
                          spacemacs-light
                          leuven
                          monokai
@@ -162,6 +163,9 @@ before layers configuration."
    ;; specified with an installed package.
    ;; Not used for now.
    dotspacemacs-default-package-repository nil
+
+   shell :variables shell-default-term-shell "/usr/local/bin/zsh"
+   shell :variables shell-default-shell 'ansi-term
 
    ruby-enable-ruby-on-rails-support t
    )
