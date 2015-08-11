@@ -1,3 +1,4 @@
+export LC_ALL=en_US.UTF-8
 export LSCOLORS="exfxcxdxbxegedabagacad"
 export CLICOLOR=1
 

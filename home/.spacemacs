@@ -165,11 +165,11 @@ before layers configuration."
    dotspacemacs-default-package-repository nil
 
    shell :variables shell-default-term-shell "/usr/local/bin/zsh"
-   shell :variables shell-default-shell 'ansi-term
+   shell :variables shell-default-shell 'shell
 
    ruby-enable-ruby-on-rails-support t
    )
-  ;; User initialization goes here
+   ;; User initialization goes here
   )
 
 (defun dotspacemacs/config ()
