@@ -36,7 +36,8 @@
      colors
      perspectives
      company-mode
-     ruby
+     ruby :variables ruby-version-manager 'chruby
+     ruby-on-rails
      shell
    )
    ;; List of additional packages that will be installed without being

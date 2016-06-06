@@ -1,0 +1,15 @@
+#/!bin/bash
+
+mkdir ~/dbdump/
+
+declare -a array=("tycoon_production" "cowboy_production" "piratetours_production" "ninjatravelco_production" "kano_production" "conquistador_production" "pony_production")
+
+for i in "${array[@]}"
+do
+    mongodump -h mongo-qa.stage.peek.com -d "$i" --out ~/dbdump/
+done
+
+for i in "${array[@]}"
+do
+    mongorestore -h localhost -d "$i" --drop ~/dbdump/$i
+done
