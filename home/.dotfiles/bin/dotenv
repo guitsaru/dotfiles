@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export DOTENV_ENV=${DOTENV_ENV:-dev}
+GIT_DIR=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+DOTENV_FILE=$GIT_DIR/.env.$DOTENV_ENV
+
+if [ -e $DOTENV_FILE ]; then source $DOTENV_FILE; fi
+
+$@
