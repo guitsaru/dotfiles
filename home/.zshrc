@@ -2,5 +2,4 @@
 autoload -U compinit
 compinit
 
-export NVM_DIR="/Users/mattpruitt/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+source ~/.dotfiles/system/path.zsh
