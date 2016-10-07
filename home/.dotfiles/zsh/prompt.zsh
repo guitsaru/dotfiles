@@ -21,14 +21,4 @@ git_prompt() {
   fi
 }
 
-rvm_prompt(){
-  if $(which rvm &> /dev/null)
-  then
-    echo "(%{$fg_bold[yellow]%}$(rvm tools identifier)%{$reset_color%}) "
-  else
-    echo ""
-  fi
-}
-
-
 export PS1='%{$fg_bold[red]%}%C%{$reset_color%} $(git_prompt)→ '

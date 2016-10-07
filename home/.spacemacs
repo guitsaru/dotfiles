@@ -17,26 +17,30 @@
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
-     better-defaults
-     emacs-lisp
-     git
-     markdown
-     org
-     ;; (shell :variables
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t)
+
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     syntax-checking
-     version-control
-     osx
-     themes-megapack
-     erlang
-     elixir
-     html
+     ;; (shell :variables
+     better-defaults
      colors
+     elixir
+     elm
+     emacs-lisp
+     erlang
+     git
+     html
+     markdown
+     org
+     osx
      (ruby :variables ruby-version-manager 'chruby)
      ruby-on-rails
      shell
+     syntax-checking
+     themes-megapack
+     version-control
    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -57,6 +61,7 @@ before layers configuration."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
+   dotspacemacs-line-numbers t
    ;; Either `vim' or `emacs'. Evil is always enabled but if the variable
    ;; is `emacs' then the `holy-mode' is enabled at startup.
    dotspacemacs-editing-style 'vim
@@ -169,11 +174,21 @@ before layers configuration."
    ruby-enable-ruby-on-rails-support t
    )
    ;; User initialization goes here
-  )
+
+  (defadvice alchemist-project-root (around seancribbs/alchemist-project-root activate)
+    (let ((alchemist-project-mix-project-indicator ".git"))
+      ad-do-it))
+
+  (defun seancribbs/activate-alchemist-root-advice ()
+    "Activates advice to override alchemist's root-finding logic"
+    (ad-activate 'alchemist-project-root))
+
+  (add-to-list 'elixir-mode-hook 'seancribbs/activate-alchemist-root-advice)
+)
 
 (defun dotspacemacs/config ()
   "Configuration function."
-  (add-hook 'alchemist-mode-hook 'company-mode)
+  (global-company-mode)
   (global-linum-mode)
 )
 
