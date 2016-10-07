@@ -2,4 +2,4 @@
 autoload -U compinit
 compinit
 
-source ~/.dotfiles/system/path.zsh
+[ -s "$ZSH/system/path.zsh" ] && source $ZSH/system/path.zsh
