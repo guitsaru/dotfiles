@@ -4,7 +4,6 @@
 - http://rubygems.org/
 - http://gems.github.com
 - http://rubygems.org
-- http://gems.brenv.net/
 gem: --no-ri --no-rdoc
 :verbose: true
 :benchmark: false
