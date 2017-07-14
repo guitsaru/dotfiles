@@ -7,7 +7,7 @@ git_branch() {
 
 # Show character if changes are pending
 git_status() {
-  if current_git_status=$(git st | grep 'working tree clean' 2> /dev/null); then
+  if current_git_status=$(git status | grep 'working tree clean' 2> /dev/null); then
     echo ""
   else;
     echo "%{$fg_no_bold[red]%}*%{$reset_color%}"
