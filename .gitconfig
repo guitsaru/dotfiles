@@ -1,0 +1,41 @@
+[user]
+	name = Matt Pruitt
+	email = matt@guitsaru.com
+
+[alias]
+	status = status -sb
+
+# DO NOT EDIT BELOW THIS LINE
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+
+[core]
+	excludesfile = ~/.gitignore
+	editor = "nvim"
+
+[alias]
+	c = commit -m
+	a = add
+	di = diff
+	dic = diff --cached
+	pl = pull
+	ps = push
+	plre = pull --rebase
+	st = status
+	out = log origin..HEAD
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+
+[push]
+	default = current
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main
+[hub]
+	protocol = https
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+

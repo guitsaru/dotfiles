@@ -1,0 +1,8 @@
+require("settings")
+require("plugins")
+require("format")
+require("completion")
+require("lsp")
+require("telescope")
+require("status")
+require("highlight")
