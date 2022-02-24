@@ -18,5 +18,10 @@ setopt SHARE_HISTORY
 
 alias dotfiles='/usr/bin/git --git-dir=$HOME/code/.dotfiles/ --work-tree=$HOME'
 
+if ! command -v starship &> /dev/null; then
+  sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -f
+  export PS1='$(ssh_status)%{$fg_bold[red]%}%C%{$reset_color%} $(git_prompt)→ '
+fi
+
 eval "$(starship init zsh)"
 
