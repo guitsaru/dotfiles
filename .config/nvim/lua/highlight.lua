@@ -1,5 +1,5 @@
-
 local configs = require("nvim-treesitter.configs")
+
 configs.setup {
   ensure_installed = "maintained",
   highlight = {
@@ -8,5 +8,5 @@ configs.setup {
   }
 }
 vim.cmd[[set fillchars+=vert:\ ]]
-vim.cmd[[colorscheme dracula]]
-vim.g.dracula_show_end_of_buffer = false
+vim.cmd[[colorscheme tokyonight]]
+vim.g.tokyonight_style = "night"

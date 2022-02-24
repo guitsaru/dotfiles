@@ -1,4 +1,5 @@
 require("settings")
+require("outline")
 require("plugins")
 require("format")
 require("completion")
