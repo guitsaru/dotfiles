@@ -1,12 +1,10 @@
 local lsp_installer_servers = require("nvim-lsp-installer.servers")
-local nvim_lsp = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local servers = {"elixirls", "solargraph", "rust_analyzer", "sumneko_lua", "html", "tailwindcss"}
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   local opts = { noremap=true, silent=true }
 
@@ -37,7 +35,38 @@ for _, server in pairs(servers) do
             capabilities = capabilities,
             on_attach = on_attach
           }
-          requested_server:setup(opts)
+          if server == "sumneko_lua" then
+            local runtime_path = vim.split(package.path, ';')
+            table.insert(runtime_path, "lua/?.lua")
+            table.insert(runtime_path, "lua/?/init.lua")
+
+            requested_server:setup {
+              settings = {
+                Lua = {
+                  runtime = {
+                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                    version = 'LuaJIT',
+                    -- Setup your lua path
+                    path = runtime_path,
+                  },
+                  diagnostics = {
+                    -- Get the language server to recognize the `vim` global
+                    globals = {'vim'},
+                  },
+                  workspace = {
+                    -- Make the server aware of Neovim runtime files
+                    library = vim.api.nvim_get_runtime_file("", true),
+                  },
+                  -- Do not send telemetry data containing a randomized but unique identifier
+                  telemetry = {
+                    enable = false,
+                  },
+                },
+              }
+            }
+          else
+            requested_server:setup(opts)
+          end
       end)
       if not requested_server:is_installed() then
           -- Queue the server to be installed

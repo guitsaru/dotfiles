@@ -1,7 +1,7 @@
 vim.cmd[[nnoremap <SPACE> <Nop>]]
 vim.cmd[[tnoremap <Esc> <C-\><C-n>]]
 vim.cmd[[let mapleader=" "]]
-vim.cmd[[nnoremap <leader>t :NvimTreeToggle<CR>]]
+vim.cmd[[nnoremap <leader>b :NvimTreeToggle<CR>]]
 vim.cmd[[nnoremap <leader><SPACE> :e#<CR>]]
 vim.cmd[[set mouse=a]]
 vim.o.number = true

@@ -23,6 +23,7 @@ return require("packer").startup(function()
   use "sbdchd/neoformat"
   use 'voldikss/vim-floaterm'
   use "jssee/vim-delight"
+  use "simrat39/symbols-outline.nvim"
 
   use "nvim-treesitter/nvim-treesitter"
   use 'Mofiqul/dracula.nvim'

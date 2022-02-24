@@ -11,4 +11,11 @@ error_symbol = "[➜](bold red)"
 disabled = true
 
 [container]
+disabled=true
 style = "bold blue dimmed"
+
+[custom.toolbox]
+command = ". /run/.containerenv && echo $name"
+when = "cat /run/.containerenv"
+style = "bold blue"
+format = "in [($output)]($style) "
