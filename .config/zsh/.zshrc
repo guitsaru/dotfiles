@@ -6,6 +6,9 @@ source $ZDOTDIR/zsh-history-substring-search/zsh-history-substring-search.zsh
 export SHELL_SESSION_DIR="$XDG_STATE_HOME/zsh/sessions"
 export SHELL_SESSION_FILE="$SHELL_SESSION_DIR/$TERM_SESSION_ID"
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
+mkdir -p "$XDG_STATE_HOME/zsh"
+touch $HISTFILE
+mkdir -p $SHELL_SESSION_DIR
 
 export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
