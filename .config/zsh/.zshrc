@@ -22,6 +22,9 @@ setopt SHARE_HISTORY
 
 alias dotfiles='/usr/bin/git --git-dir=$HOME/code/.dotfiles/ --work-tree=$HOME'
 
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
 if ! command -v starship &> /dev/null; then
   sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -f
   export PS1='$(ssh_status)%{$fg_bold[red]%}%C%{$reset_color%} $(git_prompt)→ '
