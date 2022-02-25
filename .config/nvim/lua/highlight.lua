@@ -8,6 +8,6 @@ configs.setup {
   }
 }
 
-vim.g.tokyonight_style = "night"
+vim.g.onedark_config = { style = "darker" }
 vim.cmd[[set fillchars+=vert:\ ]]
-vim.cmd[[colorscheme tokyonight]]
+vim.cmd[[colorscheme onedark]]
