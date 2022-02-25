@@ -10,6 +10,7 @@ mkdir -p "$XDG_STATE_HOME/zsh"
 touch $HISTFILE
 mkdir -p $SHELL_SESSION_DIR
 
+export PATH=$PATH:~/.local/bin
 export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
 export HISTTIMEFORMAT="[%F %T]"
