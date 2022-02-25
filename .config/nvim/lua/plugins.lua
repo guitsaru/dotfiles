@@ -28,6 +28,7 @@ return require("packer").startup(function()
   use "nvim-treesitter/nvim-treesitter"
   use 'Mofiqul/dracula.nvim'
   use "folke/tokyonight.nvim"
+  use "tiagovla/tokyodark.nvim"
   use "sheerun/vim-polyglot"
 
   use {

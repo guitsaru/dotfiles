@@ -7,6 +7,7 @@ configs.setup {
     disable = { "elixir" },
   }
 }
+
+vim.g.tokyonight_style = "night"
 vim.cmd[[set fillchars+=vert:\ ]]
 vim.cmd[[colorscheme tokyonight]]
-vim.g.tokyonight_style = "night"
