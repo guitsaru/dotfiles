@@ -8,7 +8,7 @@ vim.cmd([[
 local fn = vim.fn
 local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
+  PACKER_BOOTSTRAP = fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
 end
 
 vim.cmd [[packadd packer.nvim]]
@@ -29,12 +29,31 @@ return require("packer").startup(function()
   use 'Mofiqul/dracula.nvim'
   use "folke/tokyonight.nvim"
   use "sheerun/vim-polyglot"
+
+  use {
+    "ahmedkhalf/project.nvim",
+    config = function()
+      require("project_nvim").setup({})
+      require('telescope').load_extension('projects')
+    end
+  }
+  use {'nvim-telescope/telescope-ui-select.nvim' }
+
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
     },
-    config = function() require'nvim-tree'.setup {} end
+    config = function()
+      vim.g.nvim_tree_respect_buf_cwd = 1
+      require("nvim-tree").setup({
+        update_cwd = true,
+        update_focused_file = {
+          enable = true,
+          update_cwd = true
+        },
+      })
+    end
   }
   use {
     'lewis6991/gitsigns.nvim',
@@ -46,7 +65,25 @@ return require("packer").startup(function()
     end
   }
 
-  use { "nvim-telescope/telescope.nvim", requires = { {"nvim-lua/plenary.nvim"} }}
+  use {
+    "nvim-telescope/telescope.nvim",
+    requires = {"nvim-lua/plenary.nvim"},
+    config = function()
+      require("telescope").setup({
+        extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_ivy({})
+          }
+        }
+      })
+      require("telescope").load_extension("ui-select")
+    end
+  }
+
+  use {
+    'romgrk/barbar.nvim',
+    requires = {'kyazdani42/nvim-web-devicons'}
+  }
 
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-buffer"
@@ -58,6 +95,19 @@ return require("packer").startup(function()
 
   use "neovim/nvim-lspconfig"
   use "williamboman/nvim-lsp-installer"
+  use "folke/lua-dev.nvim"
+  use {
+    "simrat39/rust-tools.nvim",
+    requires = { "nvim-lua/plenary.nvim" }
+  }
+
+  use {
+    'saecki/crates.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+        require('crates').setup()
+    end,
+}
 
   use "vim-test/vim-test"
 
@@ -69,10 +119,32 @@ return require("packer").startup(function()
     end
   }
 
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup {
+        ignore_missing = true,
+      }
+    end
+  }
+
+  use {
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("null-ls").setup {
+        sources = {
+          require("null-ls").builtins.diagnostics.credo,
+          require("null-ls").builtins.formatting.mix,
+          require("null-ls").builtins.formatting.rustywind,
+        }
+      }
+    end
+  }
+
   use { "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } }
   use "arkav/lualine-lsp-progress"
 
-  if packer_bootstrap then
+  if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
 end)

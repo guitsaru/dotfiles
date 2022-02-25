@@ -51,6 +51,3 @@ vim.g.symbols_outline = {
     }
 }
 
-vim.cmd [[
-nmap <silent> <leader>o :SymbolsOutline<CR>
-]]
