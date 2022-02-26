@@ -20,7 +20,6 @@ return require("packer").startup(function()
   use "tpope/vim-sleuth"
   use "tpope/vim-commentary"
   use "tpope/vim-eunuch"
-  use "sbdchd/neoformat"
   use 'voldikss/vim-floaterm'
   use "jssee/vim-delight"
   use "simrat39/symbols-outline.nvim"
@@ -135,8 +134,8 @@ return require("packer").startup(function()
       require("null-ls").setup {
         sources = {
           require("null-ls").builtins.diagnostics.credo,
-          require("null-ls").builtins.formatting.mix,
           require("null-ls").builtins.formatting.rustywind,
+          require("null-ls").builtins.formatting.mix,
         }
       }
     end

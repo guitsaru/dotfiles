@@ -1,7 +1,6 @@
 require("settings")
 require("outline")
 require("plugins")
-require("format")
 require("completion")
 require("lsp")
 require("keymap")
