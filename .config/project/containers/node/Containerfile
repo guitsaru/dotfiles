@@ -1,0 +1,4 @@
+ARG USER
+FROM ${USER}/base
+
+RUN dnf -y install nodejs yarnpkg

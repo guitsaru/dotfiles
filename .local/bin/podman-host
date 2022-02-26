@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$1" == "exec" ] ; then
+if [ "$1" == "exec" ]; then
     # Remove 'exec' from $@
     shift
     # We want to match toolbox in what variables from the host pass into the container
@@ -28,8 +28,23 @@ if [ "$1" == "exec" ] ; then
         done
         exec podman exec "${envargs[@]}" "$@"
     '
-    exec flatpak-spawn --host sh -c "$script" - "$@"
-else
-    exec flatpak-spawn --host podman "$@"
-fi
+    if [ -f /run/.containerenv ]; then
+        exec flatpak-spawn --host sh -c "$script" - "$@"
+    else
+        exec sh -c "$script" - "$@"
+    fi
+elif [ "$1" == "sh" ]; then
+    shift
 
+    if [ -f /run/.containerenv ]; then
+        exec flatpak-spawn --host "$@"
+    else
+        exec "$@"
+    fi
+else
+    if [ -f /run/.containerenv ]; then
+        exec flatpak-spawn --host podman "$@"
+    else
+        exec podman "$@"
+    fi
+fi
