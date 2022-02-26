@@ -47,6 +47,15 @@ wk.register({
       l = { "<cmd>Trouble loclist<CR>", "Show Location List Diagnostics" },
       q = { "<cmd>Trouble quickfix<CR>", "Show Quickfixes" },
     },
+    g = {
+      name = "Git",
+      g = { "<cmd>Git<Cr>", "Summary" },
+      b = { "<cmd>Git blame<Cr>", "Blame" },
+      c = { "<cmd>Git commit<Cr>", "Commit" },
+      p = { "<cmd>Git push<Cr>", "Push" },
+      u = { "<cmd>Git pull<Cr>", "Pull" },
+      d = { "<cmd>Git diff<Cr>", "Diff" },
+    },
 }, { prefix = "<leader>" })
 
 vim.cmd("autocmd FileType * lua WhichKeyLang()")
