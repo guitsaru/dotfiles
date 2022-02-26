@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+if [ "$1" == "make" ]; then
+    cd $HOME/.config/project/containers && make
+    exit
+fi
+
+if [[ -z $1 ]]; then
+    PROJECT=$(smug list | fzf --reverse --border)
+    if [[ -z $PROJECT ]]; then
+        exit
+    fi
+else
+    PROJECT=$1
+fi
+
+if podman-host sh distrobox list | grep $PROJECT &> /dev/null; then
+    podman-host sh distrobox enter $PROJECT -e $HOME/.local/bin/smug start $PROJECT -d
+else
+    IMAGE=$(find $HOME/.config/project/containers -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | fzf --reverse --border)
+    if [[ -z $IMAGE ]]; then
+        exit
+    fi
+
+    echo "Creating $PROJECT from $USER/$IMAGE"
+    podman-host sh distrobox create $PROJECT -i $USER/$IMAGE
+    podman-host sh distrobox enter $PROJECT -e $HOME/.local/bin/smug start $PROJECT -d
+fi
+
