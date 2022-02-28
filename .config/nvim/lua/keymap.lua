@@ -28,7 +28,7 @@ wk.register({
     c = {
       name = "Config",
       f = { "<cmd>lua require('config').find_config_files()<CR>", "Find" },
-      s = { "<cmd>source $MYVIMRC<CR>", "Source" },
+      r = { "<cmd>lua require('config').reload()<CR>", "Reload" },
       ["/"] = { "<cmd>lua require('config').live_grep_config_files()<CR>", "Search" },
     },
     p = {
@@ -63,7 +63,7 @@ function WhichKeyLang()
   local file_type = vim.api.nvim_buf_get_option(0, "filetype")
   if file_type == "rust" then
     wk.register({
-      r = {
+      m = {
         name = "Rust",
         r = { "<cmd>RustRunnables<CR>", "Runnables" },
         c = { "<cmd>RustOpenCargo<CR>", "Edit Cargo.toml" },
