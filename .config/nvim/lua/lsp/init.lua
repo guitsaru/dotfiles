@@ -59,11 +59,14 @@ lsp_installer.on_server_ready(function(server)
     return
   end
   if server.name == "rust_analyzer" then
+    local options = { settings = { ["rust-analyzer"] = { checkOnSave = { command = "clippy" } } } }
+    options = vim.tbl_deep_extend("force", options, opts)
+
       require("rust-tools").setup {
         debuggables = { use_telescope = true },
         runnables = { use_telescope = true },
         inlay_hints = { show_variable_name = true, },
-        server = vim.tbl_deep_extend("force", server:get_default_options(), opts),
+        server = vim.tbl_deep_extend("force", server:get_default_options(), options),
       }
       server:attach_buffers()
       require("rust-tools").start_standalone_if_required()
