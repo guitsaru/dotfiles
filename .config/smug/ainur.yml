@@ -4,4 +4,4 @@ root: ~/code/ainur
 windows:
   - name: Editor
     commands: 
-      - nvim README.md
+      - nvim .

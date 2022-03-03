@@ -5,7 +5,7 @@ wk.register({
     b = { "<cmd>NvimTreeToggle<CR>", "Toggle File Explorer" },
     f = {
       name = "Find",
-      a = { "<cmd>Telescope live_grep theme=ivy<CR>", "Find in Project" },
+      ["/"] = { "<cmd>Telescope live_grep theme=ivy<CR>", "Find in Project" },
       f = { "<cmd>Telescope find_files theme=ivy<CR>", "Find File" },
       b = { "<cmd>Telescope buffers theme=ivy<CR>", "Find Buffer" },
       h = { "<cmd>Telescope help_tags theme=ivy<CR>", "Find Tag" },

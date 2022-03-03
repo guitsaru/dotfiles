@@ -132,6 +132,7 @@ return require("packer").startup(function()
           require("null-ls").builtins.diagnostics.credo,
           require("null-ls").builtins.formatting.rustywind,
           require("null-ls").builtins.formatting.mix,
+          require("null-ls").builtins.formatting.rustfmt,
         }
       }
     end
