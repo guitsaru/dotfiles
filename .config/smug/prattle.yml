@@ -12,7 +12,7 @@ stop:
 windows:
   - name: Editor
     commands: 
-      - nvim README.md
+      - nvim .
   - name: Server
     commands:
       - iex -S mix do setup, phx.server
