@@ -1,0 +1,18 @@
+session: appily
+root: ~/code/appily
+
+before_start:
+  - ~/.local/bin/podman-host run --name postgis --replace -d -e POSTGRES_PASSWORD=postgres -p 5432:5432 docker.io/postgis/postgis:latest
+  - mix local.hex --if-missing --force
+  - mix local.rebar --if-missing --force
+
+stop:
+  - podman-host stop -i postgis
+
+windows:
+  - name: Editor
+    commands: 
+      - nvim .
+  - name: Server
+    commands:
+      - iex -S mix do setup, phx.server

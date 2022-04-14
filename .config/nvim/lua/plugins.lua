@@ -20,7 +20,8 @@ return require("packer").startup(function()
   use "tpope/vim-sleuth"
   use "tpope/vim-commentary"
   use "tpope/vim-eunuch"
-  use 'voldikss/vim-floaterm'
+  -- use 'voldikss/vim-floaterm'
+  use "doums/floaterm.nvim"
   use "jssee/vim-delight"
   use "simrat39/symbols-outline.nvim"
 
