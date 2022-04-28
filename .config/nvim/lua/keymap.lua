@@ -2,7 +2,7 @@ local wk = require("which-key")
 
 wk.register({
     ["<SPACE>"] = { ":e#<CR>", "Previous Buffer" },
-    b = { "<cmd>NvimTreeToggle<CR>", "Toggle File Explorer" },
+    b = { "<cmd>NvimTreeFindFileToggle<CR>", "Toggle File Explorer" },
     f = {
       name = "Find",
       ["/"] = { "<cmd>Telescope live_grep theme=ivy<CR>", "Find in Project" },
