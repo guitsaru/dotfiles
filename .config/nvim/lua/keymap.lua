@@ -77,7 +77,8 @@ function WhichKeyLang()
     wk.register({
       m = {
         name = "Elixir",
-        f = { "<cmd>!mix format<CR>", "format" },
+        F = { "<cmd>!mix format<CR>", "format" },
+        f = { "<cmd>!mix format %<CR>", "format" },
       }
     }, { prefix = "<leader>" })
   end
