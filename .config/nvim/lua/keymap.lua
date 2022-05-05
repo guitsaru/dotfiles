@@ -72,4 +72,13 @@ function WhichKeyLang()
       }
     }, { prefix = "<leader>" })
   end
+
+  if file_type == "elixir" then
+    wk.register({
+      m = {
+        name = "Elixir",
+        f = { "<cmd>!mix format<CR>", "format" },
+      }
+    }, { prefix = "<leader>" })
+  end
 end
