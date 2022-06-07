@@ -4,10 +4,8 @@ configs.setup {
   ensure_installed = "all",
   highlight = {
     enable = true,
-    disable = { "elixir" },
+    disable = { "elixir", "lua" },
   }
 }
 
-vim.g.onedark_config = { style = "darker" }
 vim.cmd[[set fillchars+=vert:\ ]]
-vim.cmd[[colorscheme onedark]]

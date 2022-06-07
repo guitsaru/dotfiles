@@ -23,7 +23,7 @@ wk.register({
       T = { "<cmd>TestFile<CR>", "File" },
       a = { "<cmd>TestSuite<CR>", "Project" },
       l = { "<cmd>TestLast<CR>", "Last" },
-      g = { "<cmd>TestVisit<CR>", "Visit" },
+     g = { "<cmd>TestVisit<CR>", "Visit" },
     },
     c = {
       name = "Config",
@@ -42,7 +42,7 @@ wk.register({
     },
     d = {
       name = "Diagnostics",
-      d = { "<cmd>Trouble<CR>", "Show Diagnostics" },
+      d = { "<cmd>Trouble document_diagnostics<CR>", "Show Diagnostics" },
       w = { "<cmd>Trouble workspace_diagnostics<CR>", "Show Workspace Diagnostics" },
       l = { "<cmd>Trouble loclist<CR>", "Show Location List Diagnostics" },
       q = { "<cmd>Trouble quickfix<CR>", "Show Quickfixes" },

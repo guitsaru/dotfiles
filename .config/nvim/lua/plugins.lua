@@ -18,10 +18,16 @@ return require("packer").startup(function()
 
   use "tpope/vim-fugitive"
   use "tpope/vim-sleuth"
-  use "tpope/vim-commentary"
   use "tpope/vim-eunuch"
   use "jssee/vim-delight"
   use "simrat39/symbols-outline.nvim"
+
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+  }
 
   use {
     "doums/floaterm.nvim",
@@ -36,10 +42,16 @@ return require("packer").startup(function()
   }
 
   use "nvim-treesitter/nvim-treesitter"
-  use 'Mofiqul/dracula.nvim'
-  use "folke/tokyonight.nvim"
-  use "navarasu/onedark.nvim"
   use "sheerun/vim-polyglot"
+
+  use({
+      "themercorp/themer.lua",
+      config = function()
+      require("themer").setup({
+          colorscheme = "dracula",
+      })
+      end
+  })
 
   use {
     "ahmedkhalf/project.nvim",
