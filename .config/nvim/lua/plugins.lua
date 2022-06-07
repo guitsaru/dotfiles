@@ -56,8 +56,7 @@ return require("packer").startup(function()
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
     },
     config = function()
-      vim.g.nvim_tree_respect_buf_cwd = 1
-      require("nvim-tree").setup({})
+      require("nvim-tree").setup({ respect_buf_cwd = true })
     end
   }
   use {
@@ -100,6 +99,10 @@ return require("packer").startup(function()
   use {
     "simrat39/rust-tools.nvim",
     requires = { "nvim-lua/plenary.nvim" }
+  }
+  use {
+    "mhanberg/elixir.nvim",
+    requires = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" }
   }
 
   use {
