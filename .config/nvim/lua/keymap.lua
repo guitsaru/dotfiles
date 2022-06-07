@@ -49,12 +49,8 @@ wk.register({
     },
     g = {
       name = "Git",
-      g = { "<cmd>Git<Cr>", "Summary" },
-      b = { "<cmd>Git blame<Cr>", "Blame" },
-      c = { "<cmd>Git commit<Cr>", "Commit" },
-      p = { "<cmd>Git push<Cr>", "Push" },
-      u = { "<cmd>Git pull<Cr>", "Pull" },
-      d = { "<cmd>Git diff<Cr>", "Diff" },
+      g = { "<cmd>Neogit<Cr>", "Summary" },
+      c = { "<cmd>Neogit commit<Cr>", "Commit" },
     },
 }, { prefix = "<leader>" })
 

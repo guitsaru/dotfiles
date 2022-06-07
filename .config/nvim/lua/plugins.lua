@@ -16,11 +16,17 @@ return require("packer").startup(function()
   -- Packer can manage itself
   use "wbthomason/packer.nvim"
 
-  use "tpope/vim-fugitive"
   use "tpope/vim-sleuth"
   use "tpope/vim-eunuch"
   use "jssee/vim-delight"
   use "simrat39/symbols-outline.nvim"
+  use {
+    'TimUntersberger/neogit',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function()
+      require("neogit").setup({})
+    end
+  }
 
   use {
     'numToStr/Comment.nvim',
@@ -101,9 +107,9 @@ return require("packer").startup(function()
   use "hrsh7th/cmp-path"
   use "hrsh7th/cmp-cmdline"
   use "hrsh7th/nvim-cmp"
-  use "hrsh7th/cmp-vsnip"
-  use "hrsh7th/vim-vsnip"
   use "lukas-reineke/lsp-format.nvim"
+  use "saadparwaiz1/cmp_luasnip"
+  use "L3MON4D3/LuaSnip"
 
   use "neovim/nvim-lspconfig"
   use "williamboman/nvim-lsp-installer"
@@ -119,9 +125,15 @@ return require("packer").startup(function()
 
   use {
     'saecki/crates.nvim',
+    event = { "BufRead Cargo.toml" },
     requires = { 'nvim-lua/plenary.nvim' },
     config = function()
-        require('crates').setup()
+        require('crates').setup({
+            null_ls = {
+              enabled = true,
+              name = "crates.nvim",
+            },
+        })
     end,
 }
 
