@@ -7,3 +7,4 @@ vim.o.cursorline = true
 vim.cmd[[nnoremap <C-t> :Fterm<CR>]]
 vim.o.timeoutlen = 300
 
+vim.cmd[[let test#strategy = "neovim"]]
