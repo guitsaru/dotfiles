@@ -13,6 +13,7 @@
 
 [delta]
     navigate = true  # use n and N to move between diff sections
+    syntax-theme = Dracula
 
 [merge]
     conflictstyle = diff3
