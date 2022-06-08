@@ -1,0 +1,8 @@
+dotfiles = [
+	".zshenv",
+	".config/zsh/",
+	".config/nvim/",
+	".config/tmux/",
+	".config/gh/"
+]
+
