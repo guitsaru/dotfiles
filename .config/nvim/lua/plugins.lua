@@ -53,9 +53,9 @@ return require("packer").startup(function()
   use({
       "themercorp/themer.lua",
       config = function()
-      require("themer").setup({
+        require("themer").setup({
           colorscheme = "dracula",
-      })
+        })
       end
   })
 

@@ -4,7 +4,7 @@ configs.setup {
   ensure_installed = "all",
   highlight = {
     enable = true,
-    disable = { "elixir", "lua" },
+    disable = {},
   }
 }
 

@@ -3,6 +3,7 @@ dotfiles = [
 	".config/zsh/",
 	".config/nvim/",
 	".config/tmux/",
-	".config/gh/"
+	".config/gh/",
+	".config/starship.toml"
 ]
 

@@ -14,8 +14,7 @@ local on_attach = function(client, bufnr)
       }
   }, { prefix = "<leader>" })
 
-  local opts = { buffer = bufnr }
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr })
 
   vim.api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
@@ -39,7 +38,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 require("rust-tools").setup({ server = { capabilities = capabilities, on_attach = on_attach }})
-require("elixir").setup({ server = { capabilities = capabilities, on_attach = on_attach }})
 
 local lspconfig = require("lspconfig")
 local luadev = require("lua-dev").setup({
@@ -57,7 +55,8 @@ local luadev = require("lua-dev").setup({
     }
 })
 
+lspconfig.elixirls.setup({ on_attach = on_attach, capabilities = capabilities })
 lspconfig.sumneko_lua.setup(luadev)
 lspconfig.solargraph.setup({ on_attach = on_attach, capabilities = capabilities })
-lspconfig.tailwindcss.setup({ on_attach = on_attach, capabilities = capabilities, userLanguages = { eelixir = "html-eex" } })
+lspconfig.tailwindcss.setup({ on_attach = on_attach, capabilities = capabilities, userLanguages = { heex = "heex", eelixir = "html-eex" } })
 
