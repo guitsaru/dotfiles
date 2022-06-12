@@ -29,7 +29,7 @@
 
 [core]
 	excludesfile = ~/.gitignore
-	editor = code --wait
+	editor = nvim
 
 [alias]
 	c = commit -m

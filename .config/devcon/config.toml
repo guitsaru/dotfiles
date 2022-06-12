@@ -1,3 +1,4 @@
+provider = "podman"
 dotfiles = [
 	".zshenv",
 	".config/zsh/",
