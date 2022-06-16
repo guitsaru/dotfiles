@@ -6,5 +6,3 @@ error_symbol = "[➜](bold red)"
 [package]
 disabled = true
 
-[container]
-disabled = true
