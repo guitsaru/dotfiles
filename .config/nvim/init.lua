@@ -1,6 +1,6 @@
+require("plugins")
 require("settings")
 require("outline")
-require("plugins")
 require("completion")
 require("lsp")
 require("keymap")
