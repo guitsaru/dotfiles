@@ -47,7 +47,13 @@ return require("packer").startup(function()
     end
   }
 
-  use "nvim-treesitter/nvim-treesitter"
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require("highlight")
+    end
+  }
+
   use "sheerun/vim-polyglot"
 
   use({
@@ -102,25 +108,31 @@ return require("packer").startup(function()
     end
   }
 
-  use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-buffer"
   use "hrsh7th/cmp-path"
   use "hrsh7th/cmp-cmdline"
-  use "hrsh7th/nvim-cmp"
   use "lukas-reineke/lsp-format.nvim"
-  use "saadparwaiz1/cmp_luasnip"
-  use "L3MON4D3/LuaSnip"
-
-  use "neovim/nvim-lspconfig"
-  use "williamboman/nvim-lsp-installer"
-  use "folke/lua-dev.nvim"
   use {
-    "simrat39/rust-tools.nvim",
-    requires = { "nvim-lua/plenary.nvim" }
+    "L3MON4D3/LuaSnip",
+    requires = {"hrsh7th/nvim-cmp", "saadparwaiz1/cmp_luasnip", "hrsh7th/cmp-nvim-lsp"},
+    config = function()
+      require("completion")
+      require("snippets")
+    end
   }
+
   use {
-    "mhanberg/elixir.nvim",
-    requires = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" }
+    "neovim/nvim-lspconfig",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "folke/lua-dev.nvim",
+      "williamboman/nvim-lsp-installer",
+      "simrat39/rust-tools.nvim",
+      "mhanberg/elixir.nvim"
+    },
+    config = function()
+      require("lsp")
+    end
   }
 
   use {
@@ -153,6 +165,7 @@ return require("packer").startup(function()
       require("which-key").setup {
         ignore_missing = true,
       }
+      require("keymap")
     end
   }
 
@@ -170,7 +183,14 @@ return require("packer").startup(function()
     end
   }
 
-  use { "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } }
+  use {
+    "nvim-lualine/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    config = function()
+      require("status")
+    end
+  }
+
   use "arkav/lualine-lsp-progress"
 
   if PACKER_BOOTSTRAP then

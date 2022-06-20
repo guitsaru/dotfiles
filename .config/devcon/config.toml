@@ -2,7 +2,8 @@ provider = "docker"
 dotfiles = [
 	".zshenv",
 	".config/zsh/",
-	".config/nvim/",
+	".config/nvim/init.lua",
+	".config/nvim/lua/",
 	".config/helix/",
 	".config/tmux/",
 	".config/zellij/",

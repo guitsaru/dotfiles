@@ -1,5 +1,5 @@
 require("lualine").setup({
-  options = { theme = "onedark" },
+  options = { theme = "dracula" },
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch', 'diff', 'diagnostics'},

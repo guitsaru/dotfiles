@@ -15,7 +15,6 @@ local on_attach = function(client, bufnr)
   }, { prefix = "<leader>" })
 
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr })
-
   vim.api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
     callback = function()
