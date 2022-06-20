@@ -52,6 +52,12 @@ wk.register({
       g = { "<cmd>Neogit<Cr>", "Summary" },
       c = { "<cmd>Neogit commit<Cr>", "Commit" },
     },
+    i = {
+      name = "Icons",
+      i = { "<cmd>PickIcons<cr>", "Pick Icons" },
+      e = { "<cmd>PickEmoji<cr>", "Pick Emoji" },
+      n = { "<cmd>PickNerd<cr>", "Pick Nerd Font" },
+    }
 }, { prefix = "<leader>" })
 
 vim.cmd("autocmd FileType * lua WhichKeyLang()")

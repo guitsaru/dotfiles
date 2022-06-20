@@ -193,6 +193,14 @@ return require("packer").startup(function()
 
   use "arkav/lualine-lsp-progress"
 
+  use "stevearc/dressing.nvim"
+  use({
+    "ziontee113/icon-picker.nvim",
+    config = function()
+      require("icon-picker")
+    end,
+  })
+
   if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
