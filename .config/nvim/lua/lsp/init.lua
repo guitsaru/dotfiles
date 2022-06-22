@@ -54,7 +54,17 @@ local luadev = require("lua-dev").setup({
     }
 })
 
-lspconfig.elixirls.setup({ on_attach = on_attach, capabilities = capabilities })
+local elixir = require("elixir")
+elixir.setup({
+  on_attach = on_attach,
+  settings = elixir.settings({
+    dialyzerEnabled = true,
+    fetchDeps = false,
+    enableTestLenses = true,
+    suggestSpecs = true,
+  })
+})
+
 lspconfig.sumneko_lua.setup(luadev)
 lspconfig.solargraph.setup({ on_attach = on_attach, capabilities = capabilities })
 lspconfig.tailwindcss.setup({ on_attach = on_attach, capabilities = capabilities, userLanguages = { heex = "heex", eelixir = "html-eex" } })
