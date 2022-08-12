@@ -6,7 +6,7 @@ wk.register({
     f = {
       name = "Find",
       ["/"] = { "<cmd>Telescope live_grep theme=ivy<CR>", "Find in Project" },
-      f = { "<cmd>Telescope git_files hidden=true theme=ivy<CR>", "Find File" },
+      f = { "<cmd>Telescope git_files show_untracked=true hidden=true theme=ivy<CR>", "Find File" },
       b = { "<cmd>Telescope buffers theme=ivy<CR>", "Find Buffer" },
       h = { "<cmd>Telescope help_tags theme=ivy<CR>", "Find Tag" },
       p = { "<cmd>Telescope projects theme=ivy<CR>", "Find Project" },
