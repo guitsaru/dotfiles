@@ -1,0 +1,9 @@
+ARG USER
+FROM ${USER}/base
+
+RUN dnf -y install \
+	llvm \
+	lldb \
+	clang 
+
+RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y

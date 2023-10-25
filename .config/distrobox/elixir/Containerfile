@@ -1,0 +1,6 @@
+ARG USER
+FROM ${USER}/node
+
+RUN dnf -y install \
+	erlang \
+	elixir
