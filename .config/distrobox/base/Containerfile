@@ -6,6 +6,11 @@ RUN ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/crun
 RUN ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/flatpak
 RUN ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman
 RUN ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/xdg-open
+RUN ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/docker
+RUN ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/docker-compose
+
+RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc
+RUN sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 
 RUN dnf update -y
 RUN dnf install -y dnf-plugins-core
@@ -14,8 +19,9 @@ RUN dnf copr enable -y varlad/zellij
 RUN dnf group install -y 'C Development Tools and Libraries' 'Development Tools'
 
 RUN dnf -y install \
-  starship \
-  zellij \
+	code \
+	starship \
+	zellij \
 	bat \
 	zsh \
 	neovim \
