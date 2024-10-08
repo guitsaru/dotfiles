@@ -87,7 +87,3 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/code/.dotfiles/ --work-tree=$HOME'
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(/opt/homebrew/bin/mise activate zsh)"
-eval "$(/opt/homebrew/bin/mise activate zsh)"
-eval "$(/opt/homebrew/bin/mise activate zsh)"
-eval "$(/opt/homebrew/bin/mise activate zsh)"
-eval "$(/opt/homebrew/bin/mise activate zsh)"
