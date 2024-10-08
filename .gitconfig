@@ -22,8 +22,8 @@
 	branch = auto
 
 [core]
-	excludesfile = ~/.gitignore
-	editor = code --wait
+	excludesFile = ~/.gitignore
+	editor = zed --wait
 
 [alias]
 	c = commit -m

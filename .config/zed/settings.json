@@ -24,16 +24,20 @@
   },
   "theme": {
     "mode": "system",
-    "light": "One Light",
-    "dark": "Github Dark"
+    "light": "Catppuccin Latte - No Italics",
+    "dark": "Catppuccin Frappé - No Italics"
   },
-  "languages": {
-    "Elixir": {
-      "inlay_hints": {
-        "type_hints": true,
-        "parameter_hints": true,
-        "chaining_hints": true
-      }
+  "inlay_hints": {
+    "enabled": true
+  },
+  "terminal": {
+    "font_family": "JetBrainsMono Nerd Font",
+    "font_size": 12,
+    "env": {
+      "EDITOR": "zed --wait"
     }
+  },
+  "outline_panel": {
+    "dock": "right"
   }
 }
