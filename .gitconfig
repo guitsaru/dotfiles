@@ -23,7 +23,7 @@
 
 [core]
 	excludesFile = ~/.gitignore
-	editor = zed --wait
+	editor = nvim
 
 [alias]
 	c = commit -m
