@@ -1,0 +1,7 @@
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = false
+theme = catppuccin-frappe
+shell-integration-features = no-cursor
+cursor-style=block
+macos-option-as-alt = true
