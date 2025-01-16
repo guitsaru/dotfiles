@@ -338,6 +338,7 @@ default_layout "welcome"
 // Default: $EDITOR or $VISUAL
 //
 // scrollback_editor "/usr/bin/vim"
+scrollback_editor "nvim"
 
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
