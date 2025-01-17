@@ -76,7 +76,8 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Editor
-EDITOR=nvim
+EDITOR=/opt/homebrew/bin/nvim
+VISUAL=/opt/homebrew/bin/nvim
 
 # Aliases
 alias ls='eza'
@@ -84,6 +85,7 @@ alias cat='bat'
 alias vim='nvim'
 alias c='clear'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/code/.dotfiles/ --work-tree=$HOME'
+alias zel='zellij -l welcome'
 
 # Shell integrations
 eval "$(fzf --zsh)"
