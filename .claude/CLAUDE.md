@@ -13,7 +13,7 @@ This is the Claude Code configuration directory (`~/.claude`). This directory co
 ## Custom Commands
 
 - `github-milestone`: Analyze GitHub milestones and break them into incremental issues
-- `github-issue`: Implement GitHub issues with atomic commits and quality checks
+- `github-issue`: **Intelligent orchestrator** that automatically routes GitHub issue implementation through complete workflow - from planning to execution to documentation. Features automatic agent handoffs, workflow phase management, and seamless transitions between github-issue-planner → implementation-executor → pattern-documenter
 - `github-review`: Provide comprehensive PR reviews with expert feedback
 
 ## Tech Stack Patterns
@@ -75,10 +75,68 @@ xcodebuild            # Xcode build (iOS/macOS)
 
 ## Development Workflow
 
-1. **Planning**: Use `github-milestone` to break down features
-2. **Implementation**: Use `github-issue` for atomic development
-3. **Review**: Use `github-review` for quality assurance
-4. **Quality**: Automated hooks ensure code standards
+### GitHub Issue Orchestration Workflow
+
+The `github-issue` command provides intelligent orchestration through complete development lifecycle:
+
+**Phase 1: Planning** 
+- Auto-detects existing PR/branch state for the issue
+- Routes to `github-issue-planner` for comprehensive analysis
+- Creates detailed action plan with acceptance criteria
+- Generates PR with structured checklist after user approval
+
+**Phase 2: Implementation**
+- Automatic handoff to `implementation-executor` agent
+- Executes tasks with focused, atomic commits
+- Routes to specialized agents as needed:
+  - `postgres-ecto-architect` for database work
+  - `liveview-frontend-expert` for UI components
+  - `elixir-phoenix-dev` for general Elixir code
+- Continuous progress tracking via PR checklist updates
+
+**Phase 3: Documentation**
+- Routes to `pattern-documenter` for milestone completion
+- Captures implementation learnings and patterns
+- Updates related issues with context and insights
+- Final quality review with `elixir-code-reviewer`
+
+**Workflow States:**
+- **Fresh Issue**: `github-issue` → `github-issue-planner` → `implementation-executor`
+- **Existing PR**: `github-issue` → `implementation-executor` (resumes from current state)
+- **Complete Work**: `github-issue` → `pattern-documenter` → final review
+
+**Usage:**
+```bash
+github-issue #123        # Start or continue issue #123
+/continue               # Resume current PR work  
+github-review PR#45     # Comprehensive PR review
+```
+
+## Dotfiles Management Notes
+
+**⚠️ Special Workflow for Configuration Files:**
+
+When working on dotfiles or Claude Code configuration changes:
+1. **DO** work on files within this repository (e.g., `/Users/guitsaru/code/dotfiles/.claude/settings.json`)
+2. **DO NOT** work directly on deployed files in their live locations (e.g., `~/.claude/settings.json`)
+3. **DO** use standard `git add`, `git commit`, `git push` commands within this repository
+4. **DO** use `dotfiles pull` after pushing to deploy changes to the live system
+
+**Example Workflow:**
+```bash
+# Edit configuration files within the repository
+nvim /Users/guitsaru/code/dotfiles/.claude/settings.json
+
+# Stage and commit using standard Git commands
+git add .claude/settings.json
+git commit -m "Update Claude Code configuration"
+git push
+
+# Deploy changes to live system
+dotfiles pull
+```
+
+**Reasoning:** Work on the source files in the repository, then deploy them to the live system. This maintains proper version control and prevents conflicts between the repository state and deployed configuration.
 
 ## Agent Preferences
 
