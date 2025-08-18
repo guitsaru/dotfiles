@@ -1,0 +1,149 @@
+{
+  "commands": {
+    "github-milestone": {
+      "description": "Intelligent milestone orchestrator that breaks down GitHub milestones into actionable issues with smart dependency planning",
+      "command_file": "commands/github-milestone.md",
+      "auto_detect_state": true,
+      "workflow_phases": ["analysis", "planning", "breakdown", "validation"],
+      "quality_gates": true
+    },
+    "github-issue": {
+      "description": "Intelligent orchestrator that routes GitHub issue implementation through the complete workflow - from planning to execution to documentation",
+      "command_file": "commands/github-issue.md",
+      "auto_detect_state": true,
+      "workflow_phases": ["planning", "implementation", "documentation"],
+      "quality_gates": true
+    },
+    "github-review": {
+      "description": "Comprehensive PR review orchestrator that provides expert analysis across architecture, security, performance, and best practices",
+      "command_file": "commands/github-review.md",
+      "auto_detect_state": true,
+      "workflow_phases": ["analysis", "specialist_review", "synthesis"],
+      "quality_gates": true
+    },
+    "continue": {
+      "description": "Continue implementation work from current state with auto-context detection",
+      "command_file": "commands/continue.md",
+      "auto_resume": true
+    },
+    "plan": {
+      "description": "Direct access to planning phase for GitHub issues",
+      "command_file": "commands/plan.md",
+      "direct_phase": "planning"
+    },
+    "document": {
+      "description": "Direct access to documentation phase for pattern capture",
+      "command_file": "commands/document.md", 
+      "direct_phase": "documentation"
+    }
+  },
+  "hooks": {
+    "pre-commit": {
+      "description": "Run quality checks before commits",
+      "command": "mix format --check-formatted && mix credo --strict && mix test",
+      "enabled": true
+    },
+    "post-implementation": {
+      "description": "Post-implementation quality and documentation checks",
+      "command": "echo 'Implementation complete. Running final checks...' && mix format && mix credo && mix test && mix docs",
+      "enabled": true
+    }
+  },
+  "agent_preferences": {
+    "elixir-phoenix-dev": {
+      "priority": "high",
+      "auto_select": true,
+      "file_patterns": ["*.ex", "*.exs", "*.heex", "mix.exs"]
+    },
+    "liveview-frontend-expert": {
+      "priority": "high", 
+      "auto_select": true,
+      "file_patterns": ["*.heex", "assets/**/*.js", "assets/**/*.css"]
+    },
+    "postgres-ecto-architect": {
+      "priority": "high",
+      "auto_select": true,
+      "file_patterns": ["**/migrations/*.exs", "**/schemas/*.ex", "**/repo.ex"]
+    },
+    "implementation-executor": {
+      "priority": "medium",
+      "auto_select": false
+    },
+    "github-issue-planner": {
+      "priority": "medium", 
+      "auto_select": false
+    },
+    "elixir-code-reviewer": {
+      "priority": "high",
+      "auto_select": false
+    }
+  },
+  "project_defaults": {
+    "elixir_phoenix": {
+      "test_command": "mix test",
+      "format_command": "mix format",
+      "lint_command": "mix credo --strict",
+      "build_command": "mix compile",
+      "deps_command": "mix deps.get"
+    },
+    "swift_swiftui": {
+      "test_command": "swift test",
+      "format_command": "swift-format --in-place",
+      "lint_command": "swiftlint",
+      "build_command": "swift build"
+    }
+  },
+  "quality_gates": {
+    "commit_requirements": {
+      "format_check": true,
+      "lint_check": true, 
+      "test_pass": true,
+      "no_warnings": false
+    },
+    "pr_requirements": {
+      "test_coverage": 80,
+      "documentation_updated": true,
+      "changelog_updated": false
+    }
+  },
+  "repl_settings": {
+    "subagent_output_mode": "verbose",
+    "show_agent_reasoning": true,
+    "preserve_agent_context": true,
+    "expand_subagent_display": true
+  },
+  "agent_defaults": {
+    "verbose_output": true,
+    "show_detailed_progress": true,
+    "output_all_commands": true
+  },
+  "interaction_mode": {
+    "user_approval_required": true,
+    "confirmation_checkpoints": [
+      "planning_complete",
+      "before_file_changes", 
+      "before_commit",
+      "task_complete",
+      "milestone_breakdown_ready",
+      "specialist_routing"
+    ],
+    "approval_timeout": 300,
+    "default_approval_response": "request_input",
+    "checkpoint_format": {
+      "planning": "🔍 **PLANNING APPROVAL NEEDED**\nPlease review and type 'APPROVED' to continue or provide feedback:",
+      "implementation": "⚡ **IMPLEMENTATION CHECKPOINT**\nReview changes and type 'COMMIT' to proceed or 'MODIFY' to adjust:",
+      "milestone": "📋 **MILESTONE BREAKDOWN READY**\nType 'APPROVED' to create GitHub issues or 'MODIFY' to adjust the plan:",
+      "routing": "🔀 **AGENT ROUTING DECISION**\nShould I route this to [AGENT]? Type 'YES' to proceed or suggest alternative:"
+    }
+  },
+  "workflow_controls": {
+    "auto_continue": false,
+    "require_explicit_approval": true,
+    "pause_on_specialist_routing": true,
+    "pause_on_file_modifications": true,
+    "pause_on_github_operations": true,
+    "confirmation_keywords": ["APPROVED", "COMMIT", "CONTINUE", "YES"],
+    "modification_keywords": ["MODIFY", "CHANGE", "ADJUST", "NO"],
+    "stop_keywords": ["STOP", "PAUSE", "WAIT", "CANCEL"]
+  }
+}
