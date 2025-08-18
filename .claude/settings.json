@@ -104,6 +104,39 @@
             "description": "Regular progress check-ins during implementation"
           }
         ]
+      },
+      {
+        "matcher": {"description": "review-discussion"},
+        "hooks": [
+          {
+            "type": "notification",
+            "message": "🔍 I found something to discuss in the code review. Let me know your thoughts before I continue.",
+            "pause_for_input": true,
+            "description": "Pause at code review discussion points"
+          }
+        ]
+      },
+      {
+        "matcher": {"description": "context-question"},
+        "hooks": [
+          {
+            "type": "notification",
+            "message": "❓ I need some context to give you the best review. Can you help me understand this?",
+            "pause_for_input": true,
+            "description": "Ask for context during reviews"
+          }
+        ]
+      },
+      {
+        "matcher": {"description": "review-options"},
+        "hooks": [
+          {
+            "type": "notification",
+            "message": "🔄 I see a few options for improvement here. Which approach interests you?",
+            "pause_for_input": true,
+            "description": "Present improvement options and wait for preference"
+          }
+        ]
       }
     ],
     "PostToolUse": [

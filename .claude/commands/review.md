@@ -47,6 +47,7 @@ You are conducting an interactive code review with the user. Focus on collaborat
 
 Let me first understand the changes and then we can discuss findings together.
 
+<!-- description: context-question -->
 Any specific concerns or areas you'd like me to pay attention to?
 ```
 
@@ -84,6 +85,7 @@ Any specific concerns or areas you'd like me to pay attention to?
 
 **Trade-offs**: [Discuss pros/cons of different approaches]
 
+<!-- description: context-question -->
 What was your thinking behind this approach? Is there context I'm missing?
 ```
 
@@ -108,6 +110,7 @@ What was your thinking behind this approach? Is there context I'm missing?
 **Potential improvements**:
 - [Suggested enhancements]
 
+<!-- description: review-discussion -->
 Does this pattern work well for your team? Any adjustments you'd make?
 ```
 
@@ -131,6 +134,7 @@ Does this pattern work well for your team? Any adjustments you'd make?
 - [Questions about requirements or constraints]
 - [Questions about future plans that might affect design]
 
+<!-- description: context-question -->
 How does this fit with your overall system architecture?
 ```
 
@@ -156,6 +160,7 @@ How does this fit with your overall system architecture?
 **Questions**:
 - [Context questions about security requirements]
 
+<!-- description: context-question -->
 Are there specific security constraints or policies I should consider?
 ```
 
@@ -180,6 +185,7 @@ Are there specific security constraints or policies I should consider?
 - [Performance strengths]
 - [Potential optimization opportunities]
 
+<!-- description: context-question -->
 **Load expectations**: What kind of load do you expect for this feature?
 ```
 
@@ -242,6 +248,7 @@ I see [specific implementation].
 - [Question about constraints]
 - [Question about future plans]
 
+<!-- description: context-question -->
 Can you provide context on the reasoning here?
 ```
 
@@ -263,6 +270,7 @@ For [specific area], I see a few approaches:
 
 **Current approach is fine if**: [When current approach works well]
 
+<!-- description: review-options -->
 Which direction feels right for your situation?
 ```
 
@@ -311,6 +319,7 @@ end
 
 This will work well initially. At scale, you might want an index on (user_id, read_at).
 
+<!-- description: context-question -->
 Expected notification volume per user?
 ```
 
@@ -338,6 +347,7 @@ end
 2. Use a constant-time comparison approach
 3. Accept the small risk given your use case
 
+<!-- description: context-question -->
 What's your security posture on user enumeration?
 ```
 
@@ -365,6 +375,7 @@ Most contexts use `list_*_for_user` but Accounts uses `get_user_*`.
 2. Keep the variation since it matches domain language
 3. Extract into a shared naming guide
 
+<!-- description: review-discussion -->
 Is the naming variation intentional or worth standardizing?
 ```
 
