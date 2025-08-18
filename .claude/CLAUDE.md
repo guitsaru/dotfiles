@@ -12,9 +12,12 @@ This is the Claude Code configuration directory (`~/.claude`). This directory co
 
 ## Custom Commands
 
-- `github-milestone`: Analyze GitHub milestones and break them into incremental issues
-- `github-issue`: **Intelligent orchestrator** that automatically routes GitHub issue implementation through complete workflow - from planning to execution to documentation. Features automatic agent handoffs, workflow phase management, and seamless transitions between github-issue-planner → implementation-executor → pattern-documenter
-- `github-review`: Provide comprehensive PR reviews with expert feedback
+- `work`: **Collaborative pair programming** for GitHub issues/PRs with interactive decision making
+- `plan`: Create implementation plans with architectural discussions and user input
+- `implement`: Execute tasks with pattern discussions and naming decisions
+- `review`: Interactive code review with collaborative feedback and learning
+- `document`: Capture patterns and architectural decisions together
+- `continue`: Resume work from current state with context and user direction
 
 ## Tech Stack Patterns
 
@@ -75,42 +78,53 @@ xcodebuild            # Xcode build (iOS/macOS)
 
 ## Development Workflow
 
-### GitHub Issue Orchestration Workflow
+### Pair Programming Approach
 
-The `github-issue` command provides intelligent orchestration through complete development lifecycle:
+Claude Code now operates as a collaborative pair programming partner with frequent interaction and decision points:
 
-**Phase 1: Planning** 
-- Auto-detects existing PR/branch state for the issue
-- Routes to `github-issue-planner` for comprehensive analysis
-- Creates detailed action plan with acceptance criteria
-- Generates PR with structured checklist after user approval
+**Core Philosophy:**
+- **Interactive Development**: Ask for input on patterns, naming, and architectural decisions
+- **Collaborative Planning**: Present options and get user preference before proceeding
+- **Incremental Progress**: Work in small, reviewable chunks with regular check-ins
+- **Pattern Learning**: Discover and discuss patterns together as they emerge
 
-**Phase 2: Implementation**
-- Automatic handoff to `implementation-executor` agent
-- Executes tasks with focused, atomic commits
-- Routes to specialized agents as needed:
-  - `postgres-ecto-architect` for database work
-  - `liveview-frontend-expert` for UI components
-  - `elixir-phoenix-dev` for general Elixir code
-- Continuous progress tracking via PR checklist updates
+**Workflow Commands:**
 
-**Phase 3: Documentation**
-- Routes to `pattern-documenter` for milestone completion
-- Captures implementation learnings and patterns
-- Updates related issues with context and insights
-- Final quality review with `elixir-code-reviewer`
+**`/work [issue/PR]`** - Collaborative issue implementation:
+- Analyze requirements together
+- Present architectural options for user choice
+- Implement with frequent decision points
+- Ask about naming conventions and patterns
 
-**Workflow States:**
-- **Fresh Issue**: `github-issue` → `github-issue-planner` → `implementation-executor`
-- **Existing PR**: `github-issue` → `implementation-executor` (resumes from current state)
-- **Complete Work**: `github-issue` → `pattern-documenter` → final review
+**`/plan [feature/issue]`** - Interactive planning:
+- Understand requirements collaboratively
+- Discuss technology and architecture choices
+- Create action plans with user input
+- Define success criteria together
 
-**Usage:**
-```bash
-github-issue #123        # Start or continue issue #123
-/continue               # Resume current PR work  
-github-review PR#45     # Comprehensive PR review
-```
+**`/implement [task]`** - Pair programming execution:
+- Present approach options before coding
+- Discuss patterns as they emerge
+- Get input on naming and structure
+- Show changes before committing
+
+**`/review [code/PR]`** - Collaborative code review:
+- Discuss findings and suggestions
+- Present improvement options
+- Learn from user's architectural reasoning
+- Document decisions and patterns
+
+**`/document [work]`** - Capture learnings together:
+- Identify patterns worth documenting
+- Discuss architectural decisions made
+- Create knowledge for future reference
+- Update project documentation
+
+**`/continue`** - Resume from current state:
+- Understand current progress together
+- Present options for next steps
+- Maintain established patterns
+- Continue collaborative approach
 
 ## Dotfiles Management Notes
 
@@ -138,9 +152,24 @@ dotfiles pull
 
 **Reasoning:** Work on the source files in the repository, then deploy them to the live system. This maintains proper version control and prevents conflicts between the repository state and deployed configuration.
 
-## Agent Preferences
+## Interactive Features
 
-- **elixir-phoenix-dev**: Auto-selected for .ex/.exs/.heex files
-- **liveview-frontend-expert**: Auto-selected for LiveView templates
-- **postgres-ecto-architect**: Auto-selected for database files
-- **elixir-code-reviewer**: Manual trigger for PR reviews
+### Hooks for Pair Programming
+- **pre-task**: Ask about approach before starting tasks
+- **pattern-detected**: Confirm pattern usage when code patterns emerge
+- **naming-decision**: Get input on naming for new components
+- **architecture-choice**: Present options for architectural decisions
+- **implementation-checkpoint**: Regular progress check-ins every 2 tasks
+
+### Output Styles for Clear Communication
+- **pair-programming**: Interactive format for all collaborative work
+- **pattern-discussion**: Format for exploring code patterns together
+- **decision-point**: Structure for presenting architectural choices
+- **implementation-plan**: Format for collaborative planning sessions
+
+### Workflow Settings
+- **pair_programming_mode**: Always on for interactive development
+- **decision_frequency**: High frequency of decision points
+- **pattern_confirmation**: Always confirm patterns before applying
+- **checkpoint_interval**: Ask for input every 2 tasks
+- **explain_reasoning**: Always explain options and trade-offs

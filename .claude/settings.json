@@ -1,51 +1,34 @@
 {
   "commands": {
-    "github-milestone": {
-      "description": "Intelligent milestone orchestrator that breaks down GitHub milestones into actionable issues with smart dependency planning",
-      "command_file": "commands/github-milestone.md",
-      "auto_detect_state": true,
-      "workflow_phases": ["analysis", "planning", "breakdown", "validation"],
-      "quality_gates": true
-    },
-    "github-issue": {
-      "description": "Intelligent orchestrator that routes GitHub issue implementation through the complete workflow - from planning to execution to documentation",
-      "command_file": "commands/github-issue.md",
-      "auto_detect_state": true,
-      "workflow_phases": ["planning", "implementation", "documentation"],
-      "quality_gates": true,
-      "orchestration_mode": true,
-      "agent_handoffs": {
-        "planning_to_implementation": "implementation-executor",
-        "implementation_to_documentation": "pattern-documenter",
-        "blocked_to_debug": "debug-agent"
-      }
-    },
-    "github-review": {
-      "description": "Comprehensive PR review orchestrator that provides expert analysis across architecture, security, performance, and best practices",
-      "command_file": "commands/github-review.md",
-      "auto_detect_state": true,
-      "workflow_phases": ["analysis", "specialist_review", "synthesis"],
-      "quality_gates": true
-    },
-    "continue": {
-      "description": "Continue implementation work from current state with auto-context detection",
-      "command_file": "commands/continue.md",
-      "auto_resume": true
+    "work": {
+      "description": "Collaborative work on GitHub issues/PRs with pair programming approach",
+      "command_file": "commands/work.md",
+      "interactive_mode": true
     },
     "plan": {
-      "description": "Direct access to planning phase for GitHub issues",
+      "description": "Create implementation plans with interactive decision points", 
       "command_file": "commands/plan.md",
-      "direct_phase": "planning"
+      "interactive_mode": true
+    },
+    "implement": {
+      "description": "Execute implementation tasks with pattern discussions",
+      "command_file": "commands/implement.md",
+      "interactive_mode": true
+    },
+    "review": {
+      "description": "Interactive code review with architectural guidance",
+      "command_file": "commands/review.md",
+      "interactive_mode": true
     },
     "document": {
-      "description": "Direct access to documentation phase for pattern capture",
-      "command_file": "commands/document.md", 
-      "direct_phase": "documentation"
+      "description": "Capture patterns and learnings collaboratively",
+      "command_file": "commands/document.md",
+      "interactive_mode": true
     },
-    "create-milestone": {
-      "description": "Create GitHub milestones from project requirements with scope analysis",
-      "command_file": "commands/create-milestone.md",
-      "direct_phase": "milestone_creation"
+    "continue": {
+      "description": "Continue from current work state with context",
+      "command_file": "commands/continue.md",
+      "interactive_mode": true
     }
   },
   "hooks": {
@@ -54,19 +37,40 @@
       "command": "mix format --check-formatted && mix credo --strict && mix test",
       "enabled": true
     },
+    "pre-task": {
+      "description": "Ask about approach before starting each task",
+      "prompt": "🤝 Before I start this task, let's discuss the approach. What patterns should we follow here?",
+      "enabled": true,
+      "pause_for_input": true
+    },
+    "pattern-detected": {
+      "description": "Confirm pattern usage when code patterns are detected",
+      "prompt": "📋 I noticed a pattern here. Should we apply this consistently throughout the codebase?",
+      "enabled": true,
+      "pause_for_input": true
+    },
+    "naming-decision": {
+      "description": "Ask for naming preferences when creating new components",
+      "prompt": "📝 I need to name this component/module. What would you prefer?",
+      "enabled": true,
+      "pause_for_input": true
+    },
+    "architecture-choice": {
+      "description": "Present options for architectural decisions",
+      "prompt": "🏗️ This requires an architectural decision. I see a few approaches - which fits your vision?",
+      "enabled": true,
+      "pause_for_input": true
+    },
+    "implementation-checkpoint": {
+      "description": "Regular progress check-ins during implementation",
+      "prompt": "✅ Quick checkpoint: I've just completed [task]. Should we continue with this approach or adjust?",
+      "enabled": true,
+      "pause_for_input": true,
+      "frequency": 2
+    },
     "post-implementation": {
       "description": "Post-implementation quality and documentation checks",
       "command": "echo 'Implementation complete. Running final checks...' && mix format && mix credo && mix test && mix docs",
-      "enabled": true
-    },
-    "pre-pr-creation": {
-      "description": "Validate action plan completeness before creating PR",
-      "command": "echo '📋 Validating PR readiness...' && test -f CLAUDE.md && echo '✅ Project context found'",
-      "enabled": true
-    },
-    "post-task-completion": {
-      "description": "Run after each task in action plan completes",
-      "command": "mix compile --warnings-as-errors && mix test --only unit",
       "enabled": true
     },
     "migration-check": {
@@ -80,15 +84,33 @@
       "command": "mix deps.audit && mix sobelow --config",
       "enabled": false,
       "trigger_on": ["**/auth*.ex", "**/session*.ex", "**/permission*.ex"]
-    },
-    "performance-check": {
-      "description": "Run performance benchmarks on critical paths",
-      "command": "mix test --only benchmark",
-      "enabled": false,
-      "trigger_on": ["**/query*.ex", "**/repo*.ex"]
     }
   },
   "output_styles": {
+    "pair-programming": {
+      "description": "Interactive pair programming format for collaborative development",
+      "auto_apply": true,
+      "file_patterns": ["*"],
+      "style_file": "output-styles/pair-programming.md"
+    },
+    "pattern-discussion": {
+      "description": "Format for exploring and discussing code patterns",
+      "auto_apply": false,
+      "trigger_on": ["pattern_detected", "refactoring_opportunity"],
+      "style_file": "output-styles/pattern-discussion.md"
+    },
+    "decision-point": {
+      "description": "Format for presenting architectural and implementation decisions",
+      "auto_apply": false,
+      "trigger_on": ["architecture_decision", "implementation_choice", "trade_off_analysis"],
+      "style_file": "output-styles/decision-point.md"
+    },
+    "implementation-plan": {
+      "description": "Structured format for presenting implementation plans with user checkpoints",
+      "auto_apply": false,
+      "trigger_on": ["planning_phase", "action_plan_creation"],
+      "style_file": "output-styles/implementation-plan.md"
+    },
     "database-work": {
       "description": "PostgreSQL/Ecto patterns with migrations and query optimization",
       "auto_apply": true,
@@ -106,12 +128,6 @@
       "auto_apply": true,
       "file_patterns": ["test/**/*.exs", "**/test_helper.exs", "**/*_test.exs"],
       "style_file": "output-styles/testing-patterns.md"
-    },
-    "api-development": {
-      "description": "RESTful and GraphQL API patterns",
-      "auto_apply": true,
-      "file_patterns": ["**/controllers/*.ex", "**/views/*.ex", "**/schema.ex"],
-      "style_file": "output-styles/api-development.md"
     },
     "documentation": {
       "description": "ExDoc and project documentation standards",
@@ -169,39 +185,30 @@
     }
   },
   "workflow_settings": {
-    "show_phase_transitions": true,
-    "verbose_progress": true,
-    "preserve_context": true,
+    "pair_programming_mode": true,
+    "decision_frequency": "high",
+    "pattern_confirmation": true,
+    "checkpoint_interval": 2,
+    "explain_reasoning": true,
+    "suggest_alternatives": true,
     "auto_apply_styles": true
   },
-  "interaction_mode": {
-    "user_approval_required": true,
-    "confirmation_checkpoints": [
-      "planning_complete",
-      "milestone_breakdown_ready",
-      "specialist_routing"
-    ],
-    "approval_timeout": 300,
-    "default_approval_response": "request_input",
-    "checkpoint_format": {
-      "planning": "🔍 **PLANNING APPROVAL NEEDED**\nPlease review and type 'APPROVED' to continue or provide feedback:",
-      "implementation": "⚡ **IMPLEMENTATION CHECKPOINT**\nReview changes and type 'COMMIT' to proceed or 'MODIFY' to adjust:",
-      "milestone": "📋 **MILESTONE BREAKDOWN READY**\nType 'APPROVED' to create GitHub issues or 'MODIFY' to adjust the plan:",
-      "routing": "🔀 **AGENT ROUTING DECISION**\nShould I route this to [AGENT]? Type 'YES' to proceed or suggest alternative:"
-    }
+  "interaction_preferences": {
+    "ask_about_naming": "always",
+    "confirm_patterns": "always",
+    "review_frequency": "every_task",
+    "explain_options": true,
+    "show_alternatives": true,
+    "pause_for_input": true
   },
   "statusLine": {
     "type": "command",
     "command": "input=$(cat); model=$(echo \"$input\" | jq -r '.model.display_name'); dir=$(basename \"$(echo \"$input\" | jq -r '.workspace.current_dir')\"); if git rev-parse --git-dir >/dev/null 2>&1; then branch=$(git branch --show-current 2>/dev/null); printf \"%s on %s | %s\" \"$dir\" \"$branch\" \"$model\"; else printf \"%s | %s\" \"$dir\" \"$model\"; fi"
   },
   "workflow_controls": {
-    "auto_continue": false,
-    "require_explicit_approval": true,
-    "pause_on_specialist_routing": true,
-    "pause_on_file_modifications": false,
-    "pause_on_github_operations": true,
-    "confirmation_keywords": ["APPROVED", "COMMIT", "CONTINUE", "YES"],
-    "modification_keywords": ["MODIFY", "CHANGE", "ADJUST", "NO"],
-    "stop_keywords": ["STOP", "PAUSE", "WAIT", "CANCEL"]
+    "require_user_input": true,
+    "confirmation_keywords": ["yes", "continue", "proceed", "looks good"],
+    "modification_keywords": ["no", "change", "adjust", "different"],
+    "stop_keywords": ["stop", "pause", "wait"]
   }
 }
