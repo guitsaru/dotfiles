@@ -4,12 +4,31 @@ Personal dotfiles managed using a bare Git repository approach.
 
 ## Quick Setup
 
+### Initial Installation
+
 ```sh
 git clone --bare https://github.com/guitsaru/dotfiles.git $HOME/code/.dotfiles
 alias dotfiles='/usr/bin/git --git-dir=$HOME/code/.dotfiles/ --work-tree=$HOME'
 dotfiles config --local status.showUntrackedFiles no
 dotfiles checkout
+```
+
+### Post-Checkout Setup
+
+After checking out the dotfiles, run these commands to complete the setup:
+
+```sh
+# Install packages and tools
 brew bundle
+
+# Reload shell configuration to enable all functions
+source ~/.zshrc
+
+# Verify everything is working
+dotfiles-health
+
+# Optional: Set up automated backups (runs weekly on Sundays at 2 AM)
+dotfiles-auto-backup
 ```
 
 ## Features
@@ -56,6 +75,28 @@ Zellij automatically detects project types and loads appropriate layouts:
 - **General**: Default fallback → `general.kdl`
 
 ## Troubleshooting
+
+### Post-Setup Issues
+
+**Functions not available after checkout:**
+```sh
+# Reload shell configuration
+source ~/.zshrc
+
+# Or start a new terminal session
+exec zsh
+```
+
+**Conflicts during dotfiles checkout:**
+```sh
+# If you get "untracked working tree files would be overwritten"
+# Backup the conflicting files first
+mkdir ~/dotfiles-backup-conflicts
+mv ~/.config/conflicting-file ~/dotfiles-backup-conflicts/
+
+# Then retry checkout
+dotfiles checkout
+```
 
 ### Shell Issues
 
@@ -165,9 +206,18 @@ tldr --update
 # Manual backup before major changes
 dotfiles-backup
 
-# Automated via cron (optional)
-# 0 2 * * 0 /path/to/dotfiles-backup
+# Set up automated weekly backups (Sundays at 2 AM)
+dotfiles-auto-backup
+
+# Check if automated backup is scheduled
+crontab -l | grep auto-backup
 ```
+
+**Automated Backup Details:**
+- Runs every Sunday at 2:00 AM via cron
+- Creates timestamped backups in `~/dotfiles-backup-YYYYMMDD-HHMMSS/`
+- Backs up: .zshrc, .gitconfig, .p10k.zsh, .config directories
+- To disable: `crontab -e` and remove the auto-backup line
 
 ## Advanced Configuration
 
