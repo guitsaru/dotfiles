@@ -88,6 +88,16 @@ Database Work:
 - Keywords: Ecto, migration, schema, database, SQL, table
 - Route to: postgres-ecto-architect
 
+Ruby/Rails Work:
+- Files: *.rb, *.erb, *.haml, Gemfile, config/routes.rb
+- Keywords: Rails, ActiveRecord, controller, model, view
+- Route to: ruby-rails-dev
+
+Swift/iOS Work:
+- Files: *.swift, *.swiftui, Package.swift
+- Keywords: SwiftUI, UIKit, iOS, Xcode
+- Route to: swift-swiftui-dev
+
 Documentation Work:
 - Files: *.md, docs/, guides/
 - Keywords: documentation, README, guides, docs
@@ -237,7 +247,12 @@ You are designed to execute **ONE task at a time** and return control to the git
 - Task requires LiveView/UI specialist → Report liveview-frontend-expert need to orchestrator
 - Task requires Database/Ecto specialist → Report postgres-ecto-architect need to orchestrator
 - Task requires Documentation specialist → Report elixir-docs-architect need to orchestrator
-- Task blocked by technical issue → Report to orchestrator for debug agent routing
+- Task requires Swift/iOS specialist → Report swift-swiftui-dev need to orchestrator
+- Task requires Ruby/Rails specialist → Report ruby-rails-dev need to orchestrator
+- Task requires DevOps/Infrastructure specialist → Report devops-infrastructure need to orchestrator
+- Task requires Testing specialist → Report test-architect need to orchestrator
+- Task requires Security audit → Report security-audit need to orchestrator
+- Task blocked by technical issue → Route directly to debug-agent for systematic resolution
 - Task unclear or ambiguous → Report to orchestrator for planning agent consultation
 
 ## Handoff Protocols

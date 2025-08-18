@@ -35,6 +35,11 @@
       "description": "Direct access to documentation phase for pattern capture",
       "command_file": "commands/document.md", 
       "direct_phase": "documentation"
+    },
+    "create-milestone": {
+      "description": "Create GitHub milestones from project requirements with scope analysis",
+      "command_file": "commands/create-milestone.md",
+      "direct_phase": "milestone_creation"
     }
   },
   "hooks": {
@@ -55,6 +60,16 @@
       "auto_select": true,
       "file_patterns": ["*.ex", "*.exs", "*.heex", "mix.exs"]
     },
+    "swift-swiftui-dev": {
+      "priority": "high",
+      "auto_select": true,
+      "file_patterns": ["*.swift", "*.swiftui", "Package.swift", "*.xcodeproj", "*.xcworkspace"]
+    },
+    "ruby-rails-dev": {
+      "priority": "high",
+      "auto_select": true,
+      "file_patterns": ["*.rb", "*.erb", "*.haml", "Gemfile", "Rakefile", "config.ru", "config/routes.rb"]
+    },
     "liveview-frontend-expert": {
       "priority": "high", 
       "auto_select": true,
@@ -65,6 +80,21 @@
       "auto_select": true,
       "file_patterns": ["**/migrations/*.exs", "**/schemas/*.ex", "**/repo.ex"]
     },
+    "devops-infrastructure": {
+      "priority": "high",
+      "auto_select": true,
+      "file_patterns": ["Dockerfile", "docker-compose.yml", "*.k8s.yml", "*.tf", ".github/workflows/*.yml", "fly.toml"]
+    },
+    "test-architect": {
+      "priority": "medium",
+      "auto_select": true,
+      "file_patterns": ["test/**/*.exs", "**/test_helper.exs", "**/*_test.exs"]
+    },
+    "security-audit": {
+      "priority": "high",
+      "auto_select": true,
+      "file_patterns": ["**/auth*.ex", "**/session*.ex", "**/permission*.ex", "**/security*.ex"]
+    },
     "implementation-executor": {
       "priority": "medium",
       "auto_select": false
@@ -72,6 +102,15 @@
     "github-issue-planner": {
       "priority": "medium", 
       "auto_select": false
+    },
+    "github-milestone-creator": {
+      "priority": "medium",
+      "auto_select": false
+    },
+    "debug-agent": {
+      "priority": "high",
+      "auto_select": false,
+      "escalation_triggers": ["compilation_error", "test_failure", "runtime_error", "deployment_failure"]
     },
     "elixir-code-reviewer": {
       "priority": "high",
@@ -84,13 +123,33 @@
       "format_command": "mix format",
       "lint_command": "mix credo --strict",
       "build_command": "mix compile",
-      "deps_command": "mix deps.get"
+      "deps_command": "mix deps.get",
+      "security_audit_command": "mix deps.audit",
+      "release_command": "MIX_ENV=prod mix release"
     },
     "swift_swiftui": {
       "test_command": "swift test",
       "format_command": "swift-format --in-place",
       "lint_command": "swiftlint",
-      "build_command": "swift build"
+      "build_command": "swift build",
+      "deps_command": "swift package resolve",
+      "security_audit_command": "swift package audit-dependencies",
+      "release_command": "swift build -c release"
+    },
+    "ruby_rails": {
+      "test_command": "bundle exec rspec",
+      "format_command": "bundle exec rubocop -A",
+      "lint_command": "bundle exec rubocop",
+      "build_command": "bundle install",
+      "deps_command": "bundle update",
+      "security_audit_command": "bundle audit",
+      "release_command": "RAILS_ENV=production bundle exec rake assets:precompile"
+    },
+    "infrastructure": {
+      "test_command": "terraform plan",
+      "lint_command": "terraform fmt -check",
+      "security_audit_command": "checkov -d .",
+      "deploy_command": "terraform apply"
     }
   },
   "quality_gates": {
