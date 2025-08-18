@@ -26,9 +26,6 @@ source ~/.zshrc
 
 # Verify everything is working
 dotfiles-health
-
-# Optional: Set up automated backups (runs weekly on Sundays at 2 AM)
-dotfiles-auto-backup
 ```
 
 ## Features
@@ -47,8 +44,9 @@ Once installed, use these commands to manage your dotfiles:
 ### Dotfiles Management
 ```sh
 dotfiles-update    # Add, commit, and push all changes
-dotfiles-backup    # Create timestamped backup of configurations
+dotfiles-backup    # Create timestamped backup of configurations  
 dotfiles-health    # Check system health and missing tools
+dotfiles-auto-backup  # Set up automated cron backups (unreliable on laptops)
 ```
 
 ### Project Management
@@ -203,21 +201,21 @@ tldr --update
 
 ### Backup Strategy
 ```sh
-# Manual backup before major changes
+# Manual backup before major changes (recommended)
 dotfiles-backup
 
-# Set up automated weekly backups (Sundays at 2 AM)
-dotfiles-auto-backup
+# Backup before updates
+dotfiles-backup && dotfiles-update
 
-# Check if automated backup is scheduled
-crontab -l | grep auto-backup
+# Clean up old backups (older than 30 days)
+find ~/dotfiles-backup-* -type d -mtime +30 -exec rm -rf {} \;
 ```
 
-**Automated Backup Details:**
-- Runs every Sunday at 2:00 AM via cron
-- Creates timestamped backups in `~/dotfiles-backup-YYYYMMDD-HHMMSS/`
+**Backup Details:**
+- Creates timestamized backups in `~/dotfiles-backup-YYYYMMDD-HHMMSS/`
 - Backs up: .zshrc, .gitconfig, .p10k.zsh, .config directories
-- To disable: `crontab -e` and remove the auto-backup line
+- **Note**: The `dotfiles-auto-backup` function sets up cron jobs, but these won't run if your laptop is sleeping
+- For laptops, manual backups before major changes are more reliable
 
 ## Advanced Configuration
 
