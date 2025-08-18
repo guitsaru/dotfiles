@@ -12,7 +12,13 @@
       "command_file": "commands/github-issue.md",
       "auto_detect_state": true,
       "workflow_phases": ["planning", "implementation", "documentation"],
-      "quality_gates": true
+      "quality_gates": true,
+      "orchestration_mode": true,
+      "agent_handoffs": {
+        "planning_to_implementation": "implementation-executor",
+        "implementation_to_documentation": "pattern-documenter",
+        "blocked_to_debug": "debug-agent"
+      }
     },
     "github-review": {
       "description": "Comprehensive PR review orchestrator that provides expert analysis across architecture, security, performance, and best practices",
@@ -96,8 +102,10 @@
       "file_patterns": ["**/auth*.ex", "**/session*.ex", "**/permission*.ex", "**/security*.ex"]
     },
     "implementation-executor": {
-      "priority": "medium",
-      "auto_select": false
+      "priority": "high",
+      "auto_select": false,
+      "handoff_target": true,
+      "workflow_integration": true
     },
     "github-issue-planner": {
       "priority": "medium", 
