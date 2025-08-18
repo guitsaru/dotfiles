@@ -4,7 +4,7 @@ description: Use this agent when you need to perform comprehensive security anal
 
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, BashOutput, KillBash, Bash, mcp__tidewave__get_logs, mcp__tidewave__get_source_location, mcp__tidewave__get_docs, mcp__tidewave__get_package_location, mcp__tidewave__project_eval, mcp__tidewave__execute_sql_query, mcp__tidewave__get_ecto_schemas, mcp__tidewave__list_liveview_pages, mcp__tidewave__search_package_docs
 
-model: sonnet
+model: haiku
 verbose_output: true
 show_detailed_progress: true
 output_all_commands: true
@@ -62,11 +62,11 @@ defmodule MyAppWeb.AuthorizationAudit do
       check_direct_object_references()
     ]
   end
-  
+
   defp check_route_authorization do
     # Verify all routes have appropriate authorization
     routes = MyAppWeb.Router.__routes__()
-    
+
     Enum.reduce(routes, [], fn route, issues ->
       if requires_auth?(route) && !has_auth_plug?(route) do
         [unauthorized_route_issue(route) | issues]
@@ -75,11 +75,11 @@ defmodule MyAppWeb.AuthorizationAudit do
       end
     end)
   end
-  
+
   defp check_resource_ownership do
     # Check for insecure direct object references
     controllers = get_all_controllers()
-    
+
     Enum.flat_map(controllers, fn controller ->
       controller.__info__(:functions)
       |> Enum.filter(&resource_access_function?/1)
@@ -101,7 +101,7 @@ defmodule MyAppWeb.CryptographyAudit do
       check_session_security()
     ]
   end
-  
+
   defp check_password_hashing do
     # Verify secure password hashing
     case Application.get_env(:bcrypt_elixir, :log_rounds) do
@@ -113,15 +113,15 @@ defmodule MyAppWeb.CryptographyAudit do
         {:ok, "Password hashing configuration secure"}
     end
   end
-  
+
   defp check_data_encryption do
     # Check for encrypted sensitive fields
     schemas = get_all_schemas()
-    
+
     Enum.flat_map(schemas, fn schema ->
       sensitive_fields = find_sensitive_fields(schema)
       unencrypted_fields = Enum.reject(sensitive_fields, &encrypted_field?/1)
-      
+
       Enum.map(unencrypted_fields, fn field ->
         {:warning, "Sensitive field #{field} in #{schema} is not encrypted"}
       end)
@@ -141,20 +141,20 @@ defmodule MyAppWeb.InjectionAudit do
       check_template_injection()
     ]
   end
-  
+
   defp check_sql_injection do
     # Scan for raw SQL usage
     code_files = find_elixir_files()
-    
+
     Enum.flat_map(code_files, fn file ->
       content = File.read!(file)
-      
+
       dangerous_patterns = [
         ~r/Ecto\.Adapters\.SQL\.query.*#{/,
         ~r/Repo\.query.*".*#{/,
         ~r/fragment\(.*#{/
       ]
-      
+
       Enum.flat_map(dangerous_patterns, fn pattern ->
         case Regex.scan(pattern, content, return: :index) do
           [] -> []
@@ -184,28 +184,28 @@ defmodule MyAppWeb.AuthenticationAudit do
       brute_force_protection: audit_rate_limiting()
     }
   end
-  
+
   defp audit_session_security do
     config = Application.get_env(:my_app, MyAppWeb.Endpoint)
     session_config = config[:secret_key_base]
-    
+
     checks = [
       check_session_timeout(config),
       check_session_regeneration(config),
       check_secure_cookies(config),
       check_csrf_protection(config)
     ]
-    
+
     %{
       status: if(Enum.all?(checks, &(&1.status == :ok)), do: :secure, else: :vulnerable),
       findings: checks
     }
   end
-  
+
   defp audit_mfa do
     # Check TOTP implementation security
     totp_config = Application.get_env(:my_app, :totp)
-    
+
     %{
       secret_generation: check_totp_secret_strength(totp_config),
       backup_codes: check_backup_code_security(totp_config),
@@ -226,17 +226,17 @@ defmodule MyAppWeb.AuthorizationPatternAudit do
       privilege_escalation: check_escalation_paths()
     }
   end
-  
+
   defp check_policy_consistency do
     policies = discover_policy_modules()
-    
+
     Enum.map(policies, fn policy ->
       functions = policy.__info__(:functions)
-      
+
       # Check for consistent authorization patterns
       consistency_issues = find_policy_inconsistencies(functions)
       missing_checks = find_missing_authorization_checks(functions)
-      
+
       %{
         policy: policy,
         consistency_issues: consistency_issues,
@@ -262,13 +262,13 @@ defmodule MyAppWeb.DataProtectionAudit do
       logging_security: audit_security_logging()
     }
   end
-  
+
   defp identify_pii_fields do
     schemas = get_all_schemas()
-    
+
     Enum.flat_map(schemas, fn schema ->
       fields = schema.__schema__(:fields)
-      
+
       Enum.filter(fields, fn field ->
         pii_field?(field) || sensitive_field_name?(Atom.to_string(field))
       end)
@@ -281,7 +281,7 @@ defmodule MyAppWeb.DataProtectionAudit do
       end)
     end)
   end
-  
+
   defp check_gdpr_requirements do
     %{
       data_portability: check_data_export_capability(),
@@ -306,13 +306,13 @@ defmodule MyAppWeb.InfrastructureSecurityAudit do
       monitoring_security: audit_security_monitoring()
     }
   end
-  
+
   defp audit_container_configuration do
     dockerfile_path = "Dockerfile"
-    
+
     if File.exists?(dockerfile_path) do
       content = File.read!(dockerfile_path)
-      
+
       %{
         base_image_security: check_base_image(content),
         user_privileges: check_container_user(content),
@@ -332,21 +332,21 @@ end
 ```elixir
 defmodule MyAppWeb.SecurityTest do
   use MyAppWeb.ConnCase
-  
+
   describe "security headers" do
     test "includes security headers", %{conn: conn} do
       conn = get(conn, "/")
-      
+
       assert get_resp_header(conn, "x-frame-options") == ["DENY"]
       assert get_resp_header(conn, "x-content-type-options") == ["nosniff"]
       assert get_resp_header(conn, "x-xss-protection") == ["1; mode=block"]
-      
+
       csp_header = get_resp_header(conn, "content-security-policy")
       assert length(csp_header) > 0
       assert hd(csp_header) =~ "default-src 'self'"
     end
   end
-  
+
   describe "authentication security" do
     test "prevents brute force attacks", %{conn: conn} do
       # Attempt multiple failed logins
@@ -356,38 +356,38 @@ defmodule MyAppWeb.SecurityTest do
           "user" => %{"email" => "test@example.com", "password" => "wrong"}
         })
       end)
-      
+
       # The 6th attempt should be rate limited
       last_response = List.last(failed_attempts)
       assert last_response.status == 429
       assert json_response(last_response, 429)["error"] =~ "rate limit"
     end
-    
+
     test "enforces session timeout", %{conn: conn} do
       # Login user
       user = insert(:user)
       conn = login_user(conn, user)
-      
+
       # Simulate session timeout by manipulating session timestamp
-      conn = %{conn | private: %{conn.private | 
-        plug_session: Map.put(conn.private.plug_session, :login_time, 
+      conn = %{conn | private: %{conn.private |
+        plug_session: Map.put(conn.private.plug_session, :login_time,
           System.system_time(:second) - 3700) # 1 hour + 1 second ago
       }}
-      
+
       # Request should require re-authentication
       conn = get(conn, Routes.dashboard_path(conn, :index))
       assert redirected_to(conn) == Routes.session_path(conn, :new)
     end
   end
-  
+
   describe "authorization security" do
     test "prevents horizontal privilege escalation", %{conn: conn} do
       user1 = insert(:user)
       user2 = insert(:user)
       user1_resource = insert(:resource, user: user1)
-      
+
       conn = login_user(conn, user2)
-      
+
       # User2 should not be able to access User1's resource
       conn = get(conn, Routes.resource_path(conn, :show, user1_resource.id))
       assert conn.status == 403
@@ -400,9 +400,9 @@ end
 ```elixir
 defmodule MyAppWeb.PenetrationTest do
   use MyAppWeb.ConnCase
-  
+
   @moduletag :security_scan
-  
+
   describe "injection vulnerability testing" do
     test "SQL injection resistance", %{conn: conn} do
       sql_payloads = [
@@ -410,28 +410,28 @@ defmodule MyAppWeb.PenetrationTest do
         "'; DROP TABLE users; --",
         "1' UNION SELECT * FROM users --"
       ]
-      
+
       Enum.each(sql_payloads, fn payload ->
         conn = get(conn, "/search?q=#{URI.encode(payload)}")
-        
+
         # Should not return 500 or expose database errors
         assert conn.status in [200, 400, 422]
         refute conn.resp_body =~ "database"
         refute conn.resp_body =~ "SQL"
       end)
     end
-    
+
     test "XSS protection", %{conn: conn} do
       xss_payloads = [
         "<script>alert('xss')</script>",
         "javascript:alert('xss')",
         "<img src=x onerror=alert('xss')>"
       ]
-      
+
       Enum.each(xss_payloads, fn payload ->
         user = insert(:user, name: payload)
         conn = get(conn, Routes.user_path(conn, :show, user.id))
-        
+
         # Payload should be escaped in response
         refute conn.resp_body =~ "<script>"
         refute conn.resp_body =~ "javascript:"
@@ -455,7 +455,7 @@ defmodule MyAppWeb.ASVSComplianceAudit do
       overall_compliance: calculate_overall_compliance()
     }
   end
-  
+
   defp check_level_1_requirements do
     %{
       authentication: %{
@@ -502,7 +502,7 @@ Type 'APPROVED' to begin security audit, or specify focus areas.
 🚨 SECURITY VULNERABILITIES IDENTIFIED
 
 **Critical Issues**: [Number and brief descriptions]
-**High Priority**: [Number and brief descriptions] 
+**High Priority**: [Number and brief descriptions]
 **Medium Priority**: [Number and brief descriptions]
 **Informational**: [Number and brief descriptions]
 

@@ -4,7 +4,7 @@ description: Use this agent when implementation agents encounter blockers, error
 
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, BashOutput, KillBash, Bash, mcp__tidewave__get_logs, mcp__tidewave__get_source_location, mcp__tidewave__get_docs, mcp__tidewave__get_package_location, mcp__tidewave__project_eval, mcp__tidewave__execute_sql_query, mcp__tidewave__get_ecto_schemas, mcp__tidewave__list_liveview_pages, mcp__tidewave__search_package_docs
 
-model: sonnet
+model: haiku
 verbose_output: true
 show_detailed_progress: true
 output_all_commands: true
@@ -52,7 +52,7 @@ Please provide this information so I can systematically diagnose the issue.
 ### Step 2: Error Classification and Prioritization
 **Issue Categories**:
 - **Critical**: Blocks all development progress (compilation failures, database down)
-- **High**: Prevents specific feature completion (test failures, integration errors)  
+- **High**: Prevents specific feature completion (test failures, integration errors)
 - **Medium**: Causes workflow friction (performance issues, warnings)
 - **Low**: Minor issues that don't block progress (code style, minor bugs)
 
@@ -92,7 +92,7 @@ mix test --trace                   # Verbose test execution
 mix ecto.setup                     # Database setup and migration
 iex -S mix                         # Interactive debugging session
 
-# Swift/iOS Debugging  
+# Swift/iOS Debugging
 xcodebuild -project App.xcodeproj -scheme App clean build  # Clean build
 xcrun simctl list devices          # Available simulators
 plutil -p Info.plist              # Plist file inspection
@@ -259,7 +259,7 @@ Handing back to implementation-executor to continue with: [specific next action]
 ### Escalation to Specialists
 **Complex Issues Requiring Expert Input**:
 ```
-This issue requires specialist expertise in [domain]. 
+This issue requires specialist expertise in [domain].
 
 **Context for Specialist**: [Issue summary and debugging findings]
 **Attempted Solutions**: [What has been tried already]

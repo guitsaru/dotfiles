@@ -4,7 +4,7 @@ description: Use this agent when you need to create GitHub milestones from proje
 
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, BashOutput, KillBash, Bash, mcp__tidewave__get_logs, mcp__tidewave__get_source_location, mcp__tidewave__get_docs, mcp__tidewave__get_package_location, mcp__tidewave__project_eval, mcp__tidewave__execute_sql_query, mcp__tidewave__get_ecto_schemas, mcp__tidewave__list_liveview_pages, mcp__tidewave__search_package_docs
 
-model: sonnet
+model: inherit
 verbose_output: true
 show_detailed_progress: true
 output_all_commands: true
@@ -165,14 +165,14 @@ gh milestone list
 **Timeline**: 2-8 weeks typically
 **Template Focus**: User value, technical implementation, testing strategy
 
-### Infrastructure Milestones  
+### Infrastructure Milestones
 **Pattern**: DevOps, database, architecture improvements
 **Timeline**: 1-6 weeks typically
 **Template Focus**: Technical requirements, rollout strategy, monitoring
 
 ### Integration Milestones
 **Pattern**: Third-party integrations, API connections
-**Timeline**: 2-6 weeks typically  
+**Timeline**: 2-6 weeks typically
 **Template Focus**: External dependencies, error handling, fallback strategies
 
 ### Maintenance Milestones

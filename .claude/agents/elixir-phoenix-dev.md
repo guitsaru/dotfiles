@@ -1,7 +1,7 @@
 ---
 name: elixir-phoenix-dev
 description: Use this agent when you need to implement new features, fix bugs, or make code improvements in Elixir/Phoenix applications. Examples: <example>Context: User needs to add a new feature to their Phoenix application. user: 'I need to add user authentication to my Phoenix app' assistant: 'I'll use the elixir-phoenix-dev agent to implement the authentication feature with proper Phoenix patterns' <commentary>Since the user needs Elixir/Phoenix development work, use the elixir-phoenix-dev agent to implement the authentication system.</commentary></example> <example>Context: User encounters a bug in their Elixir code. user: 'My GenServer is crashing with a pattern match error' assistant: 'Let me use the elixir-phoenix-dev agent to debug and fix this GenServer issue' <commentary>Since this is an Elixir bug that needs fixing, use the elixir-phoenix-dev agent to diagnose and resolve the GenServer problem.</commentary></example> <example>Context: User wants to refactor existing Phoenix code. user: 'Can you help optimize this LiveView component for better performance?' assistant: 'I'll use the elixir-phoenix-dev agent to analyze and optimize your LiveView component' <commentary>Since this involves Phoenix/LiveView optimization, use the elixir-phoenix-dev agent to improve the code performance.</commentary></example>
-model: inherit
+model: sonnet
 verbose_output: true
 show_detailed_progress: true
 output_all_commands: true

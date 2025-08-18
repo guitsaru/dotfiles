@@ -4,7 +4,7 @@ description: Use this agent when you need to convert GitHub issues into detailed
 
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, BashOutput, KillBash, Bash, mcp__tidewave__get_logs, mcp__tidewave__get_source_location, mcp__tidewave__get_docs, mcp__tidewave__get_package_location, mcp__tidewave__project_eval, mcp__tidewave__execute_sql_query, mcp__tidewave__get_ecto_schemas, mcp__tidewave__list_liveview_pages, mcp__tidewave__search_package_docs
 
-model: sonnet
+model: inherit
 verbose_output: true
 show_detailed_progress: true
 output_all_commands: true
@@ -149,7 +149,7 @@ When creating the final plan:
 
 **Alternatively, you can:**
 - Modify specific action items: "Change step 3 to..."
-- Add new requirements: "Also include..."  
+- Add new requirements: "Also include..."
 - Request clarification: "Explain more about..."
 - Change agent routing: "Use [agent] instead for step X"
 ```

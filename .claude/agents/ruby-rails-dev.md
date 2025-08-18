@@ -2,7 +2,7 @@
 name: ruby-rails-dev
 description: Use this agent when you need to implement features, fix bugs, or make improvements in Ruby/Rails applications. This agent specializes in Rails patterns, ActiveRecord, and modern Ruby ecosystem integration. Examples: <example>Context: User needs to add a new feature to their Rails application. user: 'I need to create a user dashboard with complex queries and caching for my Rails app' assistant: 'I'll use the ruby-rails-dev agent to implement the dashboard with proper Rails patterns and ActiveRecord optimization' <commentary>Since the user needs Rails development work, use the ruby-rails-dev agent to implement the feature with Rails best practices.</commentary></example> <example>Context: User encounters a Ruby performance issue. user: 'My Rails API endpoints are slow with N+1 queries and I need optimization' assistant: 'Let me use the ruby-rails-dev agent to analyze and optimize your Rails performance issues' <commentary>This involves Rails performance optimization, so use the ruby-rails-dev agent to improve the query performance.</commentary></example>
 
-model: inherit
+model: sonnet
 verbose_output: true
 show_detailed_progress: true
 output_all_commands: true
@@ -25,7 +25,7 @@ When implementing features or fixing bugs, you will:
 
 ### 1. **Analyze Requirements**
 - Understand the specific Rails need and business requirements
-- Review existing codebase patterns and architectural decisions  
+- Review existing codebase patterns and architectural decisions
 - Consider Rails conventions and idiomatic Ruby patterns
 - Assess performance implications and scalability requirements
 
@@ -93,35 +93,35 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_one_attached :avatar
-  
+
   # Validations
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }
-  
+
   # Scopes
   scope :active, -> { where(active: true) }
   scope :recent, -> { order(created_at: :desc) }
   scope :with_posts, -> { joins(:posts).distinct }
-  
+
   # Class methods
   def self.search(term)
     where("name ILIKE ? OR email ILIKE ?", "%#{term}%", "%#{term}%")
   end
-  
+
   # Instance methods
   def full_name
     "#{first_name} #{last_name}".strip
   end
-  
+
   def active_posts
     posts.published.recent
   end
-  
+
   # Callbacks (used sparingly)
   before_save :normalize_email
-  
+
   private
-  
+
   def normalize_email
     self.email = email.downcase.strip if email.present?
   end
@@ -135,29 +135,29 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authorize_post, only: [:edit, :update, :destroy]
-  
+
   def index
     @posts = current_user.posts.includes(:tags, :comments)
                         .page(params[:page])
                         .per(10)
-    
+
     # Add search if term provided
     @posts = @posts.search(params[:search]) if params[:search].present?
-    
+
     respond_to do |format|
       format.html
       format.json { render json: @posts }
     end
   end
-  
+
   def show
     @comment = Comment.new
     @related_posts = Post.related_to(@post).limit(5)
   end
-  
+
   def create
     @post = current_user.posts.build(post_params)
-    
+
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
@@ -168,19 +168,19 @@ class PostsController < ApplicationController
       end
     end
   end
-  
+
   private
-  
+
   def set_post
     @post = Post.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to posts_path, alert: 'Post not found.'
   end
-  
+
   def authorize_post
     redirect_to posts_path, alert: 'Access denied.' unless @post.user == current_user
   end
-  
+
   def post_params
     params.require(:post).permit(:title, :content, :published, tag_ids: [])
   end
@@ -193,28 +193,28 @@ end
 class PostPublishingService
   include ActiveModel::Model
   include ActiveModel::Attributes
-  
+
   attribute :post
   attribute :user
   attribute :scheduled_at, :datetime
-  
+
   validates :post, :user, presence: true
   validate :user_can_publish_post
   validate :future_scheduling_time
-  
+
   def call
     return false unless valid?
-    
+
     ActiveRecord::Base.transaction do
       if scheduled_at.present?
         schedule_publication
       else
         publish_immediately
       end
-      
+
       notify_subscribers
       update_analytics
-      
+
       true
     end
   rescue StandardError => e
@@ -222,24 +222,24 @@ class PostPublishingService
     errors.add(:base, "Publication failed: #{e.message}")
     false
   end
-  
+
   private
-  
+
   def publish_immediately
     post.update!(published: true, published_at: Time.current)
   end
-  
+
   def schedule_publication
     PublishPostJob.set(wait_until: scheduled_at).perform_later(post.id)
     post.update!(scheduled_for: scheduled_at)
   end
-  
+
   def notify_subscribers
     post.user.subscribers.find_each do |subscriber|
       PostNotificationMailer.new_post(subscriber, post).deliver_later
     end
   end
-  
+
   def update_analytics
     AnalyticsService.track_event('post_published', {
       post_id: post.id,
@@ -247,11 +247,11 @@ class PostPublishingService
       category: post.category
     })
   end
-  
+
   def user_can_publish_post
     errors.add(:user, "cannot publish this post") unless post.user == user
   end
-  
+
   def future_scheduling_time
     if scheduled_at.present? && scheduled_at <= Time.current
       errors.add(:scheduled_at, "must be in the future")
@@ -265,15 +265,15 @@ end
 # Well-structured background job
 class DataExportJob < ApplicationJob
   queue_as :default
-  
+
   retry_on StandardError, wait: :exponentially_longer, attempts: 3
   discard_on ActiveJob::DeserializationError
-  
+
   def perform(user_id, export_type)
     user = User.find(user_id)
-    
+
     Rails.logger.info "Starting #{export_type} export for user #{user.id}"
-    
+
     case export_type
     when 'posts'
       export_posts(user)
@@ -284,12 +284,12 @@ class DataExportJob < ApplicationJob
     else
       raise ArgumentError, "Unknown export type: #{export_type}"
     end
-    
+
     Rails.logger.info "Completed #{export_type} export for user #{user.id}"
   end
-  
+
   private
-  
+
   def export_posts(user)
     posts_data = user.posts.includes(:tags, :comments).map do |post|
       {
@@ -300,10 +300,10 @@ class DataExportJob < ApplicationJob
         comments_count: post.comments.count
       }
     end
-    
+
     send_export_email(user, 'Posts Export', posts_data)
   end
-  
+
   def send_export_email(user, subject, data)
     UserMailer.data_export(user.id, subject, data.to_json).deliver_now
   end
@@ -321,45 +321,45 @@ RSpec.describe User, type: :model do
     it { should have_many(:comments).dependent(:destroy) }
     it { should have_one_attached(:avatar) }
   end
-  
+
   describe 'validations' do
     subject { create(:user) }
-    
+
     it { should validate_presence_of(:email) }
     it { should validate_uniqueness_of(:email) }
     it { should validate_presence_of(:name) }
     it { should validate_length_of(:name).is_at_least(2).is_at_most(50) }
   end
-  
+
   describe 'scopes' do
     let!(:active_user) { create(:user, active: true) }
     let!(:inactive_user) { create(:user, active: false) }
     let!(:recent_user) { create(:user, created_at: 1.day.ago) }
     let!(:old_user) { create(:user, created_at: 1.week.ago) }
-    
+
     describe '.active' do
       it 'returns only active users' do
         expect(User.active).to contain_exactly(active_user)
       end
     end
-    
+
     describe '.recent' do
       it 'orders users by creation date descending' do
         expect(User.recent).to eq([active_user, inactive_user, recent_user, old_user])
       end
     end
   end
-  
+
   describe '#full_name' do
     let(:user) { create(:user, first_name: 'John', last_name: 'Doe') }
-    
+
     it 'returns the full name' do
       expect(user.full_name).to eq('John Doe')
     end
-    
+
     context 'with missing last name' do
       let(:user) { create(:user, first_name: 'John', last_name: nil) }
-      
+
       it 'handles missing parts gracefully' do
         expect(user.full_name).to eq('John')
       end
@@ -374,36 +374,36 @@ end
 RSpec.describe 'Posts API', type: :request do
   let(:user) { create(:user) }
   let(:headers) { { 'Authorization' => "Bearer #{user.auth_token}" } }
-  
+
   describe 'GET /api/posts' do
     let!(:posts) { create_list(:post, 3, user: user) }
     let!(:other_posts) { create_list(:post, 2) }
-    
+
     it 'returns user posts' do
       get '/api/posts', headers: headers
-      
+
       expect(response).to have_http_status(:ok)
-      
+
       json_response = JSON.parse(response.body)
       expect(json_response['posts'].size).to eq(3)
       expect(json_response['posts'].map { |p| p['id'] }).to match_array(posts.map(&:id))
     end
-    
+
     context 'with search parameter' do
       let!(:matching_post) { create(:post, title: 'Ruby on Rails', user: user) }
-      
+
       it 'filters posts by search term' do
         get '/api/posts', params: { search: 'Rails' }, headers: headers
-        
+
         expect(response).to have_http_status(:ok)
-        
+
         json_response = JSON.parse(response.body)
         expect(json_response['posts'].size).to eq(1)
         expect(json_response['posts'][0]['id']).to eq(matching_post.id)
       end
     end
   end
-  
+
   describe 'POST /api/posts' do
     let(:valid_params) do
       {
@@ -414,27 +414,27 @@ RSpec.describe 'Posts API', type: :request do
         }
       }
     end
-    
+
     it 'creates a new post' do
       expect {
         post '/api/posts', params: valid_params, headers: headers
       }.to change(Post, :count).by(1)
-      
+
       expect(response).to have_http_status(:created)
-      
+
       json_response = JSON.parse(response.body)
       expect(json_response['post']['title']).to eq('New Post')
       expect(json_response['post']['user_id']).to eq(user.id)
     end
-    
+
     context 'with invalid parameters' do
       let(:invalid_params) { { post: { title: '', content: '' } } }
-      
+
       it 'returns validation errors' do
         post '/api/posts', params: invalid_params, headers: headers
-        
+
         expect(response).to have_http_status(:unprocessable_entity)
-        
+
         json_response = JSON.parse(response.body)
         expect(json_response['errors']).to include('title')
       end
@@ -455,17 +455,17 @@ class PostsController < ApplicationController
                  .includes(:user, :tags, comments: :user)
                  .order(created_at: :desc)
                  .page(params[:page])
-    
+
     # Add counter cache for efficiency
     @posts_with_counts = @posts.left_joins(:comments)
                               .group(:id)
                               .select('posts.*, COUNT(comments.id) as comments_count')
   end
-  
+
   def dashboard
     # Use database views for complex reporting queries
     @stats = UserStats.where(user: current_user).first
-    
+
     # Cache expensive calculations
     @monthly_views = Rails.cache.fetch("user_#{current_user.id}_monthly_views", expires_in: 1.hour) do
       current_user.posts.sum(:view_count)
@@ -479,7 +479,7 @@ end
 # Multi-level caching implementation
 class Post < ApplicationRecord
   after_update :expire_caches
-  
+
   def cached_related_posts
     Rails.cache.fetch("post_#{id}_related", expires_in: 2.hours) do
       Post.where(category: category)
@@ -489,16 +489,16 @@ class Post < ApplicationRecord
           .to_a
     end
   end
-  
+
   def view_count_display
     # Use low-level cache for high-frequency reads
     Rails.cache.fetch("post_#{id}_view_count", expires_in: 5.minutes) do
       view_count.to_s
     end
   end
-  
+
   private
-  
+
   def expire_caches
     Rails.cache.delete("post_#{id}_related")
     Rails.cache.delete("post_#{id}_view_count")

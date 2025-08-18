@@ -6,7 +6,7 @@
       "interactive_mode": true
     },
     "plan": {
-      "description": "Create implementation plans with interactive decision points", 
+      "description": "Create implementation plans with interactive decision points",
       "command_file": "commands/plan.md",
       "interactive_mode": true
     },
@@ -107,7 +107,11 @@
     "decision-point": {
       "description": "Format for presenting architectural and implementation decisions",
       "auto_apply": false,
-      "trigger_on": ["architecture_decision", "implementation_choice", "trade_off_analysis"],
+      "trigger_on": [
+        "architecture_decision",
+        "implementation_choice",
+        "trade_off_analysis"
+      ],
       "style_file": "output-styles/decision-point.md"
     },
     "implementation-plan": {
@@ -179,7 +183,7 @@
   "quality_gates": {
     "commit_requirements": {
       "format_check": true,
-      "lint_check": true, 
+      "lint_check": true,
       "test_pass": true,
       "no_warnings": false
     },

@@ -1,7 +1,7 @@
 ---
 name: milestone-breakdown-planner
 description: Use this agent when you need to break down a GitHub milestone into actionable, deliverable issues with clear dependencies and incremental value delivery. Examples: <example>Context: User has a milestone called 'User Authentication System' that needs to be broken down into implementable tasks. user: 'I have a milestone for implementing user authentication but it's too vague and big. Can you help me break it down?' assistant: 'I'll use the milestone-breakdown-planner agent to analyze your milestone and create a detailed implementation plan with small, deliverable issues.' <commentary>The user needs help breaking down a large milestone into manageable tasks, which is exactly what this agent is designed for.</commentary></example> <example>Context: User is planning a complex feature milestone and wants to ensure proper sequencing and risk management. user: 'I need to plan the implementation of our new payment system milestone. It has dependencies and I want to make sure we can ship value incrementally.' assistant: 'Let me use the milestone-breakdown-planner agent to analyze your payment system milestone and create a dependency-ordered plan with thin-slice delivery approach.' <commentary>This is a perfect use case for the milestone planning agent as it involves complex dependencies and incremental delivery planning.</commentary></example>
-model: sonnet
+model: inherit
 verbose_output: true
 show_detailed_progress: true
 output_all_commands: true

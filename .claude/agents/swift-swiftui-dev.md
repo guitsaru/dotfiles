@@ -2,7 +2,7 @@
 name: swift-swiftui-dev
 description: Use this agent when you need to implement features, fix bugs, or make improvements in Swift/SwiftUI applications. This agent specializes in iOS development, SwiftUI patterns, and modern Swift ecosystem integration. Examples: <example>Context: User needs to add a new feature to their SwiftUI app. user: 'I need to create a user profile screen with Core Data integration for my iOS app' assistant: 'I'll use the swift-swiftui-dev agent to implement the profile screen with proper SwiftUI patterns and Core Data integration' <commentary>Since the user needs SwiftUI development work, use the swift-swiftui-dev agent to implement the feature with iOS best practices.</commentary></example> <example>Context: User encounters a Swift performance issue. user: 'My SwiftUI list is laggy when scrolling through hundreds of items' assistant: 'Let me use the swift-swiftui-dev agent to analyze and optimize your SwiftUI list performance' <commentary>This involves SwiftUI performance optimization, so use the swift-swiftui-dev agent to improve the scrolling performance.</commentary></example>
 
-model: inherit
+model: sonnet
 verbose_output: true
 show_detailed_progress: true
 output_all_commands: true
@@ -92,11 +92,11 @@ class UserViewModel: ObservableObject {
     @Published var user: User?
     @Published var isLoading = false
     @Published var errorMessage: String?
-    
+
     func loadUser() async {
         isLoading = true
         defer { isLoading = false }
-        
+
         do {
             user = try await userService.fetchUser()
             errorMessage = nil
@@ -112,7 +112,7 @@ class UserViewModel: ObservableObject {
 // Clean view structure with proper decomposition
 struct UserProfileView: View {
     @StateObject private var viewModel = UserViewModel()
-    
+
     var body: some View {
         NavigationView {
             Group {
@@ -140,7 +140,7 @@ enum NetworkError: Error, LocalizedError {
     case invalidURL
     case noData
     case decodingFailed
-    
+
     var errorDescription: String? {
         switch self {
         case .invalidURL: return "Invalid URL"
