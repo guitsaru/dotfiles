@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotfiles log:*)",
+      "Bash(brew list:*)",
+      "Bash(zinit:*)",
+      "Bash(cp:*)",
+      "Bash(mkdir:*)",
+      "Bash(git add:*)",
+      "Bash(grep:*)",
+      "Bash(zsh:*)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "/Users/guitsaru"
+    ]
+  }
+}

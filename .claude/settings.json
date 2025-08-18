@@ -58,71 +58,66 @@
       "description": "Post-implementation quality and documentation checks",
       "command": "echo 'Implementation complete. Running final checks...' && mix format && mix credo && mix test && mix docs",
       "enabled": true
+    },
+    "pre-pr-creation": {
+      "description": "Validate action plan completeness before creating PR",
+      "command": "echo '📋 Validating PR readiness...' && test -f CLAUDE.md && echo '✅ Project context found'",
+      "enabled": true
+    },
+    "post-task-completion": {
+      "description": "Run after each task in action plan completes",
+      "command": "mix compile --warnings-as-errors && mix test --only unit",
+      "enabled": true
+    },
+    "migration-check": {
+      "description": "Validate migrations before and after running",
+      "command": "mix ecto.migrate --log-sql && mix ecto.rollback && mix ecto.migrate",
+      "enabled": true,
+      "trigger_on": ["priv/repo/migrations/*.exs"]
+    },
+    "security-check": {
+      "description": "Run security audit on auth-related changes",
+      "command": "mix deps.audit && mix sobelow --config",
+      "enabled": false,
+      "trigger_on": ["**/auth*.ex", "**/session*.ex", "**/permission*.ex"]
+    },
+    "performance-check": {
+      "description": "Run performance benchmarks on critical paths",
+      "command": "mix test --only benchmark",
+      "enabled": false,
+      "trigger_on": ["**/query*.ex", "**/repo*.ex"]
     }
   },
-  "agent_preferences": {
-    "elixir-phoenix-dev": {
-      "priority": "high",
-      "auto_select": true,
-      "file_patterns": ["*.ex", "*.exs", "*.heex", "mix.exs"]
+  "output_styles": {
+    "database-work": {
+      "description": "PostgreSQL/Ecto patterns with migrations and query optimization",
+      "auto_apply": true,
+      "file_patterns": ["**/migrations/*.exs", "**/schemas/*.ex", "**/repo.ex"],
+      "style_file": "output-styles/database-work.md"
     },
-    "swift-swiftui-dev": {
-      "priority": "high",
-      "auto_select": true,
-      "file_patterns": ["*.swift", "*.swiftui", "Package.swift", "*.xcodeproj", "*.xcworkspace"]
+    "liveview-ui": {
+      "description": "Phoenix LiveView components with Tailwind/DaisyUI styling",
+      "auto_apply": true,
+      "file_patterns": ["*.heex", "**/live/*.ex", "assets/**/*.js"],
+      "style_file": "output-styles/liveview-ui.md"
     },
-    "ruby-rails-dev": {
-      "priority": "high",
-      "auto_select": true,
-      "file_patterns": ["*.rb", "*.erb", "*.haml", "Gemfile", "Rakefile", "config.ru", "config/routes.rb"]
+    "testing-patterns": {
+      "description": "Comprehensive testing with ExUnit and property-based tests",
+      "auto_apply": true,
+      "file_patterns": ["test/**/*.exs", "**/test_helper.exs", "**/*_test.exs"],
+      "style_file": "output-styles/testing-patterns.md"
     },
-    "liveview-frontend-expert": {
-      "priority": "high", 
-      "auto_select": true,
-      "file_patterns": ["*.heex", "assets/**/*.js", "assets/**/*.css"]
+    "api-development": {
+      "description": "RESTful and GraphQL API patterns",
+      "auto_apply": true,
+      "file_patterns": ["**/controllers/*.ex", "**/views/*.ex", "**/schema.ex"],
+      "style_file": "output-styles/api-development.md"
     },
-    "postgres-ecto-architect": {
-      "priority": "high",
-      "auto_select": true,
-      "file_patterns": ["**/migrations/*.exs", "**/schemas/*.ex", "**/repo.ex"]
-    },
-    "devops-infrastructure": {
-      "priority": "high",
-      "auto_select": true,
-      "file_patterns": ["Dockerfile", "docker-compose.yml", "*.k8s.yml", "*.tf", ".github/workflows/*.yml", "fly.toml"]
-    },
-    "test-architect": {
-      "priority": "medium",
-      "auto_select": true,
-      "file_patterns": ["test/**/*.exs", "**/test_helper.exs", "**/*_test.exs"]
-    },
-    "security-audit": {
-      "priority": "high",
-      "auto_select": true,
-      "file_patterns": ["**/auth*.ex", "**/session*.ex", "**/permission*.ex", "**/security*.ex"]
-    },
-    "implementation-executor": {
-      "priority": "high",
-      "auto_select": false,
-      "handoff_target": true,
-      "workflow_integration": true
-    },
-    "github-issue-planner": {
-      "priority": "medium", 
-      "auto_select": false
-    },
-    "github-milestone-creator": {
-      "priority": "medium",
-      "auto_select": false
-    },
-    "debug-agent": {
-      "priority": "high",
-      "auto_select": false,
-      "escalation_triggers": ["compilation_error", "test_failure", "runtime_error", "deployment_failure"]
-    },
-    "elixir-code-reviewer": {
-      "priority": "high",
-      "auto_select": false
+    "documentation": {
+      "description": "ExDoc and project documentation standards",
+      "auto_apply": true,
+      "file_patterns": ["*.md", "guides/*.md", "**/doc.ex"],
+      "style_file": "output-styles/documentation.md"
     }
   },
   "project_defaults": {
@@ -173,16 +168,11 @@
       "changelog_updated": false
     }
   },
-  "repl_settings": {
-    "subagent_output_mode": "verbose",
-    "show_agent_reasoning": true,
-    "preserve_agent_context": true,
-    "expand_subagent_display": true
-  },
-  "agent_defaults": {
-    "verbose_output": true,
-    "show_detailed_progress": true,
-    "output_all_commands": true
+  "workflow_settings": {
+    "show_phase_transitions": true,
+    "verbose_progress": true,
+    "preserve_context": true,
+    "auto_apply_styles": true
   },
   "interaction_mode": {
     "user_approval_required": true,
