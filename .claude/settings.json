@@ -29,6 +29,11 @@
       "description": "Continue from current work state with context",
       "command_file": "commands/continue.md",
       "interactive_mode": true
+    },
+    "milestone": {
+      "description": "Break down GitHub milestones into actionable issues collaboratively",
+      "command_file": "commands/milestone.md",
+      "interactive_mode": true
     }
   },
   "hooks": {

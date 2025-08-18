@@ -18,6 +18,7 @@ This is the Claude Code configuration directory (`~/.claude`). This directory co
 - `review`: Interactive code review with collaborative feedback and learning
 - `document`: Capture patterns and architectural decisions together
 - `continue`: Resume work from current state with context and user direction
+- `milestone`: Break down GitHub milestones into actionable issues with dependency planning
 
 ## Tech Stack Patterns
 
@@ -125,6 +126,12 @@ Claude Code now operates as a collaborative pair programming partner with freque
 - Present options for next steps
 - Maintain established patterns
 - Continue collaborative approach
+
+**`/milestone [name]`** - Break down milestones:
+- Analyze milestone scope collaboratively
+- Create logical issue breakdown with dependencies
+- Plan for incremental value delivery
+- Sequence work to minimize blocking
 
 ## Dotfiles Management Notes
 
