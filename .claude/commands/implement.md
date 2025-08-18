@@ -48,6 +48,7 @@ You are implementing code collaboratively with the user. Focus on small, reviewa
 
 **My approach**: [How I plan to implement this]
 
+<!-- description: context-question -->
 Does this match what you had in mind?
 ```
 
@@ -73,6 +74,7 @@ Does this match what you had in mind?
 
 **Pattern consideration**: [How this fits with existing code]
 
+<!-- description: architecture-choice -->
 Which approach feels right for your codebase?
 ```
 
@@ -86,6 +88,7 @@ Which approach feels right for your codebase?
 **Change**: [What will be added/modified]
 **Pattern**: [Pattern being followed]
 
+<!-- description: implementation-checkpoint -->
 Ready to proceed?
 ```
 
@@ -101,6 +104,7 @@ Ready to proceed?
 **Validation**: [How to verify it works]
 **Next**: [What comes next]
 
+<!-- description: implementation-checkpoint -->
 Should I continue or would you like to review/adjust?
 ```
 
@@ -124,6 +128,7 @@ a) Continue with this pattern for consistency
 b) Extract it into a shared module
 c) Use a different approach
 
+<!-- description: pattern-detected -->
 What's your preference?
 ```
 
@@ -140,6 +145,7 @@ I need to create a [type] for [purpose].
 - `AlternativeName` - [reason for alternative]
 - Following your pattern from [similar component]
 
+<!-- description: naming-decision -->
 What would you like to call it?
 ```
 
@@ -158,6 +164,7 @@ What would you like to call it?
 
 **Tests needed**: [What tests should be added]
 
+<!-- description: implementation-checkpoint -->
 Should I run the validation now?
 ```
 
@@ -203,6 +210,7 @@ mix credo --strict
 - Rollback plan: [How to undo if needed]
 - Data migration: [Any existing data to handle]
 
+<!-- description: implementation-checkpoint -->
 Ready to create the migration?
 ```
 
@@ -221,6 +229,7 @@ Ready to create the migration?
 # Component structure
 ```
 
+<!-- description: pattern-detected -->
 Does this structure match your UI patterns?
 ```
 
@@ -235,6 +244,7 @@ Does this structure match your UI patterns?
 
 **Following**: [Similar context pattern]
 
+<!-- description: architecture-choice -->
 Should I place this in [suggested location]?
 ```
 
@@ -252,6 +262,7 @@ Should I place this in [suggested location]?
 
 **My recommendation**: [Preferred solution and why]
 
+<!-- description: review-options -->
 How would you like to handle this?
 ```
 
@@ -265,6 +276,7 @@ I'm not sure about [specific aspect].
 **Question**: [Specific question]
 **Your codebase**: [What patterns exist that might help]
 
+<!-- description: architecture-choice -->
 What's the right approach here?
 ```
 
@@ -303,6 +315,7 @@ end
 - user_id index (for user queries)
 - composite index on (user_id, read_at)
 
+<!-- description: implementation-checkpoint -->
 Ready to implement this schema?
 ```
 
@@ -336,6 +349,7 @@ end
 
 **Styling**: Using DaisyUI button and badge classes like your other components
 
+<!-- description: review-options -->
 Does this component structure look right?
 ```
 

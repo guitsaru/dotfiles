@@ -63,6 +63,7 @@ git log --oneline -10
 - [What seems to be completed]  
 - [What might be next]
 
+<!-- description: context-question -->
 Does this match your understanding of where we left off?
 ```
 
@@ -85,6 +86,7 @@ Does this match your understanding of where we left off?
 
 **Current state**: [Summary of where we are]
 
+<!-- description: review-options -->
 Should we continue with the next planned task, or would you like to adjust the direction?
 ```
 
@@ -110,6 +112,7 @@ Should we continue with the next planned task, or would you like to adjust the d
 
 **My recommendation**: [Preferred option based on current state]
 
+<!-- description: review-options -->
 Which direction feels right?
 ```
 
@@ -129,6 +132,7 @@ Which direction feels right?
 **Architecture decisions**:
 - [Decisions we made together]
 
+<!-- description: pattern-detected -->
 I'll continue following these patterns unless you want to adjust anything.
 ```
 
@@ -178,6 +182,7 @@ git status -b
 - Any new requirements or constraints?
 - Want to adjust the pattern we were following?
 
+<!-- description: implementation-checkpoint -->
 Ready to continue with [next task]?
 ```
 
@@ -199,6 +204,7 @@ Ready to continue with [next task]?
 2. Quick review then continue
 3. Adjust approach based on new insights
 
+<!-- description: review-options -->
 What feels right for getting back into it?
 ```
 
@@ -214,6 +220,7 @@ What feels right for getting back into it?
 - How does new work relate to previous?
 - Any patterns to carry over?
 
+<!-- description: context-question -->
 Let me understand the priority and context for this switch.
 ```
 
@@ -263,6 +270,7 @@ mix compile --warnings-as-errors
 
 **Pattern established**: Using your multi-tenant scoping pattern
 
+<!-- description: implementation-checkpoint -->
 Ready to continue with session management?
 ```
 
@@ -288,6 +296,7 @@ end
 2. Add LiveView components
 3. Wire up real-time updates
 
+<!-- description: implementation-checkpoint -->
 Should I continue with completing the PubSub integration?
 ```
 
@@ -307,6 +316,7 @@ Should I continue with completing the PubSub integration?
 
 **Quality checks**: All passing ✅
 
+<!-- description: implementation-checkpoint -->
 Ready to wrap up with documentation and final testing?
 ```
 

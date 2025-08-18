@@ -54,6 +54,7 @@ You are creating implementation plans collaboratively with the user. Focus on un
 - [Question about constraints]
 - [Question about success criteria]
 
+<!-- description: context-question -->
 Does this match your understanding? What did I miss?
 ```
 
@@ -77,6 +78,7 @@ Does this match your understanding? What did I miss?
 
 **My recommendation**: [Preferred option and reasoning]
 
+<!-- description: architecture-choice -->
 Which architecture direction feels right for your system?
 ```
 
@@ -105,6 +107,7 @@ Which architecture direction feels right for your system?
 - Effort: [Development time estimate]
 - Maintenance: [Long-term considerations]
 
+<!-- description: architecture-choice -->
 What aligns with your technology strategy?
 ```
 
@@ -130,6 +133,7 @@ What aligns with your technology strategy?
 **Validation**: [How we know it's complete]
 **Time estimate**: [Rough estimate]
 
+<!-- description: review-options -->
 Does this phasing make sense? Would you prefer to tackle it differently?
 ```
 
@@ -163,6 +167,7 @@ Does this phasing make sense? Would you prefer to tackle it differently?
 - Decision point: [Choice needed from user]
 - Validation: [How to verify success]
 
+<!-- description: review-options -->
 Does this level of detail work for the action plan?
 ```
 
@@ -184,6 +189,7 @@ Does this level of detail work for the action plan?
 - Mitigation: [How to handle]
 - Decision point: [When we'll need your input]
 
+<!-- description: context-question -->
 Are there other risks or constraints I should consider?
 ```
 
@@ -208,6 +214,7 @@ Are there other risks or constraints I should consider?
 - [Documentation updated]
 - [Team can maintain and extend]
 
+<!-- description: review-options -->
 Do these success criteria capture what you're looking for?
 ```
 
@@ -229,6 +236,7 @@ Do these success criteria capture what you're looking for?
 - Break it into smaller issues
 - Start with a spike/prototype
 
+<!-- description: review-options -->
 What's the next step you'd like to take?
 ```
 
@@ -282,6 +290,7 @@ For notifications that need persistence, database table makes sense.
 3. **UI components**: Notification display
 4. **Integration**: Hook into existing actions
 
+<!-- description: architecture-choice -->
 Does this approach align with your vision?
 ```
 
@@ -319,6 +328,7 @@ plug RateLimiter, max_requests: 100, window: :minute
 4. Add admin monitoring interface
 5. Add tests and documentation
 
+<!-- description: review-options -->
 Ready to dive into the detailed action plan?
 ```
 

@@ -66,6 +66,7 @@ gh issue list --milestone "MILESTONE_NAME" --json title,body,labels,state
 - [Component 2] 
 - [Component 3]
 
+<!-- description: context-question -->
 Does this capture the full scope, or are there other aspects to consider?
 ```
 
@@ -97,6 +98,7 @@ Does this capture the full scope, or are there other aspects to consider?
 - Benefits: [Advantages of this approach]
 - Considerations: [Trade-offs]
 
+<!-- description: architecture-choice -->
 Which breakdown approach makes more sense for this milestone?
 ```
 
@@ -125,6 +127,7 @@ Which breakdown approach makes more sense for this milestone?
 - Phase 1 → Phase 2: [Why Phase 2 depends on Phase 1]
 - [Other dependencies]
 
+<!-- description: review-options -->
 Does this phasing make sense for incremental delivery?
 ```
 
@@ -158,6 +161,7 @@ Does this phasing make sense for incremental delivery?
 **Files likely involved**:
 - [Estimated files that will change]
 
+<!-- description: review-options -->
 Does this issue size and scope feel right?
 ```
 
@@ -187,6 +191,7 @@ Does this issue size and scope feel right?
 3. Integration: [When to bring pieces together]
 4. Polish: [Final cleanup and documentation]
 
+<!-- description: review-options -->
 Does this sequencing minimize blocking and risk?
 ```
 
@@ -219,6 +224,7 @@ Does this sequencing minimize blocking and risk?
 2. Create Phase 1 issues now, others later
 3. Adjust the breakdown first
 
+<!-- description: review-options -->
 What's your preference for issue creation?
 ```
 
@@ -314,6 +320,7 @@ This issue enables the following milestone work:
 - UI Components (forms, session handling)
 - Integration (plugs, middleware, guards)
 
+<!-- description: architecture-choice -->
 Option A feels better for incremental user value. Agree?
 
 **Issue breakdown** (User journey approach):
@@ -343,6 +350,7 @@ Option A feels better for incremental user value. Agree?
 - All Phase 2+ depends on Phase 1 (core auth)
 - Admin interface depends on user roles (might need separate issue)
 
+<!-- description: implementation-checkpoint -->
 Ready to create these 5 issues for the milestone?
 ```
 

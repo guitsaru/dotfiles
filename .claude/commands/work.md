@@ -57,6 +57,7 @@ gh pr view [NUMBER] --json title,body,additions,deletions,changedFiles,commits
 
 **My understanding**: [What needs to be done]
 
+<!-- description: context-question -->
 Does this match your understanding? Any clarifications needed?
 ```
 
@@ -80,6 +81,7 @@ Based on the requirements, I see a few approaches:
 
 **My recommendation**: [Preferred approach and why]
 
+<!-- description: architecture-choice -->
 Which approach aligns better with your architecture and preferences?
 ```
 
@@ -105,6 +107,7 @@ Which approach aligns better with your architecture and preferences?
 - Pattern check: [Any patterns to discuss]
 - Review: [Checkpoint with user]
 
+<!-- description: review-options -->
 Does this plan look good to start with Phase 1?
 ```
 
@@ -120,6 +123,7 @@ Does this plan look good to start with Phase 1?
 **Files involved**: [Files that will be modified]
 **Pattern**: [Any pattern I'll follow]
 
+<!-- description: architecture-choice -->
 Sound good, or would you prefer a different approach?
 ```
 
@@ -134,6 +138,7 @@ Sound good, or would you prefer a different approach?
 **Pattern used**: [Pattern applied]
 **Next step**: [What comes next]
 
+<!-- description: implementation-checkpoint -->
 Should I continue, or would you like to review/adjust?
 ```
 
@@ -149,6 +154,7 @@ I noticed [pattern description] in the code.
 **Opportunity**: [Where else it could apply]
 **Consistency**: [How to make it consistent]
 
+<!-- description: pattern-detected -->
 Should we establish this as a standard pattern?
 ```
 
@@ -167,6 +173,7 @@ Should we establish this as a standard pattern?
 
 **Patterns learned**: [Any patterns we've established]
 
+<!-- description: implementation-checkpoint -->
 How does the progress feel? Should we adjust the approach?
 ```
 
@@ -184,6 +191,7 @@ I need to create a [component type] for [purpose].
 - `SuggestedName2` - [reasoning]
 - Or something else you'd prefer?
 
+<!-- description: naming-decision -->
 What should we call it?
 ```
 
@@ -204,6 +212,7 @@ For [specific need], we can:
 - Benefits: [Advantages]
 - Trade-offs: [Considerations]
 
+<!-- description: architecture-choice -->
 Which aligns better with your overall architecture vision?
 ```
 
@@ -217,6 +226,7 @@ I see this follows the [pattern name] pattern used in [other locations].
 **Pattern**: [How the pattern works]
 **Application here**: [How it applies to current work]
 
+<!-- description: pattern-detected -->
 Should I follow this pattern consistently?
 ```
 
@@ -283,6 +293,7 @@ mix compile --warnings-as-errors
 
 I'm leaning toward option 1 since you already use LiveView and PubSub.
 
+<!-- description: context-question -->
 Does this direction make sense?
 ```
 
@@ -297,6 +308,7 @@ I'll create a notifications table with:
 
 This follows the pattern I see in your user settings table.
 
+<!-- description: naming-decision -->
 **Schema name**: Should I call it `Notification` or `UserNotification`?
 ```
 
@@ -313,6 +325,7 @@ def list_for_organization(org_id) do
 end
 ```
 
+<!-- description: architecture-choice -->
 Should I extract this into a shared `ScopedQuery` module, or keep it inline for clarity?
 ```
 

@@ -52,6 +52,7 @@ You are documenting completed work collaboratively with the user. Focus on captu
 - [Architectural decision 1]
 - [Architectural decision 2]
 
+<!-- description: context-question -->
 What patterns or decisions do you think are most worth documenting?
 ```
 
@@ -80,6 +81,7 @@ What patterns or decisions do you think are most worth documenting?
 
 **Alternatives considered**: [Other approaches we discussed]
 
+<!-- description: review-options -->
 Is this pattern worth documenting for future reference?
 ```
 
@@ -107,6 +109,7 @@ Is this pattern worth documenting for future reference?
 
 **Status**: [Active/Superseded/Deprecated]
 
+<!-- description: review-options -->
 Should this be documented as a formal architectural decision record?
 ```
 
@@ -136,6 +139,7 @@ Should this be documented as a formal architectural decision record?
 - [Learning 1]
 - [Learning 2]
 
+<!-- description: context-question -->
 What other insights should we capture?
 ```
 
@@ -163,6 +167,7 @@ What other insights should we capture?
 - [ ] Document new parameters
 - [ ] Update response formats
 
+<!-- description: review-options -->
 Which documentation updates are most important?
 ```
 
@@ -188,6 +193,7 @@ Which documentation updates are most important?
 - [What someone new should know]
 - [Common mistakes to avoid]
 
+<!-- description: context-question -->
 What knowledge would be most valuable to share?
 ```
 
@@ -251,6 +257,7 @@ end
 2. Document as standard pattern
 3. Create a custom Ecto macro
 
+<!-- description: architecture-choice -->
 What's your preference for formalizing this pattern?
 ```
 
@@ -282,6 +289,7 @@ What's your preference for formalizing this pattern?
 - May need WebSocket approach for mobile apps
 - Consider message persistence for offline users
 
+<!-- description: review-options -->
 Worth adding this to our architecture decisions?
 ```
 
@@ -315,6 +323,7 @@ add :org_id, :uuid
 - Migration best practices guide
 - Large table migration checklist
 
+<!-- description: review-options -->
 Should we create a migration playbook from this?
 ```
 
