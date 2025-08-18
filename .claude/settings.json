@@ -188,9 +188,6 @@
     "user_approval_required": true,
     "confirmation_checkpoints": [
       "planning_complete",
-      "before_file_changes", 
-      "before_commit",
-      "task_complete",
       "milestone_breakdown_ready",
       "specialist_routing"
     ],
@@ -211,7 +208,7 @@
     "auto_continue": false,
     "require_explicit_approval": true,
     "pause_on_specialist_routing": true,
-    "pause_on_file_modifications": true,
+    "pause_on_file_modifications": false,
     "pause_on_github_operations": true,
     "confirmation_keywords": ["APPROVED", "COMMIT", "CONTINUE", "YES"],
     "modification_keywords": ["MODIFY", "CHANGE", "ADJUST", "NO"],
