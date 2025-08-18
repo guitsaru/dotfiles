@@ -168,7 +168,7 @@ keybinds clear-defaults=true {
             WriteChars "mix compile";
             SwitchToMode "normal";
         }
-        bind "Ctrl a" "g" {
+        bind "Ctrl a" "l" {
             WriteChars "lazygit";
             SwitchToMode "normal";
         }
