@@ -10,14 +10,32 @@ layout {
   }
 
   tab name="Editor" focus=true {
-    pane borderless=true edit="README.md" name="neovim" focus=true
+    pane borderless=true edit="." name="neovim" focus=true
   }
 
-  tab name="Terminal"
+  tab name="Terminal" {
+    pane
+  }
 
   tab name="Server" {
-    pane name="IEx" command="iex" start_suspended=false {
+    pane name="Phoenix Server" command="iex" start_suspended=true {
       args "-S" "mix" "phx.server"
     }
+  }
+
+  tab name="Console" {
+    pane name="IEx Console" command="iex" start_suspended=true {
+      args "-S" "mix"
+    }
+  }
+
+  tab name="Tests" {
+    pane name="Test Runner" command="mix" start_suspended=true {
+      args "test" "--listen-on-stdin"
+    }
+  }
+
+  tab name="Git" {
+    pane name="LazyGit" command="lazygit" start_suspended=true
   }
 }

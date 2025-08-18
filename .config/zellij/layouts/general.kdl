@@ -1,0 +1,54 @@
+layout {
+  default_tab_template {
+    pane size=1 borderless=true {
+        plugin location="tab-bar"
+    }
+    children
+    pane size=1 borderless=true {
+        plugin location="status-bar"
+    }
+  }
+
+  tab name="Main" focus=true {
+    pane split_direction="vertical" {
+      pane name="Editor" edit="." size="70%" {
+        focus true
+      }
+      pane split_direction="horizontal" size="30%" {
+        pane name="Terminal" size="60%"
+        pane name="Files" size="40%" {
+          plugin location="file_manager" {
+            cwd "."
+          }
+        }
+      }
+    }
+  }
+
+  tab name="Terminal" {
+    pane
+  }
+
+  tab name="Git" {
+    pane split_direction="vertical" {
+      pane name="LazyGit" command="lazygit" start_suspended=true size="70%"
+      pane name="Git Terminal" size="30%"
+    }
+  }
+
+  tab name="Tasks" {
+    pane split_direction="horizontal" {
+      pane name="Build" start_suspended=true size="50%"
+      pane name="Test" start_suspended=true size="50%"
+    }
+  }
+
+  floating_panes {
+    pane name="Quick Terminal" {
+      width "80%"
+      height "80%"
+      x "10%"
+      y "10%"
+    }
+  }
+}

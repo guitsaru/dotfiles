@@ -1,6 +1,6 @@
 [user]
 	name = Matt Pruitt
-	email = matt@guitsaru.com
+	email = 41898282+guitsaru@users.noreply.github.com
 
 [alias]
 	status = status -sb
@@ -8,6 +8,12 @@
 [delta]
     navigate = true  # use n and N to move between diff sections
     syntax-theme = Dracula
+    line-numbers = true
+    side-by-side = false
+    decorations = true
+    file-style = bold yellow ul
+    file-decoration-style = none
+    hunk-header-decoration-style = cyan box ul
 
 [merge]
     conflictstyle = diff3
@@ -36,6 +42,14 @@
 	st = status
 	out = log origin..HEAD
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	recent = for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short)' refs/heads/
+	cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -d"
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	visual = !gitk
+	amend = commit --amend --no-edit
+	fixup = commit --fixup
+	squash = commit --squash
 
 [push]
 	default = current

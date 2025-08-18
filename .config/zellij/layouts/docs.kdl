@@ -1,0 +1,67 @@
+layout {
+  default_tab_template {
+    pane size=1 borderless=true {
+        plugin location="tab-bar"
+    }
+    children
+    pane size=1 borderless=true {
+        plugin location="status-bar"
+    }
+  }
+
+  tab name="Writing" focus=true {
+    pane split_direction="vertical" {
+      pane split_direction="horizontal" size="75%" {
+        pane name="Editor" edit="." focus=true size="80%"
+        pane name="Files" size="20%" {
+          plugin location="file_manager" {
+            cwd "."
+          }
+        }
+      }
+      pane name="Notes Terminal" size="25%"
+    }
+  }
+
+  tab name="Preview" {
+    pane split_direction="vertical" {
+      pane name="Markdown" edit="." size="50%"
+      pane split_direction="horizontal" size="50%" {
+        pane name="Live Preview" start_suspended=true size="80%" {
+          command "sh"
+          args "-c" "if command -v glow >/dev/null 2>&1; then glow README.md; else echo 'Install glow for live preview: brew install glow'; cat README.md; fi"
+        }
+        pane name="Spell Check" start_suspended=true size="20%" {
+          command "sh"
+          args "-c" "if command -v aspell >/dev/null 2>&1; then echo 'Spell check ready'; else echo 'Install aspell: brew install aspell'; fi"
+        }
+      }
+    }
+  }
+
+  tab name="Terminal" {
+    pane
+  }
+
+  tab name="Git" {
+    pane split_direction="vertical" {
+      pane name="LazyGit" command="lazygit" start_suspended=true size="70%"
+      pane name="Git Status" command="watch" start_suspended=true size="30%" {
+        args "-n" "2" "git status --short"
+      }
+    }
+  }
+
+  tab name="Research" {
+    pane split_direction="horizontal" {
+      pane name="Web Research" start_suspended=true size="50%" {
+        command "sh"
+        args "-c" "echo 'Web research workspace. Use: curl, tldr, man commands'"
+      }
+      pane name="References" start_suspended=true size="50%" {
+        command "sh"
+        args "-c" "echo 'References and links workspace'"
+      }
+    }
+  }
+}

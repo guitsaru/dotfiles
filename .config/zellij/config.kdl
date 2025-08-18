@@ -150,6 +150,28 @@ keybinds clear-defaults=true {
         bind "Alt l" { MoveFocusOrTab "right"; }
         bind "Alt n" { NewPane; }
         bind "Alt o" { MoveTab "right"; }
+        
+        // Custom keybinds for development workflows
+        bind "Ctrl a" "r" { 
+            WriteChars "Enter to start/restart service: ";
+            SwitchToMode "normal";
+        }
+        bind "Ctrl a" "s" {
+            WriteChars "mix phx.server";
+            SwitchToMode "normal";
+        }
+        bind "Ctrl a" "t" {
+            WriteChars "mix test";
+            SwitchToMode "normal";
+        }
+        bind "Ctrl a" "c" {
+            WriteChars "mix compile";
+            SwitchToMode "normal";
+        }
+        bind "Ctrl a" "g" {
+            WriteChars "lazygit";
+            SwitchToMode "normal";
+        }
     }
     shared_except "locked" "renametab" "renamepane" {
         bind "Ctrl g" { SwitchToMode "locked"; }

@@ -1,0 +1,63 @@
+layout {
+  default_tab_template {
+    pane size=1 borderless=true {
+        plugin location="tab-bar"
+    }
+    children
+    pane size=1 borderless=true {
+        plugin location="status-bar"
+    }
+  }
+
+  tab name="Editor" focus=true {
+    pane borderless=true edit="." name="neovim" focus=true
+  }
+
+  tab name="Terminal" {
+    pane
+  }
+
+  tab name="Server" {
+    pane name="Rails Server" command="rails" start_suspended=true {
+      args "server"
+    }
+  }
+
+  tab name="Console" {
+    pane name="Rails Console" command="rails" start_suspended=true {
+      args "console"
+    }
+  }
+
+  tab name="Tests" {
+    pane split_direction="vertical" {
+      pane name="Test Runner" command="bundle" start_suspended=true size="70%" {
+        args "exec" "rspec"
+      }
+      pane name="Test Watch" command="bundle" start_suspended=true size="30%" {
+        args "exec" "guard"
+      }
+    }
+  }
+
+  tab name="Database" {
+    pane name="DB Console" command="rails" start_suspended=true {
+      args "dbconsole"
+    }
+  }
+
+  tab name="Logs" {
+    pane split_direction="horizontal" {
+      pane name="Development Log" command="tail" start_suspended=true size="50%" {
+        args "-f" "log/development.log"
+      }
+      pane name="Test Log" command="tail" start_suspended=true size="50%" {
+        args "-f" "log/test.log"
+      }
+    }
+  }
+
+  tab name="Git" {
+    pane name="LazyGit" command="lazygit" start_suspended=true
+  }
+}
