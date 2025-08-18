@@ -70,10 +70,11 @@ dotfiles push                # Push to remote
 ## Workflow Patterns
 
 When modifying configurations:
-1. Test changes in the actual config location first
-2. Use `dotfiles add` to stage only the specific files changed
-3. Commit with descriptive messages about what functionality changed
-4. For package additions, update Brewfile and commit separately
+1. **DO** work on files within this repository (not deployed locations)
+2. **DO** use standard `git add`, `git commit`, `git push` commands
+3. **DO** use `dotfiles pull` after pushing to deploy changes to live system
+4. Commit with descriptive messages about what functionality changed
+5. For package additions, update Brewfile and commit separately
 
 When adding new tools:
 1. Add to Brewfile if it's a system-wide tool
