@@ -29,6 +29,10 @@ layout {
     pane
   }
 
+  tab name="Claude" {
+    pane name="Claude Code" command="claude" start_suspended=true
+  }
+
   tab name="Git" {
     pane split_direction="vertical" {
       pane name="LazyGit" command="lazygit" start_suspended=true size="70%"

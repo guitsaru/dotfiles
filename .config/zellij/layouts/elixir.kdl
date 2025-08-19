@@ -23,16 +23,14 @@ layout {
     }
   }
 
-  tab name="Console" {
-    pane name="IEx Console" command="iex" start_suspended=true {
-      args "-S" "mix"
-    }
-  }
-
   tab name="Tests" {
     pane name="Test Runner" command="mix" start_suspended=true {
       args "test" "--listen-on-stdin"
     }
+  }
+
+  tab name="Claude" {
+    pane name="Claude Code" command="claude" start_suspended=true
   }
 
   tab name="Git" {
