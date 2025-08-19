@@ -167,6 +167,22 @@
         ]
       },
       {
+        "matcher": {"tools": ["Task"], "agent_types": ["implementation-executor"], "description": "post-implementation-complete"},
+        "hooks": [
+          {
+            "type": "notification",
+            "message": "🎯 Implementation phase complete! I'll now commit changes, update the PR, and document patterns discovered.",
+            "pause_for_input": false,
+            "description": "Notify about post-implementation workflow"
+          },
+          {
+            "type": "command",
+            "command": "claude code --agent git-commit 'Commit implementation changes' && claude code --agent pr-update 'Update PR with progress' && claude code --agent pr-document 'Document implementation patterns'",
+            "description": "Complete post-implementation workflow with agents"
+          }
+        ]
+      },
+      {
         "matcher": {"tools": ["Edit", "MultiEdit", "Write"], "file_patterns": ["priv/repo/migrations/*.exs"], "description": "migration-check"},
         "hooks": [
           {
@@ -322,5 +338,43 @@
     "commit_format": "standard",
     "auto_link_issues": true,
     "draft_pr_by_default": true
+  },
+  "git_workflow": {
+    "auto_commit_after_phase": true,
+    "update_pr_on_checkpoint": true,
+    "document_patterns": true,
+    "commit_frequency": "phase",
+    "pr_update_frequency": "checkpoint",
+    "auto_ready_threshold": 80,
+    "require_tests_for_ready": true,
+    "notify_reviewers_when_ready": true
+  },
+  "agent_settings": {
+    "pr_draft": {
+      "branch_prefix": "feature/",
+      "always_draft": true,
+      "include_checklist": true,
+      "auto_push_branch": true,
+      "default_labels": ["work-in-progress"]
+    },
+    "git_commit": {
+      "run_quality_checks": true,
+      "auto_push_feature_branches": true,
+      "commit_message_format": "conventional",
+      "include_file_counts": false,
+      "link_issues": "always"
+    },
+    "pr_update": {
+      "include_file_changes": true,
+      "add_progress_comments": true,
+      "auto_transition_ready": true
+    },
+    "pr_document": {
+      "auto_detect_patterns": true,
+      "update_project_docs": false,
+      "include_code_examples": true,
+      "document_decisions": true,
+      "create_knowledge_artifacts": true
+    }
   }
 }

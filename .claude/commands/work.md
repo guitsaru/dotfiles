@@ -233,22 +233,28 @@ Should I follow this pattern consistently?
 ## Integration with GitHub
 
 ### PR Management
-- Create PR after planning approval
-- Update PR body with progress checklist  
-- Use PR for progress tracking
-- Tag relevant team members at milestones
+- Use `/pr-draft` agent to create properly formatted PRs
+- Use `/pr-update` agent at checkpoints to update progress
+- Track implementation with automated checklists
+- Transition to ready when quality gates pass
 
 ### Issue Linking
-- Reference issues in commits
-- Update issue with progress comments
-- Link to PR when created
-- Close issues when complete
+- Automatic "Closes #X" linking via pr-draft agent
+- Use `/git-commit` agent for issue-linked commits
+- Use `/pr-document` agent to update issues with learnings
+- Close issues automatically when PRs merge
 
 ### Quality Gates
-- Run tests after each logical grouping
-- Format code before commits
-- Validate against linting rules
-- Ensure documentation is updated
+- Automated quality checks via post-implementation hooks
+- Use `/git-commit` agent for consistent commit standards
+- Format code and run linting before commits
+- Automated documentation via `/pr-document` agent
+
+### Automated Workflow
+- **Post-implementation**: Automatic commit, PR update, and documentation
+- **Checkpoints**: PR progress updates every 2-3 completed tasks
+- **Quality Gates**: Tests and formatting enforced before commits
+- **Documentation**: Pattern capture and knowledge artifacts created automatically
 
 ## Tools and Commands
 
@@ -257,6 +263,12 @@ Should I follow this pattern consistently?
 - `git` for version control
 - Project-specific commands from CLAUDE.md
 - File operations for implementation
+
+**Specialized Agents**:
+- `/pr-draft [issue_number]`: Create draft PR with proper formatting
+- `/git-commit [message]`: Intelligent staging and commit without cosigning
+- `/pr-update [phase_complete]`: Update PR body and add progress comments
+- `/pr-document [notes]`: Document patterns and add implementation notes
 
 **Quality checks**:
 ```bash
