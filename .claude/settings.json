@@ -51,6 +51,22 @@
     ],
     "UserPromptSubmit": [
       {
+        "matcher": {"keywords": ["implement", "work", "issue", "#"], "description": "pre-implementation-pr"},
+        "hooks": [
+          {
+            "type": "notification",
+            "message": "📝 I'll create a draft PR before starting implementation. Please provide the issue number if you have one.",
+            "pause_for_input": true,
+            "description": "Create draft PR before implementation"
+          },
+          {
+            "type": "command",
+            "command": "if [ -n \"$ISSUE_NUMBER\" ]; then gh pr create --draft --title \"WIP: Implementation for issue #$ISSUE_NUMBER\" --body \"Closes #$ISSUE_NUMBER\\n\\n## Work in Progress\\nThis PR is being actively developed.\\n\\n## Changes\\n- [ ] Initial implementation\\n- [ ] Tests\\n- [ ] Documentation\"; else echo 'Note: Set ISSUE_NUMBER environment variable to automatically link PRs to issues'; fi",
+            "description": "Create draft PR with issue reference"
+          }
+        ]
+      },
+      {
         "matcher": {"description": "pre-task"},
         "hooks": [
           {
@@ -300,5 +316,11 @@
     "confirmation_keywords": ["yes", "continue", "proceed", "looks good"],
     "modification_keywords": ["no", "change", "adjust", "different"],
     "stop_keywords": ["stop", "pause", "wait"]
+  },
+  "git_settings": {
+    "cosign_commits": false,
+    "commit_format": "standard",
+    "auto_link_issues": true,
+    "draft_pr_by_default": true
   }
 }
