@@ -51,18 +51,18 @@
     ],
     "UserPromptSubmit": [
       {
-        "matcher": {"keywords": ["implement", "work", "issue", "#"], "description": "pre-implementation-pr"},
+        "matcher": {"keywords": ["implement", "work", "issue", "#"], "description": "pre-implementation-setup"},
         "hooks": [
           {
             "type": "notification",
-            "message": "📝 I'll create a draft PR before starting implementation. Please provide the issue number if you have one.",
+            "message": "🌿 I'll prepare a proper feature branch from updated main and create a draft PR. Please provide the issue number if you have one.",
             "pause_for_input": true,
-            "description": "Create draft PR before implementation"
+            "description": "Prepare branch and create draft PR before implementation"
           },
           {
             "type": "command",
-            "command": "if [ -n \"$ISSUE_NUMBER\" ]; then gh pr create --draft --title \"WIP: Implementation for issue #$ISSUE_NUMBER\" --body \"Closes #$ISSUE_NUMBER\\n\\n## Work in Progress\\nThis PR is being actively developed.\\n\\n## Changes\\n- [ ] Initial implementation\\n- [ ] Tests\\n- [ ] Documentation\"; else echo 'Note: Set ISSUE_NUMBER environment variable to automatically link PRs to issues'; fi",
-            "description": "Create draft PR with issue reference"
+            "command": "claude code --agent branch-prep 'Prepare feature branch from updated main' && claude code --agent pr-draft 'Create draft PR for implementation'",
+            "description": "Branch preparation and draft PR creation workflow"
           }
         ]
       },
@@ -347,14 +347,28 @@
     "pr_update_frequency": "checkpoint",
     "auto_ready_threshold": 80,
     "require_tests_for_ready": true,
-    "notify_reviewers_when_ready": true
+    "notify_reviewers_when_ready": true,
+    "branch_management": {
+      "always_update_main": true,
+      "require_feature_branch": true,
+      "auto_create_from_main": true,
+      "push_branch_immediately": true
+    }
   },
   "agent_settings": {
+    "branch_prep": {
+      "default_prefix": "feature/",
+      "auto_push_branch": true,
+      "update_main_before_branch": true,
+      "require_clean_working_dir": true,
+      "max_branch_age_reuse_days": 1,
+      "auto_fetch_issue_titles": true
+    },
     "pr_draft": {
       "branch_prefix": "feature/",
       "always_draft": true,
       "include_checklist": true,
-      "auto_push_branch": true,
+      "assume_branch_ready": true,
       "default_labels": ["work-in-progress"]
     },
     "git_commit": {

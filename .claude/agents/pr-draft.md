@@ -37,19 +37,28 @@ git status
 git branch --show-current
 ```
 
-**Determine branch strategy**:
-- If on main/master: create new feature branch
-- If on feature branch: use existing branch
-- Branch naming: `feature/issue-${ISSUE_NUMBER}-${slug}` or `feature/${description-slug}`
+**Determine branch context**:
+- Assume branch-prep agent has created proper feature branch
+- Validate we're on feature branch (not main)
+- Use current branch name for PR creation
 
-### 2. Branch Creation (if needed)
+### 2. Validate Branch Setup
 
+**Assume branch-prep agent has run**:
 ```bash
-# Create feature branch if not exists
-if [ "$(git branch --show-current)" = "main" ] || [ "$(git branch --show-current)" = "master" ]; then
-  BRANCH_NAME="feature/issue-${ISSUE_NUMBER}-$(echo '$TITLE' | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | head -c 30)"
-  git checkout -b "$BRANCH_NAME"
-  git push -u origin "$BRANCH_NAME"
+# Verify we're on a feature branch (not main)
+CURRENT_BRANCH=$(git branch --show-current)
+if [ "$CURRENT_BRANCH" = "main" ] || [ "$CURRENT_BRANCH" = "master" ]; then
+  echo "⚠️ Still on main branch. Branch preparation may have failed."
+  echo "Run /branch-prep agent first to create proper feature branch."
+  exit 1
+fi
+
+# Verify branch has upstream tracking
+UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "none")
+if [ "$UPSTREAM" = "none" ]; then
+  echo "⚠️ Branch has no upstream tracking. Setting up..."
+  git push -u origin "$CURRENT_BRANCH"
 fi
 ```
 
@@ -148,17 +157,20 @@ gh pr create \
 
 ## Error Handling
 
-**Branch conflicts**:
+**Branch validation failed**:
 ```markdown
-⚠️ **Branch Conflict**
+⚠️ **Branch Setup Issue**
 
-Current branch `feature/existing-work` has uncommitted changes.
-Options:
-1. Commit current work first
-2. Stash changes: `git stash`
-3. Continue on current branch
+Expected to be on a feature branch, but found: `main`
 
-Which approach would you prefer?
+**Likely cause**: Branch preparation step failed or was skipped.
+
+**Solution**: 
+1. Run `/branch-prep` agent first
+2. Ensure proper feature branch is created
+3. Re-run `/pr-draft` agent
+
+Should I attempt branch preparation now?
 ```
 
 **Missing issue**:

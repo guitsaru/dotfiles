@@ -251,10 +251,17 @@ Should I follow this pattern consistently?
 - Automated documentation via `/pr-document` agent
 
 ### Automated Workflow
+- **Pre-implementation**: Automatic branch preparation from updated main + draft PR creation
 - **Post-implementation**: Automatic commit, PR update, and documentation
 - **Checkpoints**: PR progress updates every 2-3 completed tasks
 - **Quality Gates**: Tests and formatting enforced before commits
 - **Documentation**: Pattern capture and knowledge artifacts created automatically
+
+### Branch Management
+- **Always from main**: Feature branches created from latest main branch
+- **Proper naming**: `feature/issue-123-description` or `feature/description`
+- **Upstream tracking**: Branches automatically pushed with upstream setup
+- **Safety checks**: Prevents work on main, handles uncommitted changes
 
 ## Tools and Commands
 
@@ -265,7 +272,8 @@ Should I follow this pattern consistently?
 - File operations for implementation
 
 **Specialized Agents**:
-- `/pr-draft [issue_number]`: Create draft PR with proper formatting
+- `/branch-prep [issue_number]`: Prepare feature branch from updated main
+- `/pr-draft [issue_number]`: Create draft PR with proper formatting  
 - `/git-commit [message]`: Intelligent staging and commit without cosigning
 - `/pr-update [phase_complete]`: Update PR body and add progress comments
 - `/pr-document [notes]`: Document patterns and add implementation notes
