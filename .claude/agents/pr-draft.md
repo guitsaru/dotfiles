@@ -26,6 +26,7 @@ You are a specialized agent for creating draft pull requests with proper formatt
 ### 1. Gather Context
 
 **Extract issue information**:
+
 ```bash
 # Get issue details if provided
 if [ -n "$ISSUE_NUMBER" ]; then
@@ -38,6 +39,7 @@ git branch --show-current
 ```
 
 **Determine branch context**:
+
 - Assume branch-prep agent has created proper feature branch
 - Validate we're on feature branch (not main)
 - Use current branch name for PR creation
@@ -45,6 +47,7 @@ git branch --show-current
 ### 2. Validate Branch Setup
 
 **Assume branch-prep agent has run**:
+
 ```bash
 # Verify we're on a feature branch (not main)
 CURRENT_BRANCH=$(git branch --show-current)
@@ -65,10 +68,12 @@ fi
 ### 3. Draft PR Creation
 
 **Generate PR title**:
-- Format: `WIP: [Issue Title]` or `WIP: [Description]`
+
+- Format: `[Issue Title]` or `[Description]`
 - Keep concise but descriptive
 
 **Generate PR body**:
+
 ```markdown
 ## Summary
 
@@ -120,6 +125,7 @@ Closes #${ISSUE_NUMBER}
 ```
 
 **Create the PR**:
+
 ```bash
 gh pr create \
   --draft \
@@ -131,6 +137,7 @@ gh pr create \
 ### 4. Success Confirmation
 
 **Output format**:
+
 ```markdown
 ✅ **Draft PR Created**
 
@@ -147,17 +154,20 @@ gh pr create \
 ## Input Parameters
 
 **Environment Variables**:
+
 - `ISSUE_NUMBER`: GitHub issue number to link
 - `PR_TITLE`: Custom PR title (optional)
 - `BRANCH_NAME`: Custom branch name (optional)
 
 **Command Line Args**:
+
 - Issue number: `pr-draft 127`
 - Title override: `pr-draft 127 "Custom Title"`
 
 ## Error Handling
 
 **Branch validation failed**:
+
 ```markdown
 ⚠️ **Branch Setup Issue**
 
@@ -174,6 +184,7 @@ Should I attempt branch preparation now?
 ```
 
 **Missing issue**:
+
 ```markdown
 ⚠️ **No Issue Specified**
 
@@ -187,11 +198,13 @@ Should I proceed without issue linking?
 ## Integration Points
 
 **Called by**:
+
 - `/work` command at start
 - `/implement` command for new features
 - User directly via `/pr-draft`
 
 **Calls**:
+
 - GitHub CLI (`gh`) for PR operations
 - Git for branch management
 - Issue parsing for content generation
@@ -199,6 +212,7 @@ Should I proceed without issue linking?
 ## Quality Standards
 
 **PR Body Requirements**:
+
 - Clear summary of implementation
 - Proper issue linking with "Closes #X"
 - Comprehensive task checklist
@@ -206,6 +220,7 @@ Should I proceed without issue linking?
 - Documentation requirements listed
 
 **Branch Naming**:
+
 - Consistent prefix (`feature/`, `fix/`, `refactor/`)
 - Issue number when available
 - Descriptive suffix
@@ -214,6 +229,7 @@ Should I proceed without issue linking?
 ## Configuration
 
 **Customizable via settings.json**:
+
 ```json
 "pr_draft_settings": {
   "branch_prefix": "feature/",
@@ -225,3 +241,4 @@ Should I proceed without issue linking?
 ```
 
 This agent ensures consistent, well-formatted draft PRs that integrate seamlessly with GitHub workflows and provide clear implementation guidance.
+
