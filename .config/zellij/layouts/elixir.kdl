@@ -17,6 +17,10 @@ layout {
     pane
   }
 
+  tab name="Claude" {
+    pane name="Claude Code" command="claude" start_suspended=true
+  }
+
   tab name="Server" {
     pane name="Phoenix Server" command="iex" start_suspended=true {
       args "-S" "mix" "phx.server"
@@ -27,10 +31,6 @@ layout {
     pane name="Test Runner" command="mix" start_suspended=true {
       args "test" "--listen-on-stdin"
     }
-  }
-
-  tab name="Claude" {
-    pane name="Claude Code" command="claude" start_suspended=true
   }
 
   tab name="Git" {
