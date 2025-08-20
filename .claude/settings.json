@@ -34,6 +34,11 @@
       "description": "Break down GitHub milestones into actionable issues collaboratively",
       "command_file": "commands/milestone.md",
       "interactive_mode": true
+    },
+    "branch": {
+      "description": "Prepare feature branch and draft PR for implementation work",
+      "command_file": "commands/branch.md",
+      "interactive_mode": false
     }
   },
   "hooks": {
@@ -51,18 +56,25 @@
     ],
     "UserPromptSubmit": [
       {
-        "matcher": {"keywords": ["implement", "work", "issue", "#"], "description": "pre-implementation-setup"},
+        "matcher": {"patterns": ["Let's start implementing", "start implementing", "Perfect! Let's start", "begin implementing", "implementing.*module", "Create.*lib/"], "description": "pre-implementation-setup"},
         "hooks": [
           {
             "type": "notification",
-            "message": "🌿 I'll prepare a proper feature branch from updated main and create a draft PR. Please provide the issue number if you have one.",
-            "pause_for_input": true,
+            "message": "🌿 I'll prepare a proper feature branch from updated main and create a draft PR for this implementation.",
+            "pause_for_input": false,
             "description": "Prepare branch and create draft PR before implementation"
           },
           {
-            "type": "command",
-            "command": "claude code --agent branch-prep 'Prepare feature branch from updated main' && claude code --agent pr-draft 'Create draft PR for implementation'",
-            "description": "Branch preparation and draft PR creation workflow"
+            "type": "task",
+            "agent": "branch-prep",
+            "prompt": "Prepare a feature branch from updated main for this implementation work",
+            "description": "Create feature branch from main"
+          },
+          {
+            "type": "task", 
+            "agent": "pr-draft",
+            "prompt": "Create a draft PR for the current implementation work",
+            "description": "Create draft pull request"
           }
         ]
       },
