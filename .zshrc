@@ -219,4 +219,4 @@ dotfiles-auto-backup() {
         echo "✅ Weekly backup scheduled for Sundays at 2 AM"
     fi
 }
-eval "$(~/.local/bin/mise activate zsh)"
+eval "$(/opt/homebrew/bin/mise activate zsh)"

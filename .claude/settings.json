@@ -1,4 +1,5 @@
 {
+  "model": "opusplan",
   "commands": {
     "work": {
       "description": "Collaborative work on GitHub issues/PRs with pair programming approach",
@@ -44,7 +45,12 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": {"tools": ["Bash"], "description": "pre-commit"},
+        "matcher": {
+          "tools": [
+            "Bash"
+          ],
+          "description": "pre-commit"
+        },
         "hooks": [
           {
             "type": "command",
@@ -56,7 +62,17 @@
     ],
     "UserPromptSubmit": [
       {
-        "matcher": {"patterns": ["Let's start implementing", "start implementing", "Perfect! Let's start", "begin implementing", "implementing.*module", "Create.*lib/"], "description": "pre-implementation-setup"},
+        "matcher": {
+          "patterns": [
+            "Let's start implementing",
+            "start implementing",
+            "Perfect! Let's start",
+            "begin implementing",
+            "implementing.*module",
+            "Create.*lib/"
+          ],
+          "description": "pre-implementation-setup"
+        },
         "hooks": [
           {
             "type": "notification",
@@ -71,7 +87,7 @@
             "description": "Create feature branch from main"
           },
           {
-            "type": "task", 
+            "type": "task",
             "agent": "pr-draft",
             "prompt": "Create a draft PR for the current implementation work",
             "description": "Create draft pull request"
@@ -79,7 +95,9 @@
         ]
       },
       {
-        "matcher": {"description": "pre-task"},
+        "matcher": {
+          "description": "pre-task"
+        },
         "hooks": [
           {
             "type": "notification",
@@ -90,10 +108,12 @@
         ]
       },
       {
-        "matcher": {"description": "pattern-detected"},
+        "matcher": {
+          "description": "pattern-detected"
+        },
         "hooks": [
           {
-            "type": "notification", 
+            "type": "notification",
             "message": "📋 I noticed a pattern here. Should we apply this consistently throughout the codebase?",
             "pause_for_input": true,
             "description": "Confirm pattern usage when code patterns are detected"
@@ -101,7 +121,9 @@
         ]
       },
       {
-        "matcher": {"description": "naming-decision"},
+        "matcher": {
+          "description": "naming-decision"
+        },
         "hooks": [
           {
             "type": "notification",
@@ -112,7 +134,9 @@
         ]
       },
       {
-        "matcher": {"description": "architecture-choice"},
+        "matcher": {
+          "description": "architecture-choice"
+        },
         "hooks": [
           {
             "type": "notification",
@@ -123,7 +147,9 @@
         ]
       },
       {
-        "matcher": {"description": "implementation-checkpoint"},
+        "matcher": {
+          "description": "implementation-checkpoint"
+        },
         "hooks": [
           {
             "type": "notification",
@@ -134,7 +160,9 @@
         ]
       },
       {
-        "matcher": {"description": "review-discussion"},
+        "matcher": {
+          "description": "review-discussion"
+        },
         "hooks": [
           {
             "type": "notification",
@@ -145,7 +173,9 @@
         ]
       },
       {
-        "matcher": {"description": "context-question"},
+        "matcher": {
+          "description": "context-question"
+        },
         "hooks": [
           {
             "type": "notification",
@@ -156,7 +186,9 @@
         ]
       },
       {
-        "matcher": {"description": "review-options"},
+        "matcher": {
+          "description": "review-options"
+        },
         "hooks": [
           {
             "type": "notification",
@@ -169,7 +201,14 @@
     ],
     "PostToolUse": [
       {
-        "matcher": {"tools": ["Edit", "MultiEdit", "Write"], "description": "post-implementation"},
+        "matcher": {
+          "tools": [
+            "Edit",
+            "MultiEdit",
+            "Write"
+          ],
+          "description": "post-implementation"
+        },
         "hooks": [
           {
             "type": "command",
@@ -179,7 +218,15 @@
         ]
       },
       {
-        "matcher": {"tools": ["Task"], "agent_types": ["implementation-executor"], "description": "post-implementation-complete"},
+        "matcher": {
+          "tools": [
+            "Task"
+          ],
+          "agent_types": [
+            "implementation-executor"
+          ],
+          "description": "post-implementation-complete"
+        },
         "hooks": [
           {
             "type": "notification",
@@ -195,7 +242,17 @@
         ]
       },
       {
-        "matcher": {"tools": ["Edit", "MultiEdit", "Write"], "file_patterns": ["priv/repo/migrations/*.exs"], "description": "migration-check"},
+        "matcher": {
+          "tools": [
+            "Edit",
+            "MultiEdit",
+            "Write"
+          ],
+          "file_patterns": [
+            "priv/repo/migrations/*.exs"
+          ],
+          "description": "migration-check"
+        },
         "hooks": [
           {
             "type": "command",
@@ -205,7 +262,19 @@
         ]
       },
       {
-        "matcher": {"tools": ["Edit", "MultiEdit", "Write"], "file_patterns": ["**/auth*.ex", "**/session*.ex", "**/permission*.ex"], "description": "security-check"},
+        "matcher": {
+          "tools": [
+            "Edit",
+            "MultiEdit",
+            "Write"
+          ],
+          "file_patterns": [
+            "**/auth*.ex",
+            "**/session*.ex",
+            "**/permission*.ex"
+          ],
+          "description": "security-check"
+        },
         "hooks": [
           {
             "type": "command",
@@ -220,13 +289,18 @@
     "pair-programming": {
       "description": "Interactive pair programming format for collaborative development",
       "auto_apply": true,
-      "file_patterns": ["*"],
+      "file_patterns": [
+        "*"
+      ],
       "style_file": "output-styles/pair-programming.md"
     },
     "pattern-discussion": {
       "description": "Format for exploring and discussing code patterns",
       "auto_apply": false,
-      "trigger_on": ["pattern_detected", "refactoring_opportunity"],
+      "trigger_on": [
+        "pattern_detected",
+        "refactoring_opportunity"
+      ],
       "style_file": "output-styles/pattern-discussion.md"
     },
     "decision-point": {
@@ -242,31 +316,50 @@
     "implementation-plan": {
       "description": "Structured format for presenting implementation plans with user checkpoints",
       "auto_apply": false,
-      "trigger_on": ["planning_phase", "action_plan_creation"],
+      "trigger_on": [
+        "planning_phase",
+        "action_plan_creation"
+      ],
       "style_file": "output-styles/implementation-plan.md"
     },
     "database-work": {
       "description": "PostgreSQL/Ecto patterns with migrations and query optimization",
       "auto_apply": true,
-      "file_patterns": ["**/migrations/*.exs", "**/schemas/*.ex", "**/repo.ex"],
+      "file_patterns": [
+        "**/migrations/*.exs",
+        "**/schemas/*.ex",
+        "**/repo.ex"
+      ],
       "style_file": "output-styles/database-work.md"
     },
     "liveview-ui": {
       "description": "Phoenix LiveView components with Tailwind/DaisyUI styling",
       "auto_apply": true,
-      "file_patterns": ["*.heex", "**/live/*.ex", "assets/**/*.js"],
+      "file_patterns": [
+        "*.heex",
+        "**/live/*.ex",
+        "assets/**/*.js"
+      ],
       "style_file": "output-styles/liveview-ui.md"
     },
     "testing-patterns": {
       "description": "Comprehensive testing with ExUnit and property-based tests",
       "auto_apply": true,
-      "file_patterns": ["test/**/*.exs", "**/test_helper.exs", "**/*_test.exs"],
+      "file_patterns": [
+        "test/**/*.exs",
+        "**/test_helper.exs",
+        "**/*_test.exs"
+      ],
       "style_file": "output-styles/testing-patterns.md"
     },
     "documentation": {
       "description": "ExDoc and project documentation standards",
       "auto_apply": true,
-      "file_patterns": ["*.md", "guides/*.md", "**/doc.ex"],
+      "file_patterns": [
+        "*.md",
+        "guides/*.md",
+        "**/doc.ex"
+      ],
       "style_file": "output-styles/documentation.md"
     }
   },
@@ -341,9 +434,23 @@
   },
   "workflow_controls": {
     "require_user_input": true,
-    "confirmation_keywords": ["yes", "continue", "proceed", "looks good"],
-    "modification_keywords": ["no", "change", "adjust", "different"],
-    "stop_keywords": ["stop", "pause", "wait"]
+    "confirmation_keywords": [
+      "yes",
+      "continue",
+      "proceed",
+      "looks good"
+    ],
+    "modification_keywords": [
+      "no",
+      "change",
+      "adjust",
+      "different"
+    ],
+    "stop_keywords": [
+      "stop",
+      "pause",
+      "wait"
+    ]
   },
   "git_settings": {
     "cosign_commits": false,
@@ -381,7 +488,9 @@
       "always_draft": true,
       "include_checklist": true,
       "assume_branch_ready": true,
-      "default_labels": ["work-in-progress"]
+      "default_labels": [
+        "work-in-progress"
+      ]
     },
     "git_commit": {
       "run_quality_checks": true,
