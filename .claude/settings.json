@@ -291,5 +291,6 @@
       "document_decisions": true,
       "create_knowledge_artifacts": true
     }
-  }
+  },
+  "model": "opusplan"
 }
