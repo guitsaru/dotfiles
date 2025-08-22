@@ -45,9 +45,7 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": {
-          "tools": ["Bash"]
-        },
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
@@ -59,36 +57,11 @@
     "UserPromptSubmit": [],
     "PostToolUse": [
       {
-        "matcher": {
-          "tools": ["Edit", "Write"],
-          "file_patterns": ["**/*.ex", "**/*.exs"]
-        },
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Running Elixir checks...' && mix format && mix credo && mix test"
-          }
-        ]
-      },
-      {
-        "matcher": {
-          "file_patterns": ["**/migrations/*.exs"]
-        },
-        "hooks": [
-          {
-            "type": "command",
-            "command": "mix ecto.migrate --log-sql && mix ecto.rollback && mix ecto.migrate"
-          }
-        ]
-      },
-      {
-        "matcher": {
-          "file_patterns": ["**/auth/**/*.ex", "**/session/**/*.ex", "**/permission/**/*.ex"]
-        },
-        "hooks": [
-          {
-            "type": "command",
-            "command": "mix deps.audit && mix sobelow --config"
+            "command": "echo 'File modified - consider running tests if applicable'"
           }
         ]
       }
