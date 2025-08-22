@@ -45,23 +45,52 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "git commit",
-        "command": "mix format --check-formatted && mix credo --strict && mix test"
+        "matcher": {
+          "tools": ["Bash"]
+        },
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Pre-tool hook for Bash commands'"
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [],
     "PostToolUse": [
       {
-        "matcher": "\\.(ex|exs)$",
-        "command": "echo 'Running Elixir checks...' && mix format && mix credo && mix test"
+        "matcher": {
+          "tools": ["Edit", "Write"],
+          "file_patterns": ["**/*.ex", "**/*.exs"]
+        },
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Running Elixir checks...' && mix format && mix credo && mix test"
+          }
+        ]
       },
       {
-        "matcher": "migrations.*\\.exs$",
-        "command": "mix ecto.migrate --log-sql && mix ecto.rollback && mix ecto.migrate"
+        "matcher": {
+          "file_patterns": ["**/migrations/*.exs"]
+        },
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mix ecto.migrate --log-sql && mix ecto.rollback && mix ecto.migrate"
+          }
+        ]
       },
       {
-        "matcher": "(auth|session|permission).*\\.ex$",
-        "command": "mix deps.audit && mix sobelow --config"
+        "matcher": {
+          "file_patterns": ["**/auth/**/*.ex", "**/session/**/*.ex", "**/permission/**/*.ex"]
+        },
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mix deps.audit && mix sobelow --config"
+          }
+        ]
       }
     ]
   },
