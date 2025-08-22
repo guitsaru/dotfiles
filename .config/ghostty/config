@@ -5,3 +5,4 @@ theme = catppuccin-frappe
 cursor-style=block
 macos-option-as-alt = true
 font-family = JetBrainsMonoNL Nerd Font Mono
+keybind = shift+enter=text:\n
