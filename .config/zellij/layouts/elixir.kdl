@@ -26,14 +26,4 @@ layout {
       args "-S" "mix" "phx.server"
     }
   }
-
-  tab name="Tests" {
-    pane name="Test Runner" command="mix" start_suspended=true {
-      args "test" "--listen-on-stdin"
-    }
-  }
-
-  tab name="Git" {
-    pane name="LazyGit" command="lazygit" start_suspended=true
-  }
 }
