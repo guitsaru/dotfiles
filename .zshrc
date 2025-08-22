@@ -196,7 +196,9 @@ git-clean() {
 
 # Shell integrations
 eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+if [[ "$CLAUDECODE" != "1" ]]; then
+  eval "$(zoxide init --cmd cd zsh)"
+fi
 
 # Initialize direnv if available
 if command -v direnv >/dev/null 2>&1; then
