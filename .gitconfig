@@ -6,7 +6,7 @@
 	status = status -sb
 
 [delta]
-    navigate = true  # use n and N to move between diff sections
+	navigate = true
     syntax-theme = Dracula
     line-numbers = true
     side-by-side = false
@@ -16,7 +16,7 @@
     hunk-header-decoration-style = cyan box ul
 
 [merge]
-    conflictstyle = diff3
+	conflictStyle = zdiff3
 
 [diff]
     colorMoved = default
@@ -30,6 +30,7 @@
 [core]
 	excludesFile = ~/.gitignore
 	editor = nvim
+	pager = delta
 
 [alias]
 	c = commit -m
@@ -61,3 +62,5 @@
 	helper = 
 	helper = !gh auth git-credential
 
+[interactive]
+	diffFilter = delta --color-only
