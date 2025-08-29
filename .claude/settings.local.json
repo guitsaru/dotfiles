@@ -10,7 +10,8 @@
       "Bash(grep:*)",
       "Bash(zsh:*)",
       "Bash(git push:*)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": [],

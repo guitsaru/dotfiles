@@ -414,3 +414,7 @@ scrollback_editor "/opt/homebrew/bin/nvim"
 // Default: true (if the host terminal supports it)
 // 
 // support_kitty_keyboard_protocol false
+
+env {
+    COLORTERM "truecolor"
+}
