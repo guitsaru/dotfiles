@@ -1,33 +1,34 @@
 ---
 name: epic-breakdown
-description: Break down a Feature/Epic PRD into Linear sub-issues with implementation tasks
+description: Break down a Feature/Epic PRD into GitHub issues and sub-issues with implementation tasks
 interactive_mode: true
 
 Examples:
 - <example>
   Context: User wants to break down an epic
   user: "Break down the Audit Logs epic into sub-issues"
-  assistant: "I'll analyze the Audit Logs PRD and create sub-issues with task checklists. First, let me review the requirements and codebase..."
-  <commentary>Breaking down epic into implementable sub-issues with task checklists</commentary>
+  assistant: "I'll analyze the Audit Logs PRD and create GitHub issues with task checklists. First, let me review the requirements and codebase..."
+  <commentary>Breaking down epic into implementable GitHub issues and sub-issues with task checklists</commentary>
 </example>
 - <example>
   Context: User provides a Linear epic issue
-  user: "Epic breakdown for issue LIN-42"
-  assistant: "I'll analyze Linear issue LIN-42 and break it down into sub-issues with detailed task checklists for implementation."
+  user: "Epic breakdown for GitHub milestone 'User Authentication'"
+  assistant: "I'll analyze the User Authentication milestone and break it down into GitHub issues and sub-issues with detailed task checklists for implementation."
   <commentary>Creating epic breakdown from Linear issue reference</commentary>
 </example>
 ---
 
-# Rule: Breaking Down Feature/Epic into Linear Sub-Issues
+# Rule: Breaking Down Feature/Epic into GitHub Issues and Sub-Issues
 
 ## Goal
 
-Create a structured breakdown of a Feature/Epic into Linear sub-issues, with each sub-issue containing its own task checklist. This creates the implementation plan for a feature defined in a PRD.
+Create a structured breakdown of a Feature/Epic into GitHub issues and sub-issues, with each issue containing its own task checklist. This creates the implementation plan for a feature defined in a PRD.
 
 ## Process
 
 1. **Input Analysis:** Accept either:
-   - A Linear Epic issue number/link
+   - A GitHub milestone name or link
+   - A GitHub issue number/link
    - A PRD document reference
    - A feature description
 
@@ -46,11 +47,12 @@ Create a structured breakdown of a Feature/Epic into Linear sub-issues, with eac
    - Each checklist item should be 1-4 hours of work
    - Include testing and documentation in checklists
 
-5. **Linear Creation:** Ask user: 'Should I create these as Linear sub-issues under the epic? (y/n)'
-   - If yes, use Linear MCP to create each sub-issue under the parent epic
+5. **GitHub Creation:** Ask user: 'Should I create these as GitHub issues and sub-issues? (y/n)'
+   - If yes, use GitHub CLI to create each issue and link sub-issues using GraphQL API
    - Add appropriate labels (backend/frontend/fullstack)
    - Set estimates based on S/M/L
    - Add the task checklist to each issue description
+   - Create milestone if this is a top-level epic
 
 ## Output Format
 
@@ -154,18 +156,18 @@ Assume the primary reader is a **Phoenix/Elixir developer** familiar with the st
 
 ## Output Options
 
-### Primary: Linear Issues (Default)
-* **Format:** Create sub-issues as Linear issues under parent epic
-* **Process:** Use Linear MCP tools to create each sub-issue with task checklists
-* **Benefits:** Trackable progress, proper workflow integration
-* **Hierarchy:** All sub-issues are children of the parent epic (use parentId)
+### Primary: GitHub Issues (Default)
+* **Format:** Create issues and sub-issues as GitHub issues under milestone
+* **Process:** Use GitHub CLI and GraphQL API to create each issue with task checklists
+* **Benefits:** Trackable progress, proper workflow integration, native sub-issue support
+* **Hierarchy:** Main issues linked to milestone, sub-issues linked to parent issues
 * **Labels:** Apply appropriate backend/frontend/fullstack labels
-* **Estimates:** Map S/M/L to Linear estimate values
+* **Estimates:** Use GitHub issue size labels (S/M/L)
 
 ### Optional: Documentation
 * **Format:** Show breakdown in chat first
-* **File:** Optionally save to `/docs/epics/[feature-name]-breakdown.md` if requested
-* **Focus:** Linear issue creation is primary, file is supplementary
+* **File:** Optionally save to `/docs/epics/EPIC-{###}-{feature-name}-breakdown.md` if requested
+* **Focus:** GitHub issue creation is primary, file is supplementary
 
 ## Final Instructions
 
@@ -174,7 +176,7 @@ Assume the primary reader is a **Phoenix/Elixir developer** familiar with the st
 3. **Generate** 3-8 sub-issues with realistic time estimates
 4. **Create** detailed task checklists for each sub-issue
 5. **Specify** file paths and dependencies
-6. **Offer** to create Linear sub-issues with proper linking and labels
+6. **Offer** to create GitHub issues and sub-issues with proper linking and labels
 7. **Include** ADR identification for architectural decisions
 
-**Note:** This command is specifically designed for the Elixir/Phoenix/LiveView stack and two-tier Linear structure (Epic → Sub-issues with task checklists).
+**Note:** This command is specifically designed for the Elixir/Phoenix/LiveView stack and GitHub structure (Milestone → Issues → Sub-issues with task checklists).

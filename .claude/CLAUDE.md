@@ -19,6 +19,9 @@ This is the Claude Code configuration directory (`~/.claude`). This directory co
 - `document`: Capture patterns and architectural decisions together
 - `continue`: Resume work from current state with context and user direction
 - `milestone`: Break down GitHub milestones into actionable issues with dependency planning
+- `prd`: Create Product Requirements Documents in `/docs/prd/` with GitHub issue integration
+- `adr`: Generate Architecture Decision Records in `/docs/adr/` with PR workflow
+- `epic-breakdown`: Break down milestones/epics into GitHub issues and sub-issues
 
 ## Tech Stack Patterns
 
@@ -180,3 +183,60 @@ dotfiles pull
 - **pattern_confirmation**: Always confirm patterns before applying
 - **checkpoint_interval**: Ask for input every 2 tasks
 - **explain_reasoning**: Always explain options and trade-offs
+
+## Document Management
+
+### Structure
+- **PRDs**: `/docs/prd/PRD-{###}-{feature-title}.md` (PRD-001, PRD-002, etc.)
+- **ADRs**: `/docs/adr/ADR-{###}-{title}.md` (ADR-001, ADR-002, etc.)
+- **Epics**: `/docs/epics/EPIC-{###}-{feature-name}-breakdown.md` (EPIC-001, etc.)
+
+### Workflow
+1. Create documentation on feature branch: `docs/{type}-{###}-{title}`
+2. Submit PR with just the documentation changes
+3. Review and merge documentation before implementation
+4. Create GitHub issues linking to approved documents
+5. Use GitHub's native sub-issue support for task hierarchies
+
+### Integration
+- **GitHub Issues**: Link to PRD/ADR documents for context
+- **Milestones**: Group related features and track progress
+- **Sub-Issues**: Use GitHub's native sub-issue API for task breakdown
+- **Projects**: Optional GitHub Projects integration for workflow management
+
+## Browser Automation
+
+### Playwright MCP Integration
+Claude Code includes Playwright MCP for browser automation and web interaction:
+
+**Common Use Cases:**
+- **Web Testing**: Automated testing of web applications and user flows
+- **UI Debugging**: Interactive debugging of frontend issues in real browsers
+- **Screenshot Generation**: Capturing visual states for documentation or debugging
+- **Form Automation**: Filling out forms and testing user interactions
+- **Content Extraction**: Scraping or extracting data from web pages
+- **Cross-browser Testing**: Testing compatibility across different browser engines
+
+**Browser Control:**
+```bash
+# Navigate and interact with web pages
+mcp__playwright__browser_navigate --url "https://example.com"
+mcp__playwright__browser_click --element "Login button" --ref "button_ref"
+mcp__playwright__browser_type --element "Email input" --text "user@example.com"
+mcp__playwright__browser_take_screenshot --filename "login-page.png"
+
+# Form interactions
+mcp__playwright__browser_fill_form --fields '[{"name":"email","type":"textbox","value":"test@example.com"}]'
+mcp__playwright__browser_select_option --element "Dropdown" --values '["option1"]'
+
+# Advanced interactions  
+mcp__playwright__browser_evaluate --function "() => document.title"
+mcp__playwright__browser_wait_for --text "Success message"
+```
+
+**Integration Patterns:**
+- **Development Workflow**: Test local development servers during implementation
+- **QA Automation**: Automated testing as part of quality gates
+- **Documentation**: Generate screenshots for PRDs and user guides
+- **Issue Reproduction**: Capture and document browser-based bugs
+- **Performance Testing**: Monitor page load times and user experience

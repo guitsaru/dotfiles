@@ -81,3 +81,17 @@ When adding new tools:
 2. Create configuration in appropriate `.config/` subdirectory
 3. Update shell aliases or path modifications in `.config/zsh/.zshrc`
 4. Test the full setup workflow to ensure reproducibility
+
+## Document Management
+
+This repository now includes a `/docs/` directory for structured documentation:
+
+- **PRDs**: Product Requirements Documents in `/docs/prd/PRD-{###}-{title}.md`
+- **ADRs**: Architecture Decision Records in `/docs/adr/ADR-{###}-{title}.md`  
+- **Epics**: Epic breakdowns in `/docs/epics/EPIC-{###}-{name}-breakdown.md`
+
+### Documentation Workflow
+1. Create docs on feature branch: `docs/{type}-{###}-{title}`
+2. Submit PR for document review before implementation
+3. Link GitHub issues to approved documentation
+4. Use GitHub milestones and sub-issues for task management

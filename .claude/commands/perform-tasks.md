@@ -1,6 +1,6 @@
 ---
 name: perform-tasks
-description: Implement tasks from Linear sub-issues, epic breakdown files, or task lists, with Linear integration and Phoenix/Elixir awareness
+description: Implement tasks from GitHub issues/sub-issues, epic breakdown files, or task lists, with GitHub integration and Phoenix/Elixir awareness
 interactive_mode: true
 
 Examples:
@@ -18,7 +18,7 @@ Examples:
 </example>
 ---
 
-# Task Implementation with Linear Integration
+# Task Implementation with GitHub Integration
 
 Guidelines for implementing tasks from Linear sub-issues, epic breakdowns, or task lists with proper Phoenix/Elixir patterns and Linear progress tracking.
 

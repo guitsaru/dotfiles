@@ -17,10 +17,10 @@ Examples:
   <commentary>Research-driven ADR creation with option analysis</commentary>
 </example>
 - <example>
-  Context: User references Linear issue for ADR
-  user: "Create an ADR for the caching strategy mentioned in LIN-456"
-  assistant: "I'll read the context from LIN-456 and create an ADR for the caching strategy. Let me fetch the issue details first..."
-  <commentary>ADR creation based on Linear issue context</commentary>
+  Context: User references GitHub issue for ADR
+  user: "Create an ADR for the caching strategy mentioned in issue #456"
+  assistant: "I'll read the context from issue #456 and create an ADR for the caching strategy. Let me fetch the issue details first..."
+  <commentary>ADR creation based on GitHub issue context</commentary>
 </example>
 ---
 
@@ -35,7 +35,7 @@ Create Architecture Decision Records (ADRs) to document important technical deci
 1. **Initial Input**: Accept one of:
    - A technical decision that needs documenting
    - A question about architectural choices
-   - Reference to a Linear issue that needs an ADR
+   - Reference to a GitHub issue that needs an ADR
 
 2. **Clarifying Questions**: Gather context, decision, and impact information
 
@@ -43,7 +43,7 @@ Create Architecture Decision Records (ADRs) to document important technical deci
 
 4. **Generate ADR**: Create comprehensive documentation using template
 
-5. **Create in Linear**: Save as Linear document with proper organization
+5. **Create GitHub Document**: Save as markdown file in `/docs/adr/ADR-{###}-{title}.md` with PR workflow
 
 6. **Follow-up Actions**: Suggest implementation steps if decision is accepted
 
@@ -54,7 +54,7 @@ Ask the user (provide lettered options where appropriate):
 ### Context Questions:
 * **Problem Statement**: "What problem are we trying to solve?"
 * **Product Context**: "Is this for: a) Nebula, b) Stellar, c) Pulsar, d) Simple Thai, e) Wug?"
-* **Feature Relation**: "Related to which feature/epic? (Linear issue number if applicable)"
+* **Feature Relation**: "Related to which feature/epic? (GitHub issue number if applicable)"
 * **Decision Trigger**: "What triggered this decision? (new feature, performance issue, technical debt, etc.)"
 
 ### Decision Questions:
@@ -84,7 +84,7 @@ If the user hasn't fully decided or needs more information:
 **Date**: [YYYY-MM-DD]
 **Status**: Proposed | Accepted | Superseded | Deprecated
 **Deciders**: [Names/Roles]
-**Technical Story**: [Linear issue link if applicable]
+**Technical Story**: [GitHub issue link if applicable]
 
 ## Context and Problem Statement
 
@@ -168,7 +168,7 @@ end
 
 ## Implementation Plan
 
-1. [Step 1 with Linear issue reference if applicable]
+1. [Step 1 with GitHub issue reference if applicable]
 2. [Step 2]
 3. [Step 3]
 
@@ -197,7 +197,7 @@ How will we know this decision was correct?
 - [ ] Proposed (date)
 - [ ] Reviewed (date)
 - [ ] Accepted (date)
-- [ ] Implemented (Linear issue #)
+- [ ] Implemented (GitHub issue #)
 ```
 
 ## Stack-Specific Templates
@@ -222,19 +222,21 @@ Include additional sections on:
 - **Language/Locale Considerations**: Internationalization effects
 - **Mobile vs Web Differences**: Platform-specific considerations
 
-## Linear Integration
+## GitHub Integration
 
 ### Document Creation:
-1. Ask which team's documents to save in
-2. Create as a Linear document under: Team > Documents > Architecture Decisions
-3. Use naming convention: 'ADR-XXX: [Title]'
-4. Link to related epic/issue if provided
-5. Return the document link
+1. Check existing ADRs in `/docs/adr/` to get next number
+2. Create feature branch: `docs/adr-{###}-{title}`
+3. Save as markdown file: `/docs/adr/ADR-{###}-{title}.md`
+4. Use naming convention: 'ADR-{###}: [Title]' in the file header
+5. Create GitHub issue linking to the ADR document
+6. Create PR with just the ADR document for review
+7. Link to related GitHub issues/milestones if provided
 
 ### ADR Numbering:
-- Check existing ADRs to get next number
-- Use format: ADR-001, ADR-002, etc.
-- Maintain sequential numbering within team
+- Check existing ADRs in `/docs/adr/` to get next number
+- Use format: ADR-001, ADR-002, etc. in filename and document header
+- Maintain sequential numbering across all ADRs
 
 ## Follow-up Actions
 

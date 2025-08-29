@@ -1,6 +1,6 @@
 ---
 name: context-dump
-description: Capture work session context for easy resumption, including git state, Linear issues, and next steps
+description: Capture work session context for easy resumption, including git state, GitHub issues, and next steps
 interactive_mode: true
 
 Examples:
