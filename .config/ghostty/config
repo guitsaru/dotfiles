@@ -1,7 +1,7 @@
 clipboard-read = allow
 clipboard-write = allow
 copy-on-select = false
-theme = catppuccin-frappe
+theme = dark:catppuccin-frappe,light:catppuccin-latte
 cursor-style=block
 macos-option-as-alt = true
 font-family = JetBrainsMonoNL Nerd Font Mono
