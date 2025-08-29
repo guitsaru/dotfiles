@@ -7,13 +7,18 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-  "assistant": {
-    "always_allow_tool_actions": true,
+  "agent": {
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4o"
+      "model": "gpt-5"
     },
-    "version": "2"
+    "always_allow_tool_actions": true
+  },
+  "agent_servers": {
+    "claude-code": {
+      "command": "npx",
+      "args": ["acp-claude-code"]
+    }
   },
   "tab_bar": { "show": false },
   "vim_mode": true,
@@ -40,5 +45,16 @@
   },
   "outline_panel": {
     "dock": "right"
+  },
+  "languages": {
+    "Elixir": {
+      "language_servers": [
+        "expert",
+        "!elixir-ls",
+        "!next-ls",
+        "!lexical",
+        "..."
+      ]
+    }
   }
 }
