@@ -26,4 +26,8 @@ layout {
       args "-S" "mix" "phx.server"
     }
   }
+
+  tab name="Git" {
+    pane name="LazyGit" command="lazygit" start_suspended=true
+  }
 }
