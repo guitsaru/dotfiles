@@ -10,6 +10,8 @@ return {
       -- Your configuration, if any — see lua/opencode/config.lua
     },
     keys = {
+      -- Define the group name
+      { "<leader>o", group = "opencode" },
       -- Main keymaps
       { "<leader>oA", function() require("opencode").ask() end, desc = "Ask opencode" },
       { "<leader>oa", function() require("opencode").ask("@cursor: ") end, desc = "Ask opencode about this", mode = "n" },
