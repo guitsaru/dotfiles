@@ -88,8 +88,8 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Editor
-EDITOR=/opt/homebrew/bin/nvim
-VISUAL=/opt/homebrew/bin/nvim
+export EDITOR=/opt/homebrew/bin/nvim
+export VISUAL=/opt/homebrew/bin/nvim
 
 # Aliases
 alias ls='eza'
