@@ -43,8 +43,8 @@ layout {
     pane
   }
 
-  tab name="Claude" {
-    pane name="Claude Code" command="claude" start_suspended=true
+  tab name="AI" {
+    pane name="AI" command="opencode" start_suspended=true
   }
 
   tab name="Git" {
