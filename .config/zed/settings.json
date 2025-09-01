@@ -8,17 +8,20 @@
 // command palette
 {
   "agent": {
+    "profiles": {
+      "plan": {
+        "name": "Plan",
+        "tools": {},
+        "enable_all_context_servers": false,
+        "context_servers": {}
+      }
+    },
+    "default_profile": "ask",
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-5"
     },
     "always_allow_tool_actions": true
-  },
-  "agent_servers": {
-    "claude-code": {
-      "command": "npx",
-      "args": ["acp-claude-code"]
-    }
   },
   "tab_bar": { "show": false },
   "vim_mode": true,

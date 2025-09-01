@@ -1,6 +1,7 @@
 git:
   paging:
     useConfig: true
+    externalDiffCommand: 'sh -c "delta --paging=never"'
 
 gui:
   theme:
