@@ -18,7 +18,7 @@ layout {
   }
 
   tab name="AI" {
-    pane name="AI" command="opencode" start_suspended=true
+    pane name="AI" command="claude" start_suspended=true
   }
 
   tab name="Server" {
