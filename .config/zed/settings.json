@@ -21,7 +21,7 @@
       "provider": "copilot_chat",
       "model": "gpt-5"
     },
-    "always_allow_tool_actions": true
+    "always_allow_tool_actions": false
   },
   "tab_bar": { "show": false },
   "vim_mode": true,
