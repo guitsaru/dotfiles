@@ -221,5 +221,7 @@ dotfiles-auto-backup() {
         echo "✅ Weekly backup scheduled for Sundays at 2 AM"
     fi
 }
+
+export PATH="~/.local/bin:$PATH"
 eval "$(/opt/homebrew/bin/mise activate zsh)"
 eval "$(atuin init zsh)"
