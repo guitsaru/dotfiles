@@ -222,6 +222,5 @@ dotfiles-auto-backup() {
     fi
 }
 
-export PATH="~/.local/bin:$PATH"
 eval "$(/opt/homebrew/bin/mise activate zsh)"
 eval "$(atuin init zsh)"
