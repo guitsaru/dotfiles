@@ -54,3 +54,16 @@ alias lt='eza --tree --level=2 --group-directories-first'
 alias cat='bat --paging=never'
 export PAGER=less
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# ---- Autosuggestions -----------------------------------------------------
+# Ghosted suggestion from history as you type; accept with the right arrow
+# key or End. Must be sourced after compinit for the completion strategy.
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+# Only rebind widgets once at startup rather than on every keypress.
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+# Don't try to suggest for enormous pastes.
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Accept the whole suggestion with Ctrl-Space, one word with Alt-Right.
+bindkey '^ ' autosuggest-accept

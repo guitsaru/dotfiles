@@ -22,12 +22,18 @@ brew "gnupg"
 brew "herdr"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Simple terminal UI for git commands
+brew "lazygit"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
 # Simple tool to make locally trusted development certificates
 brew "mkcert"
 # Deep clean and optimize your Mac
 brew "mole"
+# Incremental parsing library
+brew "tree-sitter"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
 # Libraries for security-enabled client and server applications
 brew "nss"
 # Search tool like grep and The Silver Searcher
@@ -38,6 +44,8 @@ brew "opencode"
 brew "starship"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
 # Image editing and design software
 cask "affinity"
 # Display management tool
