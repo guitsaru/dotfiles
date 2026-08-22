@@ -15,8 +15,6 @@ setopt HIST_FCNTL_LOCK
 
 # ---- PATH ----------------------------------------------------------------
 export PATH="$HOME/.local/bin:$PATH"
-# rustc/cargo live only here -- ~/.cargo/bin is empty. Load-bearing.
-export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
 
 # ---- Completions ---------------------------------------------------------
 FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
@@ -42,3 +40,17 @@ eval "$(starship init zsh)"
 
 # fzf: Ctrl-R history search, Ctrl-T file picker, Alt-C cd, ** completion
 eval "$(fzf --zsh)"
+
+# zoxide: `z <partial>` jumps to a frecent dir, `zi` picks interactively.
+eval "$(zoxide init zsh)"
+
+# ---- Aliases -------------------------------------------------------------
+alias ls='eza --group-directories-first'
+alias ll='eza -l --git --group-directories-first'
+alias la='eza -la --git --group-directories-first'
+alias lt='eza --tree --level=2 --group-directories-first'
+
+# bat prints plain when piped, so this stays safe in pipelines.
+alias cat='bat --paging=never'
+export PAGER=less
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"

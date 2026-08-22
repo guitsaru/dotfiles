@@ -16,6 +16,8 @@ brew "fzf"
 brew "gh"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# GNU Privacy Guard (OpenPGP)
+brew "gnupg"
 # Agent multiplexer that lives in your terminal
 brew "herdr"
 # Lightweight and flexible command-line JSON processor
@@ -32,10 +34,10 @@ brew "nss"
 brew "ripgrep"
 # AI coding agent, built for the terminal
 brew "opencode"
-# Rust toolchain installer
-brew "rustup"
 # Cross-shell prompt for astronauts
 brew "starship"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
 # Image editing and design software
 cask "affinity"
 # Display management tool

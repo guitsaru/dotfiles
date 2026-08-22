@@ -1,1 +1,16 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editors
+.idea/
+*.swp
+*.swo
+
+# Direnv / local env
+.envrc.local
+
+# Claude Code local overrides
 **/.claude/settings.local.json
