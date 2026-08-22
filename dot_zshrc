@@ -1,0 +1,44 @@
+# ---- History -------------------------------------------------------------
+# macOS /etc/zshrc caps SAVEHIST at 1000; override it here.
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=100000
+SAVEHIST=100000
+
+setopt EXTENDED_HISTORY       # record timestamp + duration
+setopt INC_APPEND_HISTORY     # write immediately, not at shell exit
+setopt SHARE_HISTORY          # share between concurrent shells
+setopt HIST_IGNORE_ALL_DUPS   # drop older duplicates
+setopt HIST_IGNORE_SPACE      # leading space = don't record
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY            # expand !! for confirmation instead of running
+setopt HIST_FCNTL_LOCK
+
+# ---- PATH ----------------------------------------------------------------
+export PATH="$HOME/.local/bin:$PATH"
+# rustc/cargo live only here -- ~/.cargo/bin is empty. Load-bearing.
+export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
+
+# ---- Completions ---------------------------------------------------------
+FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
+
+autoload -Uz compinit
+_zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+# Full rebuild at most once a day; cheap -C load otherwise.
+if [[ ! -e "$_zcompdump" ]] || [[ -n "$(find "$_zcompdump" -mtime +1 2>/dev/null)" ]]; then
+  compinit -d "$_zcompdump"
+else
+  compinit -C -d "$_zcompdump"
+fi
+unset _zcompdump
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{yellow}%d%f'
+
+# ---- Tools ---------------------------------------------------------------
+eval "$(mise activate zsh)"
+eval "$(starship init zsh)"
+
+# fzf: Ctrl-R history search, Ctrl-T file picker, Alt-C cd, ** completion
+eval "$(fzf --zsh)"

@@ -1,0 +1,3 @@
+font-family = "JetBrainsMonoNL Nerd Font"
+shell-integration-features = ssh-env,ssh-terminfo
+macos-option-as-alt = left

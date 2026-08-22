@@ -1,0 +1,12 @@
+# Never manage these — they hold credentials or machine-local state.
+.config/gh/hosts.yml
+.claude.json
+.claude.json.backup
+.claude/gh-pr-status-cache.json
+.claude/projects
+.claude/todos
+.claude/statsig
+.claude/shell-snapshots
+.ssh/id_*
+.ssh/known_hosts*
+.zsh_history

@@ -1,0 +1,148 @@
+[user]
+	name = Matt Pruitt
+	email = matt@guitsaru.com
+	signingkey = ~/.ssh/id_ed25519.pub
+
+[core]
+	editor = zed --wait
+	pager = delta
+	fsmonitor = true
+	untrackedCache = true
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+	default = current
+	followTags = true
+
+[fetch]
+	prune = true
+	pruneTags = true
+	writeCommitGraph = true
+	fsckObjects = true
+
+[transfer]
+	fsckObjects = true
+
+[receive]
+	fsckObjects = true
+
+[rebase]
+	autoStash = true
+	autoSquash = true
+	updateRefs = true
+
+[merge]
+	conflictStyle = zdiff3
+	tool = zed
+
+[mergetool]
+	keepBackup = false
+	prompt = false
+
+[mergetool "zed"]
+	cmd = zed --wait --diff $LOCAL $REMOTE
+	trustExitCode = true
+
+[diff]
+	algorithm = histogram
+	colorMoved = default
+	colorMovedWS = allow-indentation-change
+	renames = copies
+	tool = zed
+
+[difftool "zed"]
+	cmd = zed --wait --diff $LOCAL $REMOTE
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = false
+	syntax-theme = ansi
+	hyperlinks = true
+
+[rerere]
+	enabled = true
+	autoupdate = true
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = version:refname
+	gpgsign = true
+
+[column]
+	ui = auto
+
+[help]
+	autocorrect = prompt
+
+[commit]
+	verbose = true
+	gpgsign = true
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
+
+[log]
+	date = iso
+
+[credential]
+	helper = osxkeychain
+
+[submodule]
+	recurse = true
+
+[apply]
+	whitespace = fix
+
+[status]
+	showUntrackedFiles = all
+
+[feature]
+	manyFiles = true
+
+[advice]
+	addIgnoredFile = false
+	detachedHead = false
+	skippedCherryPicks = false
+	statusHints = false
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+
+[alias]
+	co = checkout
+	br = branch
+	st = status -sb
+	ci = commit
+	cm = commit -m
+	ca = commit --amend
+	can = commit --amend --no-edit
+	aa = add --all
+	dc = diff --cached
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	lg = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(red)%d%Creset %s %C(green)(%cr) %C(blue)<%an>%Creset' --abbrev-commit
+	pushf = push --force-with-lease --force-if-includes
+	undo = reset --soft HEAD~1
+	wip = !git add -A && git commit -m 'wip'
+	uncommit = reset HEAD~1
+	root = rev-parse --show-toplevel
+	cleanup = !git branch --merged | grep -vE '^\\*|^\\s*(main|master|develop)$' | xargs -n 1 git branch -d
+	fixup = !git log -n 50 --pretty=format:'%h %s' --no-merges | fzf --reverse | cut -c -7 | xargs -o git commit --fixup
+	squash = !git log -n 50 --pretty=format:'%h %s' --no-merges | fzf --reverse | cut -c -7 | xargs -o git commit --squash
+	recent = for-each-ref --count=20 --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+	find = "!f() { git log --all --source --pretty=format:'%h %an: %s' -S\"$1\"; }; f"
