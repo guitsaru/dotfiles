@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+"""Merge versioned Claude Code settings into the existing settings.json.
+
+chezmoi pipes the current target file in on stdin and uses stdout as the
+new contents. That lets this file version the settings actually chosen
+while leaving machine-local, Claude-generated state (notably the
+`autoMode.environment` block) untouched and unpublished.
+
+Keys listed in MANAGED are authoritative here and overwrite whatever is
+on disk. Every other key is passed through unchanged.
+"""
+
+import json
+import sys
+
+MANAGED = {
+    # Keep Claude out of commit messages and PR bodies. Verified against
+    # the 2.1.x binary, which reads `attribution` and `sessionUrl`.
+    "attribution": {"commit": "", "pr": "", "sessionUrl": False},
+    "statusLine": {
+        "type": "command",
+        "command": "bash ~/.claude/statusline-command.sh",
+    },
+    "enabledPlugins": {
+        "claude-code-setup@claude-plugins-official": True,
+        "superpowers@claude-plugins-official": True,
+        "skill-creator@claude-plugins-official": True,
+        "frontend-design@claude-plugins-official": True,
+        "linear@claude-plugins-official": True,
+        "code-review@claude-plugins-official": True,
+        "posthog@claude-plugins-official": True,
+    },
+    "tui": "fullscreen",
+    "skipWorkflowUsageWarning": True,
+    "remoteControlAtStartup": True,
+    "agentPushNotifEnabled": True,
+    "skipAutoPermissionPrompt": True,
+    "hooks": {
+        "SessionStart": [
+            {
+                "matcher": "*",
+                "hooks": [
+                    {
+                        "type": "command",
+                        # ~ rather than an absolute path, so this works on
+                        # any machine and any username.
+                        "command": "bash ~/.claude/hooks/herdr-agent-state.sh session",
+                        "timeout": 10,
+                    }
+                ],
+            }
+        ]
+    },
+}
+
+
+def main() -> int:
+    raw = sys.stdin.read().strip()
+
+    # Empty stdin means the file does not exist yet (fresh machine).
+    if raw:
+        try:
+            current = json.loads(raw)
+        except json.JSONDecodeError as exc:
+            # Never destroy a file we cannot parse -- pass it through and
+            # complain on stderr so chezmoi surfaces it.
+            print(
+                f"modify_settings.json: target is not valid JSON: {exc}",
+                file=sys.stderr,
+            )
+            sys.stdout.write(raw)
+            return 0
+        if not isinstance(current, dict):
+            print(
+                "modify_settings.json: target is not a JSON object",
+                file=sys.stderr,
+            )
+            sys.stdout.write(raw)
+            return 0
+    else:
+        current = {}
+
+    current.update(MANAGED)
+
+    # ensure_ascii=False keeps em dashes and other non-ASCII intact rather
+    # than rewriting them as \uXXXX, which would show up as spurious diffs.
+    json.dump(current, sys.stdout, indent=2, ensure_ascii=False)
+    sys.stdout.write("\n")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
