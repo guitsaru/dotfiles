@@ -146,3 +146,8 @@
 	squash = !git log -n 50 --pretty=format:'%h %s' --no-merges | fzf --reverse | cut -c -7 | xargs -o git commit --squash
 	recent = for-each-ref --count=20 --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 	find = "!f() { git log --all --source --pretty=format:'%h %an: %s' -S\"$1\"; }; f"
+
+[include]
+	# Machine-specific settings: maintenance repo paths, work identities,
+	# anything that should not be published. A missing file is not an error.
+	path = ~/.gitconfig.local

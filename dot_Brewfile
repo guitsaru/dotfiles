@@ -12,6 +12,8 @@ brew "ffmpeg"
 brew "flyctl"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+# Replace zsh completion selection menu with fzf
+brew "fzf-tab"
 # GitHub command-line tool
 brew "gh"
 # Syntax-highlighting pager for git and diff output

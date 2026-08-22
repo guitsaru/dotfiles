@@ -43,4 +43,41 @@
     "light": "One Light",
     "dark": "One Dark",
   },
+  "languages": {
+    // The Elixir extension ships five language servers: dexter, elixir-ls,
+    // expert, lexical, next-ls. Pick one explicitly rather than inheriting
+    // whatever order the extension happens to declare. `expert` is the
+    // newer consolidated server -- swap the list below to try it.
+    "Elixir": {
+      "language_servers": [
+        "elixir-ls",
+        "!expert",
+        "!lexical",
+        "!next-ls",
+        "!dexter"
+      ],
+      // Formats through the language server, which honours the project's
+      // own .formatter.exs rather than imposing separate settings.
+      "format_on_save": "on",
+      "formatter": "language_server",
+      "tab_size": 2
+    },
+    "HEEx": {
+      "language_servers": [
+        "elixir-ls",
+        "!expert",
+        "!lexical",
+        "!next-ls",
+        "!dexter"
+      ],
+      "format_on_save": "on",
+      "formatter": "language_server",
+      "tab_size": 2
+    },
+    "EEx": {
+      "format_on_save": "on",
+      "formatter": "language_server",
+      "tab_size": 2
+    }
+  },
 }

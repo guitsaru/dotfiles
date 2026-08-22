@@ -13,3 +13,4 @@ README.md
 .ssh/id_*
 .ssh/known_hosts*
 .zsh_history
+.gitconfig.local

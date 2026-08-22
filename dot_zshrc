@@ -29,10 +29,21 @@ else
 fi
 unset _zcompdump
 
-zstyle ':completion:*' menu select
+# `menu no` is required by fzf-tab: it stops zsh drawing its own menu so
+# fzf-tab can capture the unambiguous prefix itself.
+zstyle ':completion:*' menu no
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:descriptions' format '%F{yellow}%d%f'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# Keep git's own ordering for branches instead of sorting alphabetically.
+zstyle ':completion:*:git-checkout:*' sort false
+
+# fzf-tab must load after compinit and before any plugin that wraps
+# widgets (zsh-autosuggestions, below).
+source /opt/homebrew/share/fzf-tab/fzf-tab.zsh
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --group-directories-first $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always --group-directories-first $realpath'
 
 # ---- Tools ---------------------------------------------------------------
 eval "$(mise activate zsh)"
