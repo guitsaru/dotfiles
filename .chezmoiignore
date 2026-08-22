@@ -1,3 +1,6 @@
+# Repo files, not targets.
+README.md
+
 # Never manage these — they hold credentials or machine-local state.
 .config/gh/hosts.yml
 .claude.json
