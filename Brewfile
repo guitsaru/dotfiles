@@ -1,7 +1,5 @@
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# Manage your dotfiles across multiple diverse machines, securely
-brew "chezmoi"
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find

@@ -1,16 +1,23 @@
 #!/usr/bin/env python3
 """Merge versioned Claude Code settings into the existing settings.json.
 
-chezmoi pipes the current target file in on stdin and uses stdout as the
-new contents. That lets this file version the settings actually chosen
-while leaving machine-local, Claude-generated state (notably the
-`autoMode.environment` block) untouched and unpublished.
+Invoked from home/.claude/settings.json.tmpl via the mise template
+engine's exec(): this script reads the *current* target file and writes
+the merged result to stdout, which mise renders into the target. That
+lets this file version the settings actually chosen while leaving
+machine-local, Claude-generated state (notably the `autoMode.environment`
+block) untouched and unpublished.
+
+Under chezmoi the current contents arrived on stdin. mise templates have
+no stdin, so the target path is passed as argv[1] and read here instead.
+The merge semantics are unchanged.
 
 Keys listed in MANAGED are authoritative here and overwrite whatever is
 on disk. Every other key is passed through unchanged.
 """
 
 import json
+import os
 import sys
 
 MANAGED = {
@@ -55,24 +62,33 @@ MANAGED = {
 
 
 def main() -> int:
-    raw = sys.stdin.read().strip()
+    if len(sys.argv) < 2:
+        print("usage: merge-claude-settings.py <target>", file=sys.stderr)
+        return 2
 
-    # Empty stdin means the file does not exist yet (fresh machine).
+    target = os.path.expanduser(sys.argv[1])
+
+    # A missing file means a fresh machine; start from nothing.
+    raw = ""
+    if os.path.exists(target):
+        with open(target, encoding="utf-8") as fh:
+            raw = fh.read().strip()
+
     if raw:
         try:
             current = json.loads(raw)
         except json.JSONDecodeError as exc:
             # Never destroy a file we cannot parse -- pass it through and
-            # complain on stderr so chezmoi surfaces it.
+            # complain on stderr so mise surfaces it.
             print(
-                f"modify_settings.json: target is not valid JSON: {exc}",
+                f"merge-claude-settings.py: target is not valid JSON: {exc}",
                 file=sys.stderr,
             )
             sys.stdout.write(raw)
             return 0
         if not isinstance(current, dict):
             print(
-                "modify_settings.json: target is not a JSON object",
+                "merge-claude-settings.py: target is not a JSON object",
                 file=sys.stderr,
             )
             sys.stdout.write(raw)

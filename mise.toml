@@ -1,0 +1,71 @@
+# Machine setup for this repo, applied in one pass by `mise bootstrap`.
+# Run it from this directory; see README.md for the cold-start command.
+#
+# Sources are relative to this file, so the repo works from any path.
+# `exec()` in templates and every hook below also run from this directory.
+
+[dotfiles]
+# Shell and git
+"~/.zshrc"      = "home/.zshrc"
+"~/.zshenv"     = "home/.zshenv"
+"~/.zprofile"   = "home/.zprofile"
+"~/.gitconfig"  = "home/.gitconfig"
+"~/.ssh/config" = "home/.ssh/config"
+
+# ~/.config
+"~/.config/git/ignore"              = "home/.config/git/ignore"
+"~/.config/gh/config.yml"           = "home/.config/gh/config.yml"
+"~/.config/ghostty/config"          = "home/.config/ghostty/config"
+"~/.config/herdr/config.toml"       = "home/.config/herdr/config.toml"
+"~/.config/mise/config.toml"        = "home/.config/mise/config.toml"
+"~/.config/opencode/opencode.jsonc" = "home/.config/opencode/opencode.jsonc"
+"~/.config/starship.toml"           = "home/.config/starship.toml"
+"~/.config/zed/settings.json"       = "home/.config/zed/settings.json"
+
+# The whole nvim directory is one symlink, so lazy.nvim writes lazy-lock.json
+# and lazyvim.json straight into the repo -- plugin bumps show up in git status
+# with nothing to sync.
+"~/.config/nvim" = "home/.config/nvim"
+
+# Claude Code
+"~/.claude/CLAUDE.md"                  = "home/.claude/CLAUDE.md"
+"~/.claude/keybindings.json"           = "home/.claude/keybindings.json"
+"~/.claude/statusline-command.sh"      = "home/.claude/statusline-command.sh"
+"~/.claude/hooks/herdr-agent-state.sh" = "home/.claude/hooks/herdr-agent-state.sh"
+
+# settings.json cannot be a symlink: Claude rewrites it in place, and the
+# autoMode.environment block it generates is machine-local and must not be
+# published. The template shells out to scripts/merge-claude-settings.py,
+# which reads the current file and overwrites only the keys we own.
+"~/.claude/settings.json" = { source = "home/.claude/settings.json.tmpl", mode = "template" }
+
+[bootstrap.hooks]
+# [bootstrap.packages] is formulae-only -- casks 404 against the formula API --
+# so the Brewfile stays the single source of truth and runs here instead.
+# pre-packages is the early hook (post-packages runs after [tools], too late
+# to install the tools everything else needs).
+pre-packages = [
+  'command -v brew >/dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"',
+  'eval "$(/opt/homebrew/bin/brew shellenv)" && brew bundle install --file=Brewfile --no-upgrade',
+]
+
+# git records only the executable bit, so 0600 cannot survive a clone the way
+# chezmoi's private_ prefix encoded it. Symlinked targets chmod through to the
+# repo file; the template-rendered one is a real file.
+# The rendered settings.json takes its mode from the template file, so that
+# gets chmodded too -- otherwise mise sees permanent drift and re-renders on
+# every run.
+post-dotfiles = [
+  'mkdir -p ~/.ssh && chmod 700 ~/.ssh',
+  'chmod 600 ~/.ssh/config ~/.config/gh/config.yml ~/.config/zed/settings.json ~/.claude/settings.json',
+  'chmod 600 home/.claude/settings.json.tmpl',
+]
+
+# Runs after [tools] are installed. Keep idempotent -- it runs every bootstrap.
+[tasks.bootstrap]
+description = "Install herdr plugins"
+run = """
+command -v herdr >/dev/null || exit 0
+herdr plugin list | grep -q '(herdr-lazygit)' || herdr plugin install crokily/herdr-lazygit --ref v0.3.0 --yes
+herdr plugin list | grep -q '(herdr-nvim)'    || herdr plugin install ChmaraX/herdr-nvim --ref v0.2.1 --yes
+"""
