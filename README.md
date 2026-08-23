@@ -90,10 +90,16 @@ than being evaluated.
   Typing is strict: `com.apple.dock tilesize` is stored as a float, and the
   friendly `tilesize` key is integer-only, so it is declared under raw
   `[bootstrap.macos.defaults]` instead -- otherwise it reads as permanent drift.
-- `mise bootstrap packages import --manager brew` re-derives the formula list
-  from what is installed, and is the check to run after adding one by hand.
-  There is no cask equivalent: cask import is not implemented, so casks are
-  maintained by hand in `[bootstrap.packages]`.
+- `[bootstrap.packages]` is a curated list of what a fresh machine needs, not a
+  record of everything installed. Installing something ad-hoc with `brew` is
+  expected and should stay out of it -- bootstrap and `status` only consider
+  declared entries, so extras are simply invisible to them.
+- Consequently `mise bootstrap packages prune` is a footgun: it deletes
+  installed packages absent from the list, including every ad-hoc install.
+  `packages import --manager brew` has the opposite problem, sweeping ad-hoc
+  installs into the list. Both are useful to *inspect* with `--dry-run`; neither
+  should be applied without reading the output. There is no cask equivalent of
+  import in any case -- cask import is not implemented.
 - git records only the executable bit, so the `post-dotfiles` hook restores
   `0600` on `~/.ssh/config`, `~/.config/gh/config.yml`,
   `~/.config/zed/settings.json`, and `~/.claude/settings.json`.

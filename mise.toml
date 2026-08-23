@@ -49,6 +49,20 @@
 # version upgrade. Re-grant in System Settings if an app stops working.
 adopt = true
 
+# A curated fresh-setup manifest, NOT a mirror of what is installed. Ad-hoc
+# `brew install` for one-off tools is expected and belongs nowhere near this
+# list; bootstrap, status and the drift check only ever consider what is
+# declared here, so undeclared packages are invisible to them rather than a
+# problem.
+#
+# Two commands break that assumption and should not be run unattended:
+#   packages prune  -- DELETES installed packages missing from this list, which
+#                      means every ad-hoc install. It removed chezmoi during the
+#                      migration; that was safe only because nothing else was
+#                      undeclared at the time.
+#   packages import -- SWEEPS installed formulae INTO this list, which is the
+#                      opposite of curation. Useful to see what you have; review
+#                      its output, never accept it wholesale.
 [bootstrap.packages]
 # Clone of cat(1) with syntax highlighting and Git integration
 "brew:bat" = "latest"
