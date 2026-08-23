@@ -1,5 +1,9 @@
+# Global toolchains, deliberately unbounded -- this machine should always be
+# current and the nightly dev.mise.mise-upgrade agent keeps it that way.
+# Projects pin their own versions in their own mise.toml; nothing here is a
+# build input.
 [tools]
-elixir = "1.20.0-otp-29"
-erlang = "29.0.1"
-node = "26.5.0"
-rust = "stable"
+elixir = "latest"
+erlang = "latest"
+node = "latest"   # not "lts": that resolves two majors back, to 24.x
+rust = "stable"   # rustup's channel, which already means "newest stable"

@@ -42,7 +42,7 @@ hardcoded root. `~/.dotfiles` is just the path the one-liner picks.
 |---|---|
 | `mise.toml` | Packages, dotfile mappings, bootstrap hooks, and the herdr plugin task |
 | `home/` | Everything symlinked into `$HOME`, mirroring its layout |
-| `home/.config/mise/config.toml` | Elixir / Erlang / Node / Rust versions |
+| `home/.config/mise/config.toml` | Global toolchains, unbounded |
 | `scripts/merge-claude-settings.py` | Merges owned keys into `~/.claude/settings.json` |
 
 macOS preferences that differ from stock live in `[bootstrap.macos.*]`: Dock
@@ -74,8 +74,23 @@ than being evaluated.
 
 ## Scheduled maintenance
 
-A weekly LaunchAgent (`dev.mise.brew-upgrade`, Mondays at 09:00) runs
-`brew upgrade --formula`, logging to `~/Library/Logs/brew-upgrade.log`.
+Two nightly LaunchAgents, logging to `~/Library/Logs/`:
+
+| Agent | Time | Runs |
+|---|---|---|
+| `dev.mise.brew-upgrade` | 03:00 | `brew upgrade --formula` |
+| `dev.mise.mise-upgrade` | 03:30 | `mise upgrade` |
+
+Sleeping through the schedule is fine. Unlike cron, launchd runs a missed
+`StartCalendarInterval` job on the next wake, and coalesces multiple missed
+intervals into a single run — a week away is one catch-up run, not seven.
+
+`mise upgrade` keeps the global toolchains current. They are unbounded
+(`latest`) on purpose: this machine should always be current, and projects pin
+their own versions in their own `mise.toml`, so nothing here is a build input.
+`node` is `latest` rather than `lts` because `lts` currently resolves two
+majors back. `rust` stays on rustup's `stable` channel, which already means
+newest stable.
 
 `brew upgrade` rather than `mise bootstrap packages upgrade` because it is the
 only one that reaches ad-hoc `brew install`s, which by design are not declared

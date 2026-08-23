@@ -196,7 +196,7 @@ AppleMeasurementUnits = "Centimeters"
 AppleMetricUnits = true
 AppleTemperatureUnit = "Celsius"
 
-# Weekly `brew upgrade`. This is the only thing that upgrades ad-hoc brew
+# Nightly `brew upgrade`. This is the only thing that upgrades ad-hoc brew
 # installs -- `packages upgrade` only touches what [bootstrap.packages]
 # declares -- and it works on kegs mise poured, since mise writes
 # brew-compatible receipts.
@@ -207,10 +207,24 @@ AppleTemperatureUnit = "Celsius"
 [bootstrap.macos.launchd.agents.brew-upgrade]
 program = "/opt/homebrew/bin/brew"
 args = ["upgrade", "--formula"]
-start_calendar_interval = { hour = 9, weekday = 1 }
+start_calendar_interval = { hour = 3, minute = 0 }
 environment = { PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin" }
 stdout_path = "~/Library/Logs/brew-upgrade.log"
 stderr_path = "~/Library/Logs/brew-upgrade.err.log"
+
+# Nightly `mise upgrade`. The global toolchains are unbounded on purpose, so
+# this is what keeps them current; projects pin their own versions and are
+# unaffected. Offset from brew-upgrade so the two do not contend.
+#
+# Asleep at 03:30 is fine: launchd runs a missed StartCalendarInterval job on
+# the next wake, and coalesces multiple missed intervals into a single run.
+[bootstrap.macos.launchd.agents.mise-upgrade]
+program = "/opt/homebrew/bin/mise"
+args = ["upgrade", "--yes"]
+start_calendar_interval = { hour = 3, minute = 30 }
+environment = { PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin" }
+stdout_path = "~/Library/Logs/mise-upgrade.log"
+stderr_path = "~/Library/Logs/mise-upgrade.err.log"
 
 [bootstrap.hooks]
 # git records only the executable bit, so 0600 cannot survive a clone the way
