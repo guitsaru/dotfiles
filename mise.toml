@@ -70,8 +70,6 @@ adopt = true
 "brew:mas" = "latest"
 # GNU Privacy Guard (OpenPGP)
 "brew:gnupg" = "latest"
-# Agent multiplexer that lives in your terminal
-"brew:herdr" = "latest"
 # Polyglot runtime manager (asdf rust clone)
 "brew:mise" = "latest"
 # Deep clean and optimize your Mac
