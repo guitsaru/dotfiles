@@ -104,8 +104,6 @@ adopt = true
 "brew:nss" = "latest"
 # Search tool like grep and The Silver Searcher
 "brew:ripgrep" = "latest"
-# AI coding agent, built for the terminal
-"brew:opencode" = "latest"
 # Cross-shell prompt for astronauts
 "brew:starship" = "latest"
 # Shell extension to navigate your filesystem faster
@@ -118,10 +116,6 @@ adopt = true
 "brew-cask:betterdisplay" = "latest"
 # Anthropic's official Claude AI desktop app
 "brew-cask:claude" = "latest"
-# Terminal-based AI coding assistant
-"brew-cask:claude-code" = "latest"
-# OpenAI's coding agent that runs in your terminal
-"brew-cask:codex" = "latest"
 "brew-cask:font-jetbrains-mono-nerd-font" = "latest"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 "brew-cask:ghostty" = "latest"

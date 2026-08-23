@@ -7,3 +7,11 @@ elixir = "latest"
 erlang = "latest"
 node = "latest"   # not "lts": that resolves two majors back, to 24.x
 rust = "stable"   # rustup's channel, which already means "newest stable"
+
+# AI CLIs. `latest` for the same reason as the toolchains -- these are tools,
+# not build inputs, and a major bump costs nothing. Previously casks (codex,
+# claude-code) and a formula (opencode); as tools the version is pinned in git
+# and moved by the nightly `mise upgrade` instead of by Homebrew.
+claude-code = "latest"
+codex = "latest"
+opencode = "latest"

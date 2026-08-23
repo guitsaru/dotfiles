@@ -85,6 +85,12 @@ Sleeping through the schedule is fine. Unlike cron, launchd runs a missed
 `StartCalendarInterval` job on the next wake, and coalesces multiple missed
 intervals into a single run — a week away is one catch-up run, not seven.
 
+The AI CLIs — `claude-code`, `codex`, `opencode` — are `[tools]` rather than
+casks or formulae. As tools their versions are recorded in git and moved by the
+nightly `mise upgrade`; as casks they were Homebrew's to update, and `opencode`
+as a formula additionally dragged in its own Homebrew `node` that shadowed the
+mise-managed one on `PATH`.
+
 `mise upgrade` keeps the global toolchains current. They are unbounded
 (`latest`) on purpose: this machine should always be current, and projects pin
 their own versions in their own `mise.toml`, so nothing here is a build input.
