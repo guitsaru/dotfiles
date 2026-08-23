@@ -45,6 +45,10 @@ hardcoded root. `~/.dotfiles` is just the path the one-liner picks.
 | `home/.config/mise/config.toml` | Elixir / Erlang / Node / Rust versions |
 | `scripts/merge-claude-settings.py` | Merges owned keys into `~/.claude/settings.json` |
 
+macOS preferences that differ from stock live in `[bootstrap.macos.*]`: Dock
+autohide, tile size, recents and mru-spaces, plus Finder's list view. Keyboard
+and trackpad are entirely stock and deliberately undeclared.
+
 ## Daily use
 
 Targets are symlinks into `home/`, so editing `~/.zshrc` edits the repo
@@ -74,6 +78,11 @@ than being evaluated.
   Claude rewrites the file in place and generates a machine-local
   `autoMode.environment` block that must not be published. The template merges
   only the keys we own and passes the rest through.
+- There is no `defaults import`, so macOS preferences are captured by hand.
+  `mise bootstrap macos defaults status` reports each as set / differs / unset.
+  Typing is strict: `com.apple.dock tilesize` is stored as a float, and the
+  friendly `tilesize` key is integer-only, so it is declared under raw
+  `[bootstrap.macos.defaults]` instead -- otherwise it reads as permanent drift.
 - `mise bootstrap packages import --manager brew` re-derives the formula list
   from what is installed, and is the check to run after adding one by hand.
   There is no cask equivalent: cask import is not implemented, so casks are

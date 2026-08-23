@@ -138,6 +138,28 @@ adopt = true
 # Video communication and virtual meeting platform
 "brew-cask:zoom" = "latest"
 
+# Captured from this machine's current settings -- everything not listed here
+# is stock macOS. There is no `defaults import`, so these are maintained by
+# hand; find new ones by diffing `defaults read` before and after changing a
+# setting in System Settings.
+#
+# No post-defaults `killall Dock Finder` hook on purpose: hooks fire on every
+# bootstrap, so it would close Finder windows even when nothing changed. mise
+# prints a relaunch reminder when it actually writes a default.
+[bootstrap.macos.dock]
+autohide = true
+show_recents = false
+mru_spaces = false
+
+[bootstrap.macos.finder]
+preferred_view_style = "list"   # Nlsv
+
+# The friendly `tilesize` key is integer-only, but macOS stores this one as a
+# float and strict typing counts a type mismatch as drift. Raw defaults take
+# the matching plist type and override the friendly key for the same pair.
+[bootstrap.macos.defaults]
+"com.apple.dock" = { tilesize = 64.0 }
+
 [bootstrap.hooks]
 # git records only the executable bit, so 0600 cannot survive a clone the way
 # chezmoi's private_ prefix encoded it. Symlinked targets chmod through to the
