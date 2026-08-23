@@ -138,8 +138,11 @@ adopt = true
 # Video communication and virtual meeting platform
 "brew-cask:zoom" = "latest"
 
-# Captured from this machine's current settings -- everything not listed here
-# is stock macOS. There is no `defaults import`, so these are maintained by
+# Captured from this machine's current settings. Read out of the live domains
+# by hand -- there is no `defaults import` -- so treat the list as incomplete
+# until proven otherwise, and check the domain rather than only the friendly
+# keys: [bootstrap.macos.trackpad] exposes two keys and covers neither scroll
+# direction nor anything else that matters here. There is no `defaults import`, so these are maintained by
 # hand; find new ones by diffing `defaults read` before and after changing a
 # setting in System Settings.
 #
@@ -158,7 +161,26 @@ preferred_view_style = "list"   # Nlsv
 # float and strict typing counts a type mismatch as drift. Raw defaults take
 # the matching plist type and override the friendly key for the same pair.
 [bootstrap.macos.defaults]
+# The friendly `tilesize` key is integer-only, but macOS stores this one as a
+# float and strict typing counts a type mismatch as drift. Raw defaults take
+# the matching plist type and override the friendly key for the same pair.
 "com.apple.dock" = { tilesize = 64.0 }
+
+[bootstrap.macos.defaults.NSGlobalDomain]
+# Natural scrolling off. [bootstrap.macos.trackpad] does not expose this -- it
+# covers only tap_to_click and three_finger_drag -- and it belongs in the global
+# domain anyway, since it applies to the mouse as well as the trackpad.
+"com.apple.swipescrolldirection" = false
+
+AppleInterfaceStyle = "Dark"
+AppleMiniaturizeOnDoubleClick = false
+
+# Metric and 24-hour, against what the en_US locale would otherwise pick.
+AppleICUForce24HourTime = true
+AppleICUForce12HourTime = false
+AppleMeasurementUnits = "Centimeters"
+AppleMetricUnits = true
+AppleTemperatureUnit = "Celsius"
 
 [bootstrap.hooks]
 # git records only the executable bit, so 0600 cannot survive a clone the way

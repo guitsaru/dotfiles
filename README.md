@@ -46,8 +46,15 @@ hardcoded root. `~/.dotfiles` is just the path the one-liner picks.
 | `scripts/merge-claude-settings.py` | Merges owned keys into `~/.claude/settings.json` |
 
 macOS preferences that differ from stock live in `[bootstrap.macos.*]`: Dock
-autohide, tile size, recents and mru-spaces, plus Finder's list view. Keyboard
-and trackpad are entirely stock and deliberately undeclared.
+autohide, tile size, recents and mru-spaces; Finder's list view; and a set of
+global-domain settings — natural scrolling off, dark mode, 24-hour time, metric
+units. Keyboard preferences are stock and deliberately undeclared.
+
+The friendly `[bootstrap.macos.*]` sections cover only a handful of keys each,
+so read the domain (`defaults read NSGlobalDomain`) rather than trusting the
+friendly key list — scroll direction has no friendly key at all. OS-managed
+state (`AK*`, `NSLinguistic*`, `NSSpellChecker*`) is deliberately excluded;
+it is not preference and should not be pinned.
 
 ## Daily use
 
