@@ -10,16 +10,28 @@ curl https://mise.run | sh && \
   cd ~/.dotfiles && mise trust && mise bootstrap -y --force-dotfiles
 ```
 
-`--force-dotfiles` is required even on a clean machine: mise refuses to replace
-real files it does not manage, and the Homebrew installer writes its own
-`~/.zprofile` during the `pre-packages` phase, before dotfiles are linked.
-Ours starts with the same `brew shellenv` line, so replacing it loses nothing.
+`mise bootstrap` runs every phase in order: it installs the packages, symlinks
+the dotfiles, fixes the permissions git cannot carry, installs the `[tools]`
+toolchains, and finally installs the herdr plugins. It converges -- anything
+already in its desired state is skipped, so re-running is always safe.
 
-`mise bootstrap` runs every phase in order: it installs Homebrew if missing,
-runs `brew bundle`, symlinks the dotfiles, fixes the permissions git cannot
-carry, installs the `[tools]` toolchains, and finally installs the herdr
-plugins. It converges -- anything already in its desired state is skipped, so
-re-running is always safe.
+Homebrew is not a prerequisite. mise pours bottles into the Homebrew prefix
+itself, reading the formulae.brew.sh API and verifying checksums, and creates
+the prefix if it does not exist. It writes brew-compatible receipts, so if you
+do install Homebrew later, `brew list`, `brew upgrade` and `brew uninstall` all
+work on formulae mise poured. Casks are the exception -- those carry a mise
+receipt and are upgraded with `mise bootstrap packages upgrade`.
+
+`--force-dotfiles` matters only when adopting a machine that already has these
+files: mise refuses to replace real files it does not manage. On a genuinely
+clean machine it is a no-op.
+
+Two casks are pkg installers and need an interactive sudo, so they are the one
+thing the one-liner cannot finish unattended:
+
+```sh
+mise bootstrap packages apply brew-cask:tailscale-app brew-cask:zoom
+```
 
 The repo can live anywhere; sources resolve relative to `mise.toml`, not to a
 hardcoded root. `~/.dotfiles` is just the path the one-liner picks.
@@ -28,8 +40,7 @@ hardcoded root. `~/.dotfiles` is just the path the one-liner picks.
 
 | Path | Purpose |
 |---|---|
-| `mise.toml` | Dotfile mappings, bootstrap hooks, and the herdr plugin task |
-| `Brewfile` | All formulae and casks, run by the `pre-packages` hook |
+| `mise.toml` | Packages, dotfile mappings, bootstrap hooks, and the herdr plugin task |
 | `home/` | Everything symlinked into `$HOME`, mirroring its layout |
 | `home/.config/mise/config.toml` | Elixir / Erlang / Node / Rust versions |
 | `scripts/merge-claude-settings.py` | Merges owned keys into `~/.claude/settings.json` |
@@ -52,8 +63,10 @@ than being evaluated.
 
 ## Notes
 
-- Toolchain versions are pinned in `home/.config/mise/config.toml`, not the
-  Brewfile.
+- Toolchain versions are pinned in `home/.config/mise/config.toml`; system
+  packages live in `[bootstrap.packages]` in `mise.toml`. The two are separate
+  on purpose -- `[tools]` is per-project versioned runtimes, packages are
+  machine-wide.
 - `~/.config/nvim` is symlinked as a whole directory, so lazy.nvim writes
   `lazy-lock.json` and `lazyvim.json` straight into the repo. Plugin bumps show
   up in `git status` with nothing to sync.
@@ -61,9 +74,10 @@ than being evaluated.
   Claude rewrites the file in place and generates a machine-local
   `autoMode.environment` block that must not be published. The template merges
   only the keys we own and passes the rest through.
-- `[bootstrap.packages]` is not used. It handles Homebrew formulae only --
-  casks 404 against the formula API -- so the Brewfile stays authoritative for
-  both and runs from the `pre-packages` hook.
+- `mise bootstrap packages import --manager brew` re-derives the formula list
+  from what is installed, and is the check to run after adding one by hand.
+  There is no cask equivalent: cask import is not implemented, so casks are
+  maintained by hand in `[bootstrap.packages]`.
 - git records only the executable bit, so the `post-dotfiles` hook restores
   `0600` on `~/.ssh/config`, `~/.config/gh/config.yml`,
   `~/.config/zed/settings.json`, and `~/.claude/settings.json`.

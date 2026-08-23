@@ -39,19 +39,110 @@
 # which reads the current file and overwrites only the keys we own.
 "~/.claude/settings.json" = { source = "home/.claude/settings.json.tmpl", mode = "template" }
 
-[bootstrap.hooks]
-# [bootstrap.packages] is formulae-only -- casks 404 against the formula API --
-# so the Brewfile stays the single source of truth and runs here instead.
-# pre-packages is the early hook (post-packages runs after [tools], too late
-# to install the tools everything else needs).
-pre-packages = [
-  'command -v brew >/dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"',
-  'eval "$(/opt/homebrew/bin/brew shellenv)" && brew bundle install --file=Brewfile --no-upgrade',
-]
+# mise installs these itself -- it reads the formulae.brew.sh API, pours bottles
+# from ghcr.io and verifies their checksums, so Homebrew is not a prerequisite.
+[bootstrap.brew]
+# Claim an app already sitting at the cask destination rather than failing.
+# Note this does not reliably avoid replacing the bundle: migrating this
+# machine's casks off Homebrew rewrote every .app even with adopt set, so
+# macOS may drop an app's Privacy & Security grants after a handover or a
+# version upgrade. Re-grant in System Settings if an app stops working.
+adopt = true
 
+[bootstrap.packages]
+# Clone of cat(1) with syntax highlighting and Git integration
+"brew:bat" = "latest"
+# Modern, maintained replacement for ls
+"brew:eza" = "latest"
+# Simple, fast and user-friendly alternative to find
+"brew:fd" = "latest"
+# Play, record, convert, and stream select audio and video codecs
+"brew:ffmpeg" = "latest"
+# Command-line tools for fly.io services
+"brew:flyctl" = "latest"
+# Command-line fuzzy finder written in Go
+"brew:fzf" = "latest"
+# Replace zsh completion selection menu with fzf
+"brew:fzf-tab" = "latest"
+# GitHub command-line tool
+"brew:gh" = "latest"
+# Syntax-highlighting pager for git and diff output
+"brew:git-delta" = "latest"
+# GNU Privacy Guard (OpenPGP)
+"brew:gnupg" = "latest"
+# Agent multiplexer that lives in your terminal
+"brew:herdr" = "latest"
+# Lightweight and flexible command-line JSON processor
+"brew:jq" = "latest"
+# Simple terminal UI for git commands
+"brew:lazygit" = "latest"
+# Polyglot runtime manager (asdf rust clone)
+"brew:mise" = "latest"
+# Simple tool to make locally trusted development certificates
+"brew:mkcert" = "latest"
+# Deep clean and optimize your Mac
+"brew:mole" = "latest"
+# Incremental parsing library
+"brew:tree-sitter" = "latest"
+# Ambitious Vim-fork focused on extensibility and agility
+"brew:neovim" = "latest"
+# Libraries for security-enabled client and server applications
+"brew:nss" = "latest"
+# Search tool like grep and The Silver Searcher
+"brew:ripgrep" = "latest"
+# AI coding agent, built for the terminal
+"brew:opencode" = "latest"
+# Cross-shell prompt for astronauts
+"brew:starship" = "latest"
+# Shell extension to navigate your filesystem faster
+"brew:zoxide" = "latest"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+"brew:zsh-autosuggestions" = "latest"
+# Image editing and design software
+"brew-cask:affinity" = "latest"
+# Display management tool
+"brew-cask:betterdisplay" = "latest"
+# Anthropic's official Claude AI desktop app
+"brew-cask:claude" = "latest"
+# Terminal-based AI coding assistant
+"brew-cask:claude-code" = "latest"
+# OpenAI's coding agent that runs in your terminal
+"brew-cask:codex" = "latest"
+"brew-cask:font-jetbrains-mono-nerd-font" = "latest"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+"brew-cask:ghostty" = "latest"
+# Web browser
+"brew-cask:google-chrome" = "latest"
+# Tool to prevent the system from going into sleep mode
+"brew-cask:keepingyouawake" = "latest"
+# App to manage software development and track bugs
+"brew-cask:linear" = "latest"
+# Host-based application firewall
+"brew-cask:little-snitch" = "latest"
+# AI coding agent desktop client
+"brew-cask:opencode-desktop" = "latest"
+# Replacement for Docker Desktop
+"brew-cask:orbstack" = "latest"
+# App wrapper for Postgres
+"brew-cask:postgres-app" = "latest"
+# Window snapping tool
+"brew-cask:rectangle-pro" = "latest"
+# Menu bar app that enables system-wide navigation using side mouse buttons
+"brew-cask:sanesidebuttons" = "latest"
+# Team communication and collaboration software
+"brew-cask:slack" = "latest"
+# Mesh VPN based on WireGuard
+"brew-cask:tailscale-app" = "latest"
+# Multiplayer code editor
+"brew-cask:zed" = "latest"
+# Video communication and virtual meeting platform
+"brew-cask:zoom" = "latest"
+
+[bootstrap.hooks]
 # git records only the executable bit, so 0600 cannot survive a clone the way
 # chezmoi's private_ prefix encoded it. Symlinked targets chmod through to the
 # repo file; the template-rendered one is a real file.
+#
 # The rendered settings.json takes its mode from the template file, so that
 # gets chmodded too -- otherwise mise sees permanent drift and re-renders on
 # every run.
