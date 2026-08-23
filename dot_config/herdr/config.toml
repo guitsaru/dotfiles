@@ -1,0 +1,29 @@
+[ui]
+agent_panel_sort = "priority"
+
+# --- herdr-lazygit ---
+# prefix+g is herdr's Goto picker; lazygit uses shifted variants instead.
+[[keys.command]]
+key = "prefix+shift+g"
+type = "plugin_action"
+command = "herdr-lazygit.open"
+description = "lazygit sidebar"
+
+[[keys.command]]
+key = "prefix+shift+b"
+type = "plugin_action"
+command = "herdr-lazygit.open-tab"
+description = "lazygit in a tab"
+
+# --- herdr-nvim ---
+[[keys.command]]
+key = "prefix+e"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.toggle"
+description = "nvim sidebar"
+
+[[keys.command]]
+key = "prefix+o"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.pick-file"
+description = "open file from agent output"
