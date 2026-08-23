@@ -31,7 +31,6 @@
 "~/.claude/CLAUDE.md"                  = "home/.claude/CLAUDE.md"
 "~/.claude/keybindings.json"           = "home/.claude/keybindings.json"
 "~/.claude/statusline-command.sh"      = "home/.claude/statusline-command.sh"
-"~/.claude/hooks/herdr-agent-state.sh" = "home/.claude/hooks/herdr-agent-state.sh"
 
 # settings.json cannot be a symlink: Claude rewrites it in place, and the
 # autoMode.environment block it generates is machine-local and must not be
@@ -260,4 +259,11 @@ run = """
 command -v herdr >/dev/null || exit 0
 herdr plugin list | grep -q '(herdr-lazygit)' || herdr plugin install crokily/herdr-lazygit --ref v0.3.0 --yes
 herdr plugin list | grep -q '(herdr-nvim)'    || herdr plugin install ChmaraX/herdr-nvim --ref v0.2.1 --yes
+
+# Agent integrations. herdr owns these files -- they carry a "managed by herdr"
+# header and are overwritten on update -- so the intent is declared here rather
+# than tracking the generated file in [dotfiles].
+for a in claude codex opencode; do
+  herdr integration status | grep -q "^$a: current" || herdr integration install "$a"
+done
 """

@@ -72,20 +72,6 @@ mise bootstrap -y                # full converge (packages, tools, plugins)
 render templates, so `~/.claude/settings.json` shows as `(if changed)` rather
 than being evaluated.
 
-## Pending cleanup
-
-Two packages are installed but no longer declared, because neither can be
-removed from inside a session that is using it. Run once outside a Claude Code
-session running under herdr:
-
-```sh
-mise bootstrap packages prune --manager brew       # herdr
-mise bootstrap packages prune --manager brew-cask  # claude-code
-```
-
-Both already exist as `[tools]` at the same versions, so this only removes the
-superseded Homebrew copies and lets the shims take over on `PATH`.
-
 ## Scheduled maintenance
 
 Two nightly LaunchAgents, logging to `~/Library/Logs/`:

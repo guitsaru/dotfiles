@@ -14,6 +14,11 @@ The merge semantics are unchanged.
 
 Keys listed in MANAGED are authoritative here and overwrite whatever is
 on disk. Every other key is passed through unchanged.
+
+`hooks` is deliberately NOT managed. herdr owns its SessionStart hook and
+rewrites it on `herdr integration install`; claiming the key here meant
+the two overwrote each other in turn, and left a duplicate entry running
+the same script twice per session.
 """
 
 import json
@@ -42,22 +47,6 @@ MANAGED = {
     "remoteControlAtStartup": True,
     "agentPushNotifEnabled": True,
     "skipAutoPermissionPrompt": True,
-    "hooks": {
-        "SessionStart": [
-            {
-                "matcher": "*",
-                "hooks": [
-                    {
-                        "type": "command",
-                        # ~ rather than an absolute path, so this works on
-                        # any machine and any username.
-                        "command": "bash ~/.claude/hooks/herdr-agent-state.sh session",
-                        "timeout": 10,
-                    }
-                ],
-            }
-        ]
-    },
 }
 
 
