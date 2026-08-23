@@ -80,6 +80,8 @@ adopt = true
 "brew:fzf-tab" = "latest"
 # GitHub command-line tool
 "brew:gh" = "latest"
+# Mac App Store CLI, required by the mas: entries below
+"brew:mas" = "latest"
 # Syntax-highlighting pager for git and diff output
 "brew:git-delta" = "latest"
 # GNU Privacy Guard (OpenPGP)
@@ -157,6 +159,15 @@ adopt = true
 # No post-defaults `killall Dock Finder` hook on purpose: hooks fire on every
 # bootstrap, so it would close Finder windows even when nothing changed. mise
 # prints a relaunch reminder when it actually writes a default.
+# Mac App Store. IDs come from `mas list`; the iWork apps are the Creator
+# Studio versions -- macOS 26 renamed the bundles but kept the classic IDs.
+"mas:363738376" = "latest"    # forScore
+"mas:361285480" = "latest"    # Keynote (Creator Studio)
+"mas:361304891" = "latest"    # Numbers (Creator Studio)
+"mas:361309726" = "latest"    # Pages (Creator Studio)
+"mas:6446933691" = "latest"   # Postico
+"mas:1480933944" = "latest"   # Vimari
+
 [bootstrap.macos.dock]
 autohide = true
 show_recents = false
