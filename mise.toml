@@ -254,8 +254,70 @@ post-dotfiles = [
 
 # Runs after [tools] are installed. Keep idempotent -- it runs every bootstrap.
 [tasks.bootstrap]
-description = "Install herdr plugins"
+description = "Set up the GitHub identity, then install herdr plugins"
 run = """
+# --- GitHub identity ---------------------------------------------------
+# Last phase of bootstrap is the only place this can live: gh is a [tools]
+# entry, so it does not exist until the phase immediately before this one.
+#
+# Placed above the herdr section because that section exits the task early
+# when herdr is absent.
+#
+# The key is per-machine and never leaves the machine. Nothing here syncs a
+# private key; a lost laptop is one `gh ssh-key delete`, not a rotation.
+# Generated with no passphrase on purpose -- a passphrase would mean a prompt
+# on every fresh install, and the disk is already encrypted at rest. The
+# trade-off is deliberate: revocability instead of a second factor.
+key=~/.ssh/id_ed25519
+title=$(scutil --get ComputerName 2>/dev/null || hostname)
+
+[ -f "$key" ] || ssh-keygen -t ed25519 -q -N '' -C "matt@guitsaru.com ($title)" -f "$key"
+ssh-add --apple-use-keychain -q "$key" 2>/dev/null || true
+
+# The one interactive step in the whole bootstrap. Skipped without a tty so
+# that an unattended `mise bootstrap -y` converges everything else instead of
+# hanging on a prompt. --skip-ssh-key because gh's own key flow only ever
+# registers an authentication key, and the signing key below matters too.
+if command -v gh >/dev/null && [ -t 0 ] && ! gh auth status >/dev/null 2>&1; then
+  gh auth login --hostname github.com --git-protocol ssh --web --skip-ssh-key --scopes admin:public_key,admin:ssh_signing_key
+fi
+
+# Requesting both scopes at login is what keeps this to a single browser trip.
+# A token minted before this block existed does not carry them, and it still
+# passes `gh auth status` -- so upgrade it in place rather than re-logging in.
+if command -v gh >/dev/null && gh auth status >/dev/null 2>&1 &&
+   ! gh api /user/keys >/dev/null 2>&1 && [ -t 0 ]; then
+  gh auth refresh --hostname github.com --scopes admin:public_key,admin:ssh_signing_key || true
+fi
+
+# Gated on the API call rather than on auth status: without the scopes every
+# command below fails, and under errexit that would abort the whole bootstrap.
+if command -v gh >/dev/null && gh api /user/keys >/dev/null 2>&1; then
+  pub=$(cut -d' ' -f2 "$key.pub")
+
+  # Compared against the API rather than `gh ssh-key list`, whose columns are
+  # a display format and not a contract. Authentication and signing are
+  # separate registrations of the same key; GitHub allows both.
+  gh api /user/keys --jq '.[].key' | grep -qF "$pub" ||
+    gh ssh-key add "$key.pub" --title "$title" --type authentication
+  gh api /user/ssh_signing_keys --jq '.[].key' | grep -qF "$pub" ||
+    gh ssh-key add "$key.pub" --title "$title" --type signing
+
+  # Derived, not tracked. Rebuilt from every signing key on the account, so a
+  # commit signed on another machine verifies here without hand-editing.
+  gh api /user/ssh_signing_keys --jq '.[].key' |
+    sed 's|^|matt@guitsaru.com |' > ~/.ssh/allowed_signers
+
+  # Seeds GitHub's host keys so the first clone does not stop on the
+  # "authenticity of host can't be established" prompt.
+  gh api /meta --jq '.ssh_keys[]' | sed 's|^|github.com |' | while read -r line; do
+    grep -qF "$line" ~/.ssh/known_hosts 2>/dev/null || echo "$line" >> ~/.ssh/known_hosts
+  done
+else
+  echo "bootstrap: skipped GitHub identity -- run 'mise run bootstrap' from a terminal to finish it"
+fi
+
+# --- herdr -------------------------------------------------------------
 command -v herdr >/dev/null || exit 0
 herdr plugin list | grep -q '(herdr-lazygit)' || herdr plugin install crokily/herdr-lazygit --ref v0.3.0 --yes
 herdr plugin list | grep -q '(herdr-nvim)'    || herdr plugin install ChmaraX/herdr-nvim --ref v0.2.1 --yes
