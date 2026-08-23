@@ -25,6 +25,9 @@ opencode = "latest"
 # tree-sitter is deliberately absent: neovim depends on it, so the package
 # manager installs it either way and a mise copy would just be shadowed.
 #
+# Tigris publishes an npm package that mise can install directly; its binary is
+# named `tigris`.
+#
 # herdr is here but its brew formula is still installed: it cannot be pruned
 # from inside a running herdr session without unlinking the binary that session
 # is using. Both are 0.8.2, so there is no skew while both exist.
@@ -41,4 +44,5 @@ lazygit = "latest"
 mkcert = "latest"
 ripgrep = "latest"
 starship = "latest"
+"npm:@tigrisdata/cli" = "latest"
 zoxide = "latest"
