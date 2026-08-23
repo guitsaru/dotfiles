@@ -196,6 +196,22 @@ AppleMeasurementUnits = "Centimeters"
 AppleMetricUnits = true
 AppleTemperatureUnit = "Celsius"
 
+# Weekly `brew upgrade`. This is the only thing that upgrades ad-hoc brew
+# installs -- `packages upgrade` only touches what [bootstrap.packages]
+# declares -- and it works on kegs mise poured, since mise writes
+# brew-compatible receipts.
+#
+# --formula on purpose. Upgrading a cask replaces its .app bundle, and macOS
+# may revoke that app's Privacy & Security grants when it does; the cask
+# handover in this repo's history did exactly that. Casks stay manual.
+[bootstrap.macos.launchd.agents.brew-upgrade]
+program = "/opt/homebrew/bin/brew"
+args = ["upgrade", "--formula"]
+start_calendar_interval = { hour = 9, weekday = 1 }
+environment = { PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin" }
+stdout_path = "~/Library/Logs/brew-upgrade.log"
+stderr_path = "~/Library/Logs/brew-upgrade.err.log"
+
 [bootstrap.hooks]
 # git records only the executable bit, so 0600 cannot survive a clone the way
 # chezmoi's private_ prefix encoded it. Symlinked targets chmod through to the

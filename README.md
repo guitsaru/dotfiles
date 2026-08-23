@@ -72,6 +72,26 @@ mise bootstrap -y                # full converge (packages, tools, plugins)
 render templates, so `~/.claude/settings.json` shows as `(if changed)` rather
 than being evaluated.
 
+## Scheduled maintenance
+
+A weekly LaunchAgent (`dev.mise.brew-upgrade`, Mondays at 09:00) runs
+`brew upgrade --formula`, logging to `~/Library/Logs/brew-upgrade.log`.
+
+`brew upgrade` rather than `mise bootstrap packages upgrade` because it is the
+only one that reaches ad-hoc `brew install`s, which by design are not declared
+here — and it works on kegs mise poured, since those carry brew-compatible
+receipts. Homebrew refreshes its own metadata before upgrading and cleans up
+old kegs afterwards, so no separate `brew update` or `brew cleanup` is needed.
+
+Formulae only. Upgrading a cask replaces its `.app`, and macOS may revoke that
+app's Privacy & Security grants when it does. Casks are upgraded by hand with
+`mise bootstrap packages upgrade` — and 16 of the 20 here self-update anyway,
+which mise skips.
+
+`git maintenance` is registered separately through git's own
+`org.git-scm.git.*` agents and is deliberately not moved here; mise only owns
+plists it labels `dev.mise.*`.
+
 ## Notes
 
 - Toolchain versions are pinned in `home/.config/mise/config.toml`; system
