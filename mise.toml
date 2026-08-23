@@ -28,7 +28,6 @@
 "~/.config/nvim" = "home/.config/nvim"
 
 # Claude Code
-"~/.claude/CLAUDE.md"                  = "home/.claude/CLAUDE.md"
 "~/.claude/keybindings.json"           = "home/.claude/keybindings.json"
 "~/.claude/statusline-command.sh"      = "home/.claude/statusline-command.sh"
 
@@ -234,6 +233,7 @@ stderr_path = "~/Library/Logs/mise-upgrade.err.log"
 [bootstrap.repos]
 "~/.local/share/zsh/fzf-tab" = { url = "https://github.com/Aloxaf/fzf-tab.git" }
 "~/.local/share/zsh/zsh-autosuggestions" = { url = "https://github.com/zsh-users/zsh-autosuggestions.git" }
+"~/.local/share/mission-control" = { url = "https://github.com/guitsaru/mission-control.git" }
 
 [bootstrap.user]
 login_shell = "/bin/zsh"
@@ -254,8 +254,16 @@ post-dotfiles = [
 
 # Runs after [tools] are installed. Keep idempotent -- it runs every bootstrap.
 [tasks.bootstrap]
-description = "Set up the GitHub identity, then install herdr plugins"
+description = "Install agent skills, set up the GitHub identity, then install herdr plugins"
 run = """
+# --- mission-control ----------------------------------------------------
+mission_control="$HOME/.local/share/mission-control"
+if [ -d "$mission_control" ]; then
+  mise -C "$mission_control" run setup
+else
+  echo "bootstrap: skipped mission-control setup -- repository is not present"
+fi
+
 # --- GitHub identity ---------------------------------------------------
 # Last phase of bootstrap is the only place this can live: gh is a [tools]
 # entry, so it does not exist until the phase immediately before this one.

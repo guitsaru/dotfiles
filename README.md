@@ -12,9 +12,9 @@ curl https://mise.run | sh && \
 
 `mise bootstrap` runs every phase in order: it installs the packages, symlinks
 the dotfiles, fixes the permissions git cannot carry, installs the `[tools]`
-toolchains, and finally sets up the GitHub identity and the herdr plugins. It
-converges -- anything already in its desired state is skipped, so re-running is
-always safe.
+toolchains, installs the mission-control agent skills and instructions, and
+finally sets up the GitHub identity and the herdr plugins. It converges --
+anything already in its desired state is skipped, so re-running is always safe.
 
 Run it from a terminal and it will open a browser once, to log in to GitHub.
 That is the only interaction; everything else is unattended.
@@ -46,6 +46,7 @@ hardcoded root. `~/.dotfiles` is just the path the one-liner picks.
 |---|---|
 | `mise.toml` | Packages, dotfile mappings, bootstrap hooks, and the GitHub-identity + herdr task |
 | `home/` | Everything symlinked into `$HOME`, mirroring its layout |
+| `~/.local/share/mission-control` | Checkout of the personal agent skills and instructions |
 | `home/.config/mise/config.toml` | Global toolchains, unbounded |
 | `scripts/merge-claude-settings.py` | Merges owned keys into `~/.claude/settings.json` |
 
