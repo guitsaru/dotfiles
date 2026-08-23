@@ -277,6 +277,10 @@ herdr plugin list | grep -q '(herdr-nvim)'    || herdr plugin install ChmaraX/he
 # enabling hooks, which codex extends on first run.
 mkdir -p ~/.codex
 
+# Seed a minimal config on a fresh machine only -- never overwrite a real one,
+# which accumulates per-project sections codex manages itself.
+[ -f ~/.codex/config.toml ] || cp codex/config.default.toml ~/.codex/config.toml
+
 for a in claude codex opencode; do
   herdr integration status | grep -q "^$a: current" && continue
   herdr integration install "$a" || echo "herdr: skipped $a integration (agent not set up yet)"

@@ -1,0 +1,13 @@
+# Seeded into ~/.codex/config.toml on a fresh machine, and only when that file
+# does not already exist. It is NOT a [dotfiles] entry on purpose: codex writes
+# to this file constantly, appending a [projects."<path>"] section for every
+# directory it is used in. Symlinking it into this repo would publish the full
+# list of local project paths -- the same leak that keeps ~/.gitconfig.local
+# out of version control.
+#
+# herdr's integration appends `[features] hooks = true` to whatever is here.
+
+# Route approval requests through automatic review inside the workspace-write
+# sandbox, rather than prompting. The persistent form of --approve-for-me.
+approvals_reviewer = "auto_review"
+sandbox_mode = "workspace-write"
