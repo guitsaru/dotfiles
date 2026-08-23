@@ -269,6 +269,14 @@ herdr plugin list | grep -q '(herdr-nvim)'    || herdr plugin install ChmaraX/he
 # ~/.codex is created by nothing here, so on a fresh machine at least one of
 # these will fail. Under the task's default errexit an unguarded failure
 # aborts the rest of the loop and fails the whole bootstrap.
+# herdr only checks that the agent's config directory exists, and codex is a
+# declared tool so it will be on the machine -- it just has not been run yet.
+# ~/.claude and ~/.config/opencode already exist by now because [dotfiles]
+# writes into them at step 8; ~/.codex has nothing to create it. An empty
+# directory is enough: herdr writes its hook plus a two-line config.toml
+# enabling hooks, which codex extends on first run.
+mkdir -p ~/.codex
+
 for a in claude codex opencode; do
   herdr integration status | grep -q "^$a: current" && continue
   herdr integration install "$a" || echo "herdr: skipped $a integration (agent not set up yet)"
