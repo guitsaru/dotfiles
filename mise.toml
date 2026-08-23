@@ -263,7 +263,14 @@ herdr plugin list | grep -q '(herdr-nvim)'    || herdr plugin install ChmaraX/he
 # Agent integrations. herdr owns these files -- they carry a "managed by herdr"
 # header and are overwritten on update -- so the intent is declared here rather
 # than tracking the generated file in [dotfiles].
+#
+# Non-fatal per agent on purpose. herdr refuses to install an integration
+# before its agent has a config directory ("install claude code first"), and
+# ~/.codex is created by nothing here, so on a fresh machine at least one of
+# these will fail. Under the task's default errexit an unguarded failure
+# aborts the rest of the loop and fails the whole bootstrap.
 for a in claude codex opencode; do
-  herdr integration status | grep -q "^$a: current" || herdr integration install "$a"
+  herdr integration status | grep -q "^$a: current" && continue
+  herdr integration install "$a" || echo "herdr: skipped $a integration (agent not set up yet)"
 done
 """
