@@ -1,4 +1,6 @@
-eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+# Homebrew, when present. Absent on Linux, where mise and the distro's package
+# manager cover the same ground.
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
 # macOS runs path_helper from /etc/zprofile, which rebuilds PATH and pushes
 # anything set in .zshenv behind /usr/bin. Re-prepend the shims so mise's

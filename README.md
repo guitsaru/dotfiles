@@ -85,6 +85,29 @@ Sleeping through the schedule is fine. Unlike cron, launchd runs a missed
 `StartCalendarInterval` job on the next wake, and coalesces multiple missed
 intervals into a single run — a week away is one catch-up run, not seven.
 
+## Linux portability
+
+The single-binary CLIs (bat, delta, eza, fd, flyctl, fzf, gh, jq, lazygit,
+mkcert, ripgrep, starship, zoxide) are `[tools]`, so one declaration covers
+macOS and Linux. Distro packaging for these is inconsistent — Debian ships `fd`
+as `fd-find` and `bat` as `batcat`, Arch calls `gh` `github-cli`, and `lazygit`
+and `starship` are not packaged at all.
+
+Anything needing system integration stays a system package with `apt:`/`dnf:`/
+`pacman:` equivalents: ffmpeg, neovim, gnupg, zsh. On macOS those foreign
+entries report `skipped (only available on linux)`, so one list serves both.
+The Linux names are conventional but **unverified on a real box**; the first
+Linux bootstrap will surface any that are wrong.
+
+The zsh plugins are `[bootstrap.repos]` checkouts under
+`~/.local/share/zsh/` rather than packages, so `.zshrc` sources the same path
+everywhere. `fzf-tab` is packaged by no distro at all, and
+`zsh-autosuggestions` lands somewhere different on each one. Both are public
+upstreams cloned over https, so neither needs an SSH key.
+
+Shell config is prefix-agnostic: the Homebrew `shellenv` line and the
+brew-completions `FPATH` entry are existence-guarded, so they no-op off macOS.
+
 The AI CLIs — `claude-code`, `codex`, `opencode` — are `[tools]` rather than
 casks or formulae. As tools their versions are recorded in git and moved by the
 nightly `mise upgrade`; as casks they were Homebrew's to update, and `opencode`

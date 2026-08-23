@@ -17,7 +17,11 @@ setopt HIST_FCNTL_LOCK
 export PATH="$HOME/.local/bin:$PATH"
 
 # ---- Completions ---------------------------------------------------------
-FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
+# Homebrew's completion functions, when Homebrew is present. $HOMEBREW_PREFIX
+# is exported by `brew shellenv` in .zprofile; on Linux there is no Homebrew
+# and the distro's own site-functions are already on FPATH.
+[[ -n "$HOMEBREW_PREFIX" && -d "$HOMEBREW_PREFIX/share/zsh/site-functions" ]] \
+  && FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH"
 
 autoload -Uz compinit
 _zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
@@ -41,7 +45,7 @@ zstyle ':completion:*:git-checkout:*' sort false
 
 # fzf-tab must load after compinit and before any plugin that wraps
 # widgets (zsh-autosuggestions, below).
-source /opt/homebrew/share/fzf-tab/fzf-tab.zsh
+source "$HOME/.local/share/zsh/fzf-tab/fzf-tab.zsh"
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --group-directories-first $realpath'
 zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always --group-directories-first $realpath'
 
@@ -74,7 +78,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 # Don't try to suggest for enormous pastes.
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source "$HOME/.local/share/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 # Accept the whole suggestion with Ctrl-Space, one word with Alt-Right.
 bindkey '^ ' autosuggest-accept

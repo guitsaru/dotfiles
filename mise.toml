@@ -64,54 +64,22 @@ adopt = true
 #                      opposite of curation. Useful to see what you have; review
 #                      its output, never accept it wholesale.
 [bootstrap.packages]
-# Clone of cat(1) with syntax highlighting and Git integration
-"brew:bat" = "latest"
-# Modern, maintained replacement for ls
-"brew:eza" = "latest"
-# Simple, fast and user-friendly alternative to find
-"brew:fd" = "latest"
 # Play, record, convert, and stream select audio and video codecs
 "brew:ffmpeg" = "latest"
-# Command-line tools for fly.io services
-"brew:flyctl" = "latest"
-# Command-line fuzzy finder written in Go
-"brew:fzf" = "latest"
-# Replace zsh completion selection menu with fzf
-"brew:fzf-tab" = "latest"
-# GitHub command-line tool
-"brew:gh" = "latest"
 # Mac App Store CLI, required by the mas: entries below
 "brew:mas" = "latest"
-# Syntax-highlighting pager for git and diff output
-"brew:git-delta" = "latest"
 # GNU Privacy Guard (OpenPGP)
 "brew:gnupg" = "latest"
 # Agent multiplexer that lives in your terminal
 "brew:herdr" = "latest"
-# Lightweight and flexible command-line JSON processor
-"brew:jq" = "latest"
-# Simple terminal UI for git commands
-"brew:lazygit" = "latest"
 # Polyglot runtime manager (asdf rust clone)
 "brew:mise" = "latest"
-# Simple tool to make locally trusted development certificates
-"brew:mkcert" = "latest"
 # Deep clean and optimize your Mac
 "brew:mole" = "latest"
-# Incremental parsing library
-"brew:tree-sitter" = "latest"
 # Ambitious Vim-fork focused on extensibility and agility
 "brew:neovim" = "latest"
 # Libraries for security-enabled client and server applications
 "brew:nss" = "latest"
-# Search tool like grep and The Silver Searcher
-"brew:ripgrep" = "latest"
-# Cross-shell prompt for astronauts
-"brew:starship" = "latest"
-# Shell extension to navigate your filesystem faster
-"brew:zoxide" = "latest"
-# Fish-like fast/unobtrusive autosuggestions for zsh
-"brew:zsh-autosuggestions" = "latest"
 # Image editing and design software
 "brew-cask:affinity" = "latest"
 # Display management tool
@@ -159,12 +127,34 @@ adopt = true
 # No post-defaults `killall Dock Finder` hook on purpose: hooks fire on every
 # bootstrap, so it would close Finder windows even when nothing changed. mise
 # prints a relaunch reminder when it actually writes a default.
+# Linux equivalents, for a move to a Linux dev box. Foreign-platform entries
+# are reported as "skipped (only available on linux)" on macOS, so one list
+# serves both. Names are conventional but UNVERIFIED on a real box -- the first
+# Linux bootstrap will surface any that are wrong.
+#
+# Not listed: mas and mole are macOS-only, and fzf-tab is packaged by no distro
+# at all, so it is cloned via [bootstrap.repos] instead.
+"apt:zsh" = "latest"
+"dnf:zsh" = "latest"
+"pacman:zsh" = "latest"
+"apt:neovim" = "latest"
+"dnf:neovim" = "latest"
+"pacman:neovim" = "latest"
+"apt:gnupg" = "latest"
+"dnf:gnupg2" = "latest"          # Fedora names it gnupg2
+"pacman:gnupg" = "latest"
+"apt:ffmpeg" = "latest"
+"pacman:ffmpeg" = "latest"
+# no dnf:ffmpeg -- Fedora ships ffmpeg-free and full ffmpeg needs RPM Fusion,
+# which is a repo decision rather than a package name. Add it once verified.
+
 # Mac App Store. IDs come from `mas list`; the iWork apps are the Creator
 # Studio versions -- macOS 26 renamed the bundles but kept the classic IDs.
 "mas:363738376" = "latest"    # forScore
 "mas:361285480" = "latest"    # Keynote (Creator Studio)
 "mas:361304891" = "latest"    # Numbers (Creator Studio)
 "mas:361309726" = "latest"    # Pages (Creator Studio)
+"mas:1615087040" = "latest"   # Logic Pro (Creator Studio)
 "mas:6446933691" = "latest"   # Postico
 "mas:1480933944" = "latest"   # Vimari
 
@@ -230,6 +220,26 @@ start_calendar_interval = { hour = 3, minute = 30 }
 environment = { PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin" }
 stdout_path = "~/Library/Logs/mise-upgrade.log"
 stderr_path = "~/Library/Logs/mise-upgrade.err.log"
+
+# Apple's /bin/zsh, deliberately -- not a Homebrew or mise zsh. This is already
+# the login shell on macOS, so applying it is a no-op; it is declared so a
+# machine that comes up on something else converges. An absolute path is
+# required, and Linux puts zsh at /usr/bin/zsh, so a Linux box needs its own
+# value rather than inheriting this one.
+# zsh plugins as checkouts rather than packages, so the source paths are the
+# same on every platform. fzf-tab is packaged by no distro at all, and
+# zsh-autosuggestions lands at a different path on each one
+# (/usr/share/zsh-autosuggestions vs /usr/share/zsh/plugins/...), which .zshrc
+# would otherwise have to probe for.
+#
+# Both are public upstreams cloned over https, so this needs no SSH key and
+# leaks nothing -- unlike declaring private work repos here would.
+[bootstrap.repos]
+"~/.local/share/zsh/fzf-tab" = { url = "https://github.com/Aloxaf/fzf-tab.git" }
+"~/.local/share/zsh/zsh-autosuggestions" = { url = "https://github.com/zsh-users/zsh-autosuggestions.git" }
+
+[bootstrap.user]
+login_shell = "/bin/zsh"
 
 [bootstrap.hooks]
 # git records only the executable bit, so 0600 cannot survive a clone the way

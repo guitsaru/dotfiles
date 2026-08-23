@@ -15,3 +15,25 @@ rust = "stable"   # rustup's channel, which already means "newest stable"
 claude-code = "latest"
 codex = "latest"
 opencode = "latest"
+
+# Single-binary CLIs. As [tools] one declaration covers macOS and Linux, where
+# distro packaging is inconsistent -- Debian ships fd as fd-find and bat as
+# batcat, Arch calls gh github-cli, and lazygit and starship are not packaged
+# at all. Anything needing system integration (ffmpeg, neovim, gnupg, the zsh
+# plugins) stays a system package instead; see [bootstrap.packages].
+#
+# tree-sitter is deliberately absent: neovim depends on it, so the package
+# manager installs it either way and a mise copy would just be shadowed.
+bat = "latest"
+delta = "latest"
+eza = "latest"
+fd = "latest"
+flyctl = "latest"
+fzf = "latest"
+gh = "latest"
+jq = "latest"
+lazygit = "latest"
+mkcert = "latest"
+ripgrep = "latest"
+starship = "latest"
+zoxide = "latest"
