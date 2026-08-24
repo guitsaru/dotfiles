@@ -4,9 +4,10 @@
 # build input.
 [tools]
 elixir = "latest"
+elixir-ls = "latest"
 erlang = "latest"
 node = "latest"   # not "lts": that resolves two majors back, to 24.x
-rust = "stable"   # rustup's channel, which already means "newest stable"
+rust = { version = "stable", components = ["rust-analyzer"] }
 
 # AI CLIs. `latest` for the same reason as the toolchains -- these are tools,
 # not build inputs, and a major bump costs nothing. Previously casks (codex,
