@@ -15,6 +15,8 @@ rust = { version = "stable", components = ["rust-analyzer"] }
 # and moved by the nightly `mise upgrade` instead of by Homebrew.
 claude-code = "latest"
 codex = "latest"
+"npm:@earendil-works/pi-coding-agent" = "latest"
+"npm:@rynfar/meridian" = { version = "latest", allow_builds = ["@rynfar/meridian"] }
 opencode = "latest"
 
 # Single-binary CLIs. As [tools] one declaration covers macOS and Linux, where
@@ -47,3 +49,18 @@ ripgrep = "latest"
 starship = "latest"
 "npm:@tigrisdata/cli" = "latest"
 zoxide = "latest"
+
+# The AI CLIs above ship several releases a day, and mise's default 24h
+# minimum_release_age holds every one of them back for a day -- so `latest`
+# resolves a version behind and each resolution logs a WARN. These are the
+# tools worth having same-day, so they opt out of the delay; everything else
+# above still gets the 24h window to have a bad release pulled. Names must
+# match mise's internal tool names, npm: prefix included.
+[settings]
+minimum_release_age_excludes = [
+  "claude-code",
+  "codex",
+  "npm:@earendil-works/pi-coding-agent",
+  "npm:@rynfar/meridian",
+  "opencode",
+]
