@@ -51,6 +51,11 @@ zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always --group-direct
 
 # ---- Tools ---------------------------------------------------------------
 eval "$(mise activate zsh)"
+
+# pitchfork: registers a chpwd hook so daemons with `auto = ["start"]` /
+# `["stop"]` in a project's pitchfork.toml start and stop as you cd in and
+# out. Must follow mise activate -- pitchfork is a mise tool.
+eval "$(pitchfork activate zsh)"
 eval "$(starship init zsh)"
 
 # fzf: Ctrl-R history search, Ctrl-T file picker, Alt-C cd, ** completion

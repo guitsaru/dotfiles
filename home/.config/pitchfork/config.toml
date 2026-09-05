@@ -1,0 +1,4 @@
+# Enable mise integration globally: pitchfork daemons run under the mise
+# environment of the directory they are started from.
+[settings.general]
+mise = true
