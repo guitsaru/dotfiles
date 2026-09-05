@@ -82,3 +82,12 @@ source "$HOME/.local/share/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 # Accept the whole suggestion with Ctrl-Space, one word with Alt-Right.
 bindkey '^ ' autosuggest-accept
+export PATH=$PATH:$HOME/.maestro/bin
+
+# >>> Claude Code Router CLI >>>
+# Added by Claude Code Router. Enables the ccr-app command in new shells.
+case ":$PATH:" in
+  *":$HOME/.claude-code-router/bin:"*) ;;
+  *) export PATH="$HOME/.claude-code-router/bin:$PATH" ;;
+esac
+# <<< Claude Code Router CLI <<<

@@ -44,7 +44,7 @@ hardcoded root. `~/.dotfiles` is just the path the one-liner picks.
 
 | Path | Purpose |
 |---|---|
-| `mise.toml` | Packages, dotfile mappings, bootstrap hooks, and the GitHub-identity + herdr task |
+| `mise.toml` | Packages, user services, dotfile mappings, bootstrap hooks, and the GitHub-identity + herdr task |
 | `home/` | Everything symlinked into `$HOME`, mirroring its layout |
 | `~/.local/share/mission-control` | Checkout of the personal agent skills and instructions |
 | `home/.config/mise/config.toml` | Global toolchains, unbounded |
@@ -168,6 +168,24 @@ which mise skips.
 `git maintenance` is registered separately through git's own
 `org.git-scm.git.*` agents and is deliberately not moved here; mise only owns
 plists it labels `dev.mise.*`.
+
+## Meridian
+
+[Meridian](https://github.com/rynfar/meridian) is installed as a mise-managed
+npm tool and runs as a user service on macOS and Linux. It listens only on
+`http://127.0.0.1:3456`; logs go to `~/Library/Logs/meridian*.log` on macOS and
+`~/.local/state/meridian*.log` on Linux.
+
+Authentication and client integration stay interactive. After the first
+bootstrap, authenticate once and optionally configure OpenCode:
+
+```sh
+claude login
+meridian setup
+```
+
+On macOS, manage it with `launchctl` under the `dev.mise.meridian` label. On
+Linux, use `systemctl --user {start,stop,restart,status} dev.mise.meridian`.
 
 ## Notes
 

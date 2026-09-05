@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Bootstrap applies user services before it installs tools. Keep the service
+# alive on a cold machine, then replace this process with the mise-managed CLI.
+meridian="$HOME/.local/share/mise/shims/meridian"
+while [ ! -x "$meridian" ]; do
+  sleep 1
+done
+
+exec "$meridian"

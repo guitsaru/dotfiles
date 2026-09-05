@@ -21,6 +21,7 @@
 "~/.config/opencode/opencode.jsonc" = "home/.config/opencode/opencode.jsonc"
 "~/.config/starship.toml"           = "home/.config/starship.toml"
 "~/.config/zed/settings.json"       = "home/.config/zed/settings.json"
+"~/.local/bin/meridian-service"     = "home/.local/bin/meridian-service"
 
 # The whole nvim directory is one symlink, so lazy.nvim writes lazy-lock.json
 # and lazyvim.json straight into the repo -- plugin bumps show up in git status
@@ -217,6 +218,29 @@ environment = { PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/
 stdout_path = "~/Library/Logs/mise-upgrade.log"
 stderr_path = "~/Library/Logs/mise-upgrade.err.log"
 
+# Local Anthropic-compatible API backed by the Claude Agent SDK. The wrapper
+# bridges bootstrap ordering: user services are loaded before [tools] are
+# installed, so it waits for mise's stable shim on a cold machine.
+[bootstrap.macos.launchd.agents.meridian]
+program = "~/.local/bin/meridian-service"
+run_at_load = true
+keep_alive = true
+kickstart = true
+environment = { PATH = "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin", MERIDIAN_HOST = "127.0.0.1", MERIDIAN_PORT = "3456" }
+stdout_path = "~/Library/Logs/meridian.log"
+stderr_path = "~/Library/Logs/meridian.err.log"
+
+# Linux equivalent of the LaunchAgent above. This is a user service, so it
+# starts at login and needs no root-owned unit or machine-wide credentials.
+[bootstrap.linux.systemd.units.meridian]
+description = "Local Anthropic-compatible API backed by the Claude Agent SDK"
+exec_start = "~/.local/bin/meridian-service"
+environment = { PATH = "/usr/local/bin:/usr/bin:/bin", MERIDIAN_HOST = "127.0.0.1", MERIDIAN_PORT = "3456" }
+restart = "on-failure"
+restart_sec = "5s"
+standard_output = "append:%h/.local/state/meridian.log"
+standard_error = "append:%h/.local/state/meridian.err.log"
+
 # Apple's /bin/zsh, deliberately -- not a Homebrew or mise zsh. This is already
 # the login shell on macOS, so applying it is a no-op; it is declared so a
 # machine that comes up on something else converges. An absolute path is
@@ -233,7 +257,7 @@ stderr_path = "~/Library/Logs/mise-upgrade.err.log"
 [bootstrap.repos]
 "~/.local/share/zsh/fzf-tab" = { url = "https://github.com/Aloxaf/fzf-tab.git" }
 "~/.local/share/zsh/zsh-autosuggestions" = { url = "https://github.com/zsh-users/zsh-autosuggestions.git" }
-"~/.local/share/mission-control" = { url = "https://github.com/guitsaru/mission-control.git" }
+"~/code/mission_control" = { url = "https://github.com/guitsaru/mission-control.git" }
 
 [bootstrap.user]
 login_shell = "/bin/zsh"
@@ -257,7 +281,7 @@ post-dotfiles = [
 description = "Install agent skills, set up the GitHub identity, then install herdr plugins"
 run = """
 # --- mission-control ----------------------------------------------------
-mission_control="$HOME/.local/share/mission-control"
+mission_control="$HOME/code/mission_control"
 if [ -d "$mission_control" ]; then
   mise -C "$mission_control" run setup
 else
@@ -356,3 +380,9 @@ for a in claude codex opencode; do
   herdr integration install "$a" || echo "herdr: skipped $a integration (agent not set up yet)"
 done
 """
+
+# Meridian is repeated in the global config linked above: this local declaration
+# makes it available during the same cold-bootstrap invocation; the global one
+# keeps it available after leaving this repository.
+[tools]
+"npm:@rynfar/meridian" = { version = "latest", allow_builds = ["@rynfar/meridian"] }

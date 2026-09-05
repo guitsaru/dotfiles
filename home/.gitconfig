@@ -151,3 +151,8 @@
 	# Machine-specific settings: maintenance repo paths, work identities,
 	# anything that should not be published. A missing file is not an error.
 	path = ~/.gitconfig.local
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
