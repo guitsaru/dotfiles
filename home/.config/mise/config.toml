@@ -48,7 +48,6 @@ mkcert = "latest"
 pitchfork = "latest"
 ripgrep = "latest"
 starship = "latest"
-"npm:@tigrisdata/cli" = "latest"
 zoxide = "latest"
 
 # The AI CLIs above ship several releases a day, and mise's default 24h
